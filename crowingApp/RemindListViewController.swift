@@ -41,6 +41,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         return messages.count
         
         
+        
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
