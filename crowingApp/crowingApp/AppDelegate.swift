@@ -13,22 +13,10 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        println("app start")
-        if let options = launchOptions{
-            /* Do we have a value? */
-            let value = options[UIApplicationLaunchOptionsLocalNotificationKey]
-            as? UILocalNotification
-            if (value != nil) {
-                println("刚刚有一个提醒")
-            }
-        }
-        
-        
         return true
     }
 
@@ -118,36 +106,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-    
-    //当点击提醒的选项，打开app时会被调用; 若果app当前在活动状态，那么也会被触发
-    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        println("get the notification")
-//        RemindListViewController.tableView.reloadData()
-    
-    }
-    
-    
-    //处理通知动作
-    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        
-        println(notificationSettings.types.rawValue)
-        println("test")
-    }
-    
-    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
-        
-        if identifier == "editList" {
-            println("editlist")
-            NSNotificationCenter.defaultCenter().postNotificationName("modifyListNotification", object: nil)
-        }
-        else if identifier == "delete" {
-            println("delList")
-            NSNotificationCenter.defaultCenter().postNotificationName("deleteListNotification", object: nil)
-        }
-        
-        completionHandler()
-    }
-    
 
 }
 
