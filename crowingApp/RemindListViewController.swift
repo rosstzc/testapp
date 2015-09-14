@@ -40,6 +40,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         self.tabBarItem.badgeValue = "9"
         return messages.count
         
+        
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
