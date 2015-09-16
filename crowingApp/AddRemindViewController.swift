@@ -39,7 +39,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
         remind.remind_time = datePicker.date
         
         remind.repeat_type = "everMinute"  // 未完，需要在界面选择
-        context.save(nil)
+       
         
         self.dismissViewControllerAnimated(true, completion: nil)
         

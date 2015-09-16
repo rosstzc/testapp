@@ -13,7 +13,7 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
+    var RemindListVC = RemindListViewController()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -122,7 +122,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //当点击提醒的选项，打开app时会被调用; 若果app当前在活动状态，那么也会被触发
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         println("get the notification")
-//        RemindListViewController.tableView.reloadData()
+        
+        //触发调用刷新主页签的 tableview
+        self.RemindListVC.viewWillAppear(true)
     
     }
     

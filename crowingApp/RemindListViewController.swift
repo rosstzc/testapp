@@ -22,7 +22,6 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
         tableView.dataSource = self
-
         println("home page")
         
     }
@@ -39,10 +38,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         messages = sortedResults
         self.tabBarItem.badgeValue = "9"
         return messages.count
-        
-        
-        
-        
+     
         
     }
 
@@ -68,8 +64,34 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        println(indexPath)
+        println(indexPath.row)
+        
         selectMessage = messages[indexPath.row]
-        selectMessage?.state = 1
+        println(selectMessage?.title)
+        var id = selectMessage!.objectID
+        
+        // 从coredata中找到id的行，然后修改保存
+        var context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+        var request =  NSFetchRequest(entityName: "RemindMessage")
+        var temp:[RemindMessage] = []
+        temp = context.executeFetchRequest(request, error: nil ) as! [RemindMessage]
+        for i in temp {
+            if i.objectID == id {
+                i.state = 1
+                println(i.title)
+            }
+        }
+        context.save(nil)
+        
+        //刷新cell内容
+        var cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        println(selectMessage?.title)
+        cell.textLabel!.text = selectMessage!.title
+        
+        
+
+
         
         
         
@@ -95,6 +117,8 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
             messages = sortedResults
             lastMessageTime =  messages[0].time_remind
             println(lastMessageTime)
+            
+            
             //循环所有关注的提醒，如果大于最后信息，并且少于当前时间，那么就到信息表写信息。。（信息未读逻辑，未完）
             for i in reminds {
                 if (i.remind_time.compare(lastMessageTime) == NSComparisonResult.OrderedDescending) && (now.compare(i.remind_time) == NSComparisonResult.OrderedDescending)   {
@@ -151,6 +175,9 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewWillAppear(animated: Bool) {
         //检查是否有信息的通知信息，如果有就刷新
         updateRemindMessage()
+        if !self.isViewLoaded() {
+            return
+        }
         tableView.reloadData()
     }
     
@@ -159,10 +186,11 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func getRemindMessageData() ->[RemindMessage] {
         var context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-        var filter:NSPredicate = NSPredicate(format: "state != 2") //不显示删除的
+        var filter:NSPredicate = NSPredicate(format: "state != 2") //不显示已删除的
         var request =  NSFetchRequest(entityName: "RemindMessage")
         request.predicate = filter
         self.messages = context.executeFetchRequest(request, error: nil ) as! [RemindMessage]
+        
         return messages
     }
     
