@@ -12,6 +12,7 @@
     <entity name="Remind" representedClassName="crowingApp.Remind" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dbid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="remind_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remind_time" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="repeat_type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="schedule" optional="YES" attributeType="String" syncable="YES"/>
@@ -20,13 +21,22 @@
     </entity>
     <entity name="RemindMessage" representedClassName="crowingApp.RemindMessage" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="remind_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="time_remind" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="User" representedClassName="crowingApp.User" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="online" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rr" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
     <elements>
         <element name="CheckAtFollowing" positionX="-54" positionY="-9" width="128" height="150"/>
-        <element name="Remind" positionX="-63" positionY="-18" width="128" height="150"/>
-        <element name="RemindMessage" positionX="-54" positionY="36" width="128" height="105"/>
+        <element name="Remind" positionX="-63" positionY="-18" width="128" height="165"/>
+        <element name="RemindMessage" positionX="-54" positionY="36" width="128" height="120"/>
+        <element name="User" positionX="-54" positionY="45" width="128" height="120"/>
     </elements>
 </model>

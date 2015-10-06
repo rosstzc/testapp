@@ -32,11 +32,12 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
 
     @IBAction func tappedSave(sender: AnyObject) {
         
-        var  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-        var remind = NSEntityDescription.insertNewObjectForEntityForName("Remind",inManagedObjectContext: context) as! Remind
-        remind.title = textTitle.text
-        remind.content = textContent.text
+        let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+        let remind = NSEntityDescription.insertNewObjectForEntityForName("Remind",inManagedObjectContext: context) as! Remind
+        remind.title = textTitle.text!
+        remind.content = textContent.text!
         remind.remind_time = datePicker.date
+        remind.remind_id = NSUUID().UUIDString
         
         remind.repeat_type = "everMinute"  // 未完，需要在界面选择
        
@@ -47,8 +48,8 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
         UIApplication.sharedApplication().cancelAllLocalNotifications()
         
         //触发通知
-        var repeatType: NSCalendarUnit = NSCalendarUnit.CalendarUnitMinute   //未完，根据界面选项生成
-        scheduleLocalNotificationWith(datePicker.date, repeat: repeatType )
+        let repeatType: NSCalendarUnit = NSCalendarUnit.Minute   //未完，根据界面选项生成
+        scheduleLocalNotificationWith(datePicker.date, `repeat`: repeatType )
 //        scheduleLocalNotification()
 
     }
@@ -82,20 +83,20 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
         return true
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         textTitle.resignFirstResponder()
         textContent.resignFirstResponder()
     }
     
     
-    func scheduleLocalNotificationWith(time: NSDate, repeat: NSCalendarUnit){
-        var localNotification = UILocalNotification()
+    func scheduleLocalNotificationWith(time: NSDate, `repeat`: NSCalendarUnit){
+        let localNotification = UILocalNotification()
         localNotification.fireDate = time
         localNotification.timeZone = NSCalendar.currentCalendar().timeZone
         localNotification.alertBody = "you must go shopping, remember!"
         localNotification.alertAction = "View list"
-        localNotification.repeatInterval = repeat
-        println("repeat",repeat)
+        localNotification.repeatInterval = `repeat`
+        print("repeat",`repeat`)
         
         localNotification.applicationIconBadgeNumber++
         
@@ -104,16 +105,16 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
     }
     //配置通知
     func scheduleLocalNotification(){
-        var localNotification = UILocalNotification()
+        let localNotification = UILocalNotification()
 //        localNotification.fireDate = datePicker.date
-        println(datePicker.date)
+        print(datePicker.date)
         localNotification.fireDate = NSDate(timeIntervalSinceNow: 8)
-        println("test", NSDate(timeIntervalSinceNow: 8))
+        print("test", NSDate(timeIntervalSinceNow: 8))
         localNotification.timeZone = NSCalendar.currentCalendar().timeZone
         localNotification.alertBody = "you must go shopping, remember!"
         localNotification.alertAction = "View list"
         
-        localNotification.repeatInterval = NSCalendarUnit.CalendarUnitMinute
+        localNotification.repeatInterval = NSCalendarUnit.Minute
         
         localNotification.applicationIconBadgeNumber++
         
@@ -124,15 +125,15 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
     //通知的基本设置
     func setupNotificationSettings() {
         
-        let notificationSettings: UIUserNotificationSettings = UIApplication.sharedApplication().currentUserNotificationSettings()
+        let notificationSettings: UIUserNotificationSettings = UIApplication.sharedApplication().currentUserNotificationSettings()!
         
         if(notificationSettings.types == UIUserNotificationType.None) {
             
             //定义通知类型
-            var notificationTypes: UIUserNotificationType = UIUserNotificationType.Alert | UIUserNotificationType.Sound
+            let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Sound]
             
             //定义通知响应
-            var justInformAction = UIMutableUserNotificationAction()
+            let justInformAction = UIMutableUserNotificationAction()
             justInformAction.identifier = "justInform"
             justInformAction.title = "ok, 知道了"
             justInformAction.destructive = false
@@ -140,14 +141,14 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
             justInformAction.authenticationRequired = false
             
             
-            var modifyListAction = UIMutableUserNotificationAction()
+            let modifyListAction = UIMutableUserNotificationAction()
             modifyListAction.identifier = "editList"
             modifyListAction.title = "修改东西"
             modifyListAction.activationMode = UIUserNotificationActivationMode.Foreground
             modifyListAction.destructive = false
             modifyListAction.authenticationRequired = false
             
-            var deleteListAction = UIMutableUserNotificationAction()
+            let deleteListAction = UIMutableUserNotificationAction()
             deleteListAction.identifier = "delete"
             deleteListAction.title = "删除"
             deleteListAction.activationMode = UIUserNotificationActivationMode.Background
@@ -159,15 +160,15 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
             let actionArrayMinimal = NSArray(objects: deleteListAction, modifyListAction)
             
             //定义分类与action的关系
-            var shoppingListRemindCategory = UIMutableUserNotificationCategory()
+            let shoppingListRemindCategory = UIMutableUserNotificationCategory()
             shoppingListRemindCategory.identifier = "shoppingListReminderCategory"
-            shoppingListRemindCategory.setActions(actionArray as [AnyObject], forContext:UIUserNotificationActionContext.Default )
-            shoppingListRemindCategory.setActions(actionArrayMinimal as [AnyObject] , forContext: UIUserNotificationActionContext.Minimal)
+            shoppingListRemindCategory.setActions(actionArray  as? [UIUserNotificationAction], forContext:UIUserNotificationActionContext.Default )
+            shoppingListRemindCategory.setActions(actionArrayMinimal as? [UIUserNotificationAction] , forContext: UIUserNotificationActionContext.Minimal)
             
             let categoriesForSettings = NSSet(object: shoppingListRemindCategory)
             
             //注册通知设定
-            let newNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: categoriesForSettings as Set<NSObject>)
+            let newNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: categoriesForSettings as? Set<UIUserNotificationCategory>)
             UIApplication.sharedApplication().registerUserNotificationSettings(newNotificationSettings)
             
         }

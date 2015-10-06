@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		000862651B98337E0031607D /* MyselfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000862641B98337E0031607D /* MyselfViewController.swift */; };
-		0019A34F1B9F1B720076AE40 /* Remind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0019A34E1B9F1B720076AE40 /* Remind.swift */; };
+		001A365E1BB21F2900D94F34 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A365D1BB21F2900D94F34 /* LoginViewController.swift */; };
 		002D475D1B91326700A43D5D /* AddRemindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002D475C1B91326700A43D5D /* AddRemindViewController.swift */; };
 		002D47611B91403600A43D5D /* ShowRemindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002D47601B91403600A43D5D /* ShowRemindViewController.swift */; };
 		004F4BBF1B909442007DABE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004F4BBE1B909442007DABE7 /* AppDelegate.swift */; };
@@ -20,10 +20,12 @@
 		004F4BD81B909442007DABE7 /* crowingAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004F4BD71B909442007DABE7 /* crowingAppTests.swift */; };
 		004F4BE21B9097B9007DABE7 /* CheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004F4BE11B9097B9007DABE7 /* CheckViewController.swift */; };
 		004F4BE41B90A556007DABE7 /* 0.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 004F4BE31B90A556007DABE7 /* 0.jpeg */; };
-		00ACABEF1BA500E600703AB1 /* RemindMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ACABEE1BA500E600703AB1 /* RemindMessage.swift */; };
-		00EB3AF31B91B31A008B061A /* CheckAtFollowing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EB3AF21B91B31A008B061A /* CheckAtFollowing.swift */; };
 		00EB3AF51B93DEE8008B061A /* RemindListCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EB3AF41B93DEE8008B061A /* RemindListCreateViewController.swift */; };
 		00EB3AF71B93DEFE008B061A /* RemindListFollowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EB3AF61B93DEFE008B061A /* RemindListFollowViewController.swift */; };
+		00EC56461BB3753100443FFC /* RemindMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EC56451BB3753100443FFC /* RemindMessage.swift */; };
+		00EC56481BB3753200443FFC /* Remind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EC56471BB3753200443FFC /* Remind.swift */; };
+		00EC564A1BB3753200443FFC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EC56491BB3753200443FFC /* User.swift */; };
+		00EC564C1BB3753200443FFC /* CheckAtFollowing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EC564B1BB3753200443FFC /* CheckAtFollowing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +40,7 @@
 
 /* Begin PBXFileReference section */
 		000862641B98337E0031607D /* MyselfViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyselfViewController.swift; sourceTree = "<group>"; };
-		0019A34E1B9F1B720076AE40 /* Remind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Remind.swift; sourceTree = "<group>"; };
+		001A365D1BB21F2900D94F34 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		002D475C1B91326700A43D5D /* AddRemindViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRemindViewController.swift; sourceTree = "<group>"; };
 		002D47601B91403600A43D5D /* ShowRemindViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowRemindViewController.swift; sourceTree = "<group>"; };
 		004F4BB91B909442007DABE7 /* crowingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = crowingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,10 +56,12 @@
 		004F4BD71B909442007DABE7 /* crowingAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crowingAppTests.swift; sourceTree = "<group>"; };
 		004F4BE11B9097B9007DABE7 /* CheckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckViewController.swift; sourceTree = "<group>"; };
 		004F4BE31B90A556007DABE7 /* 0.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 0.jpeg; sourceTree = "<group>"; };
-		00ACABEE1BA500E600703AB1 /* RemindMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindMessage.swift; sourceTree = "<group>"; };
-		00EB3AF21B91B31A008B061A /* CheckAtFollowing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckAtFollowing.swift; sourceTree = "<group>"; };
 		00EB3AF41B93DEE8008B061A /* RemindListCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindListCreateViewController.swift; sourceTree = "<group>"; };
 		00EB3AF61B93DEFE008B061A /* RemindListFollowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindListFollowViewController.swift; sourceTree = "<group>"; };
+		00EC56451BB3753100443FFC /* RemindMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindMessage.swift; sourceTree = "<group>"; };
+		00EC56471BB3753200443FFC /* Remind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Remind.swift; sourceTree = "<group>"; };
+		00EC56491BB3753200443FFC /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		00EC564B1BB3753200443FFC /* CheckAtFollowing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckAtFollowing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,9 +85,10 @@
 		004F4BB01B909442007DABE7 = {
 			isa = PBXGroup;
 			children = (
-				00ACABEE1BA500E600703AB1 /* RemindMessage.swift */,
-				0019A34E1B9F1B720076AE40 /* Remind.swift */,
-				00EB3AF21B91B31A008B061A /* CheckAtFollowing.swift */,
+				00EC564B1BB3753200443FFC /* CheckAtFollowing.swift */,
+				00EC56491BB3753200443FFC /* User.swift */,
+				00EC56471BB3753200443FFC /* Remind.swift */,
+				00EC56451BB3753100443FFC /* RemindMessage.swift */,
 				004F4BBB1B909442007DABE7 /* crowingApp */,
 				004F4BD41B909442007DABE7 /* crowingAppTests */,
 				004F4BBA1B909442007DABE7 /* Products */,
@@ -116,6 +121,7 @@
 				00EB3AF41B93DEE8008B061A /* RemindListCreateViewController.swift */,
 				00EB3AF61B93DEFE008B061A /* RemindListFollowViewController.swift */,
 				000862641B98337E0031607D /* MyselfViewController.swift */,
+				001A365D1BB21F2900D94F34 /* LoginViewController.swift */,
 			);
 			path = crowingApp;
 			sourceTree = "<group>";
@@ -189,7 +195,9 @@
 		004F4BB11B909442007DABE7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastSwiftMigration = 0710;
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "mike公司";
 				TargetAttributes = {
 					004F4BB81B909442007DABE7 = {
@@ -246,17 +254,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00EC564A1BB3753200443FFC /* User.swift in Sources */,
 				002D47611B91403600A43D5D /* ShowRemindViewController.swift in Sources */,
 				004F4BE21B9097B9007DABE7 /* CheckViewController.swift in Sources */,
 				00EB3AF71B93DEFE008B061A /* RemindListFollowViewController.swift in Sources */,
-				0019A34F1B9F1B720076AE40 /* Remind.swift in Sources */,
 				004F4BC41B909442007DABE7 /* RemindListViewController.swift in Sources */,
+				00EC564C1BB3753200443FFC /* CheckAtFollowing.swift in Sources */,
 				002D475D1B91326700A43D5D /* AddRemindViewController.swift in Sources */,
 				004F4BBF1B909442007DABE7 /* AppDelegate.swift in Sources */,
+				00EC56481BB3753200443FFC /* Remind.swift in Sources */,
 				000862651B98337E0031607D /* MyselfViewController.swift in Sources */,
+				00EC56461BB3753100443FFC /* RemindMessage.swift in Sources */,
 				00EB3AF51B93DEE8008B061A /* RemindListCreateViewController.swift in Sources */,
-				00EB3AF31B91B31A008B061A /* CheckAtFollowing.swift in Sources */,
-				00ACABEF1BA500E600703AB1 /* RemindMessage.swift in Sources */,
+				001A365E1BB21F2900D94F34 /* LoginViewController.swift in Sources */,
 				004F4BC21B909442007DABE7 /* crowingApp.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,6 +330,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -390,6 +401,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = crowingApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mike.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
@@ -401,6 +413,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = crowingApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mike.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
@@ -420,6 +433,7 @@
 				);
 				INFOPLIST_FILE = crowingAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mike.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/crowingApp.app/crowingApp";
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -436,6 +450,7 @@
 				);
 				INFOPLIST_FILE = crowingAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mike.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/crowingApp.app/crowingApp";
 				VALID_ARCHS = "arm64 armv7 armv7s";

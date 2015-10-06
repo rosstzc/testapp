@@ -33,7 +33,7 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
         
         
         //提醒时间倒序
-        var sortedResults = sorted(reminds, {
+        let sortedResults = reminds.sort({
             $0.remind_time.compare($1.remind_time) == NSComparisonResult.OrderedDescending
         })
         reminds = sortedResults
@@ -42,12 +42,12 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UITableViewCell()
+        let cell = UITableViewCell()
         let dateFormat: NSDateFormatter = NSDateFormatter()
         dateFormat.dateFormat =  "yyyy-MM-dd HH:mm:ss EEEE"
-        var timeString:String = dateFormat.stringFromDate(reminds[indexPath.row].remind_time)
+        let timeString:String = dateFormat.stringFromDate(reminds[indexPath.row].remind_time)
         cell.textLabel!.text = reminds[indexPath.row].title + " " + timeString
-        println(reminds[indexPath.row].remind_time)
+        print(reminds[indexPath.row].remind_time)
         
         cell.imageView?.image = UIImage(named:"0.jpeg")
         return cell
@@ -57,7 +57,7 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
     //传递数据
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "segueShowRemind" {
-            var nextVC = segue.destinationViewController as! ShowRemindViewController
+            let nextVC = segue.destinationViewController as! ShowRemindViewController
             nextVC.remind = self.selectRemind
         }
         
@@ -74,9 +74,9 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func getDataFromCoreData() -> [Remind] {
-        var context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-        var request =  NSFetchRequest(entityName: "Remind")
-        self.reminds = context.executeFetchRequest(request, error: nil ) as! [Remind]
+        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+        let request =  NSFetchRequest(entityName: "Remind")
+        self.reminds = (try! context.executeFetchRequest(request)) as! [Remind]
         return self.reminds
     }
     

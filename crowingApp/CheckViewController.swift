@@ -32,21 +32,21 @@ class CheckViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             
-            var context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-            var request =  NSFetchRequest(entityName: "CheckAtFollowing")
-            self.checks = context.executeFetchRequest(request, error: nil ) as! [CheckAtFollowing]
+            let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+            let request =  NSFetchRequest(entityName: "CheckAtFollowing")
+            self.checks = (try! context.executeFetchRequest(request)) as! [CheckAtFollowing]
         
             return checks.count
         }
         
         func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-            let cell = self.tableView.dequeueReusableCellWithIdentifier("todoCell") as! UITableViewCell
-            var userImage = cell.viewWithTag(10) as! UIImageView
-            var userName = cell.viewWithTag(11) as! UILabel
-            var checkContent = cell.viewWithTag(13) as! UILabel
-            var remindTitle = cell.viewWithTag(14) as! UILabel
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("todoCell") as UITableViewCell!
+            _ = cell.viewWithTag(10) as! UIImageView
+            let userName = cell.viewWithTag(11) as! UILabel
+            let checkContent = cell.viewWithTag(13) as! UILabel
+            let remindTitle = cell.viewWithTag(14) as! UILabel
             
-            var check = checks[indexPath.row] as CheckAtFollowing
+            let check = checks[indexPath.row] as CheckAtFollowing
             userName.text = check.userName
             checkContent.text = check.content
             remindTitle.text = check.remindTitle

@@ -18,13 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        println("app start")
+        print("app start")
         if let options = launchOptions{
             /* Do we have a value? */
             let value = options[UIApplicationLaunchOptionsLocalNotificationKey]
             as? UILocalNotification
             if (value != nil) {
-                println("刚刚有一个提醒")
+                print("刚刚有一个提醒")
             }
         }
         
@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.mike.crowingApp" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as! NSURL
+        return urls[urls.count-1] 
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
@@ -77,7 +77,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("crowingApp.sqlite")
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
+        do {
+            try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+        } catch var error1 as NSError {
+            error = error1
             coordinator = nil
             // Report any error we got.
             var dict = [String: AnyObject]()
@@ -89,6 +92,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(error), \(error!.userInfo)")
             abort()
+        } catch {
+            fatalError()
         }
         
         return coordinator
@@ -110,18 +115,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func saveContext () {
         if let moc = self.managedObjectContext {
             var error: NSError? = nil
-            if moc.hasChanges && !moc.save(&error) {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
-                abort()
+            if moc.hasChanges {
+                do {
+                    try moc.save()
+                } catch let error1 as NSError {
+                    error = error1
+                    // Replace this implementation with code to handle the error appropriately.
+                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    NSLog("Unresolved error \(error), \(error!.userInfo)")
+                    abort()
+                }
             }
         }
     }
     
     //当点击提醒的选项，打开app时会被调用; 若果app当前在活动状态，那么也会被触发
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        println("get the notification")
+        print("get the notification")
         
         //触发调用刷新主页签的 tableview
         self.RemindListVC.viewWillAppear(true)
@@ -132,18 +142,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //处理通知动作
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
         
-        println(notificationSettings.types.rawValue)
-        println("test")
+        print(notificationSettings.types.rawValue)
+        print("test")
     }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
         
         if identifier == "editList" {
-            println("editlist")
+            print("editlist")
             NSNotificationCenter.defaultCenter().postNotificationName("modifyListNotification", object: nil)
         }
         else if identifier == "delete" {
-            println("delList")
+            print("delList")
             NSNotificationCenter.defaultCenter().postNotificationName("deleteListNotification", object: nil)
         }
         

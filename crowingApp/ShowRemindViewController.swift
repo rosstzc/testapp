@@ -18,6 +18,7 @@ class ShowRemindViewController: UIViewController {
     @IBOutlet weak var checkContent: UITextField!
     
     var remind:Remind? = nil
+    var remindId:NSManagedObjectID!
     
     
     
@@ -38,15 +39,18 @@ class ShowRemindViewController: UIViewController {
     
     @IBAction func submit(sender: AnyObject) {
         //点按钮，触发写入 followAtRemind 表
-        var  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-        var check = NSEntityDescription.insertNewObjectForEntityForName("CheckAtFollowing",inManagedObjectContext: context) as! CheckAtFollowing
+        let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+        let check = NSEntityDescription.insertNewObjectForEntityForName("CheckAtFollowing",inManagedObjectContext: context) as! CheckAtFollowing
         check.remindTitle = remindTitle.text!
         check.content = checkContent.text!
         check.userID = 2
         check.userName = "mike"
-        //        check.userImage =
-        //        check.dbID =
-        context.save(nil)
+        do {
+            //        check.userImage =
+            //        check.dbID =
+            try context.save()
+        } catch _ {
+        }
         
         
     }
@@ -57,7 +61,7 @@ class ShowRemindViewController: UIViewController {
         return true
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         checkContent.resignFirstResponder()
     }
 
