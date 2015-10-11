@@ -11,11 +11,15 @@ import UIKit
 class MyselfViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var labelUserName: UILabel!
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        labelUserName.text = userDefaults.valueForKey("name") as? String
 
         // Do any additional setup after loading the view.
     }
@@ -35,5 +39,15 @@ class MyselfViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
 
+    
+
+    @IBAction func btnLogout(sender: AnyObject) {
+        
+        
+        
+        
+    }
+    
+    
 
 }

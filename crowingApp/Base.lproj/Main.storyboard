@@ -80,12 +80,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d7w-Mo-KRb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1456" y="530"/>
+            <point key="canvasLocation" x="2204" y="544"/>
         </scene>
         <!--Remind List View Controller-->
         <scene sceneID="dcE-vU-Qft">
             <objects>
-                <viewController id="CAz-Un-B1h" customClass="RemindListViewController" customModule="crowingApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="info" id="CAz-Un-B1h" customClass="RemindListViewController" customModule="crowingApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9JO-MS-F7L"/>
                         <viewControllerLayoutGuide type="bottom" id="nbC-SE-7YB"/>
@@ -121,7 +121,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hRU-79-CTG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1450" y="-152"/>
+            <point key="canvasLocation" x="2224" y="-182"/>
         </scene>
         <!--Add Remind View Controller-->
         <scene sceneID="4V9-rt-S1A">
@@ -305,12 +305,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uio-uJ-eZH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2186" y="-43"/>
+            <point key="canvasLocation" x="2998" y="-43"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="H5m-nb-NRt">
             <objects>
-                <tabBarController id="IBN-un-A55" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tab" id="IBN-un-A55" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Rrs-K6-bAi">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -320,12 +320,13 @@
                     <connections>
                         <segue destination="qon-Om-pz2" kind="relationship" relationship="viewControllers" id="prQ-gf-rh6"/>
                         <segue destination="DXc-TL-tu5" kind="relationship" relationship="viewControllers" id="STC-sI-BnG"/>
+                        <segue destination="yYX-hL-l5h" kind="relationship" relationship="viewControllers" id="izx-sb-TpG"/>
                         <segue destination="2qm-m8-l2w" kind="relationship" relationship="viewControllers" id="Pkn-iE-2E6"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bca-BS-rF4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-182" y="179"/>
+            <point key="canvasLocation" x="466" y="179"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="XEa-9a-mlt">
@@ -362,7 +363,7 @@
                                     <action selector="btnLogin:" destination="ucs-K3-hHX" eventType="touchUpInside" id="zHN-f0-Li8"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="呢称" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kvC-zk-Soe">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="呢称" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kvC-zk-Soe">
                                 <rect key="frame" x="0.0" y="87" width="600" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="262" id="5vv-Ic-bhN"/>
@@ -413,13 +414,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="coZ-QT-Uvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-894" y="196"/>
+            <point key="canvasLocation" x="-200" y="196"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--信息-->
         <scene sceneID="9xp-Rs-Y5d">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qon-Om-pz2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" badgeValue="2" systemItem="favorites" id="6R9-mZ-h5G"/>
+                    <tabBarItem key="tabBarItem" title="信息" image="geisha" badgeValue="2" id="6R9-mZ-h5G"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="OhI-JP-rhd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -432,7 +433,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6DA-6C-rTm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="638" y="-152"/>
+            <point key="canvasLocation" x="1450" y="-152"/>
         </scene>
         <!--动态-->
         <scene sceneID="H8Z-uJ-IpW">
@@ -451,7 +452,36 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Shs-uG-fkB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="638" y="510"/>
+            <point key="canvasLocation" x="1450" y="510"/>
+        </scene>
+        <!--Remind Sum List View Controller-->
+        <scene sceneID="1v1-XN-Juv">
+            <objects>
+                <viewController id="vuf-rY-so0" customClass="RemindSumListViewController" customModule="crowingApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gsy-fc-aB8"/>
+                        <viewControllerLayoutGuide type="bottom" id="egg-FB-j8Q"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uFu-R3-Ema">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CtY-yP-YEy">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ZWi-MB-jt5"/>
+                    <connections>
+                        <outlet property="tableView" destination="CtY-yP-YEy" id="cqA-ld-U0n"/>
+                        <segue destination="1kW-WW-GMC" kind="show" identifier="segueShowRemind" id="IYd-LE-INH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lmH-e0-7qf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1460" y="1445"/>
         </scene>
         <!--Myself View Controller-->
         <scene sceneID="Z1c-Zr-hDs">
@@ -484,6 +514,19 @@
                                     <segue destination="dQK-mN-ZIa" kind="show" id="FHz-yl-1n6"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="00O-CF-19A">
+                                <rect key="frame" x="277" y="470" width="30" height="30"/>
+                                <state key="normal" title="退出"/>
+                                <connections>
+                                    <action selector="btnLogout:" destination="sdd-6A-Sbu" eventType="touchUpInside" id="K1u-F9-qRw"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="当前用户：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iou-FZ-GS1">
+                                <rect key="frame" x="31" y="210" width="85" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -508,12 +551,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="TXi-hN-uyd"/>
                     <connections>
+                        <outlet property="labelUserName" destination="iou-FZ-GS1" id="F1Q-yt-J9A"/>
                         <outlet property="tableView" destination="CfN-RD-lF0" id="REI-Io-gaH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Od8-HN-CkU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="633" y="1474"/>
+            <point key="canvasLocation" x="693" y="2220"/>
         </scene>
         <!--Remind List Create View Controller-->
         <scene sceneID="djV-SQ-mUu">
@@ -541,7 +585,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kTz-N8-rGp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1288" y="1485"/>
+            <point key="canvasLocation" x="1436" y="2233"/>
         </scene>
         <!--我-->
         <scene sceneID="IEE-jy-Rmr">
@@ -560,12 +604,33 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RZ7-iT-vdi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-179" y="1474"/>
+            <point key="canvasLocation" x="-32" y="2314"/>
+        </scene>
+        <!--列表-->
+        <scene sceneID="amr-3v-2zO">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yYX-hL-l5h" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="列表" image="torii" badgeValue="1" id="hKo-gv-EvU"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="pVm-a3-dgf"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="av8-vA-gUh">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vuf-rY-so0" kind="relationship" relationship="rootViewController" id="OfL-02-T4A"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oqK-4y-tbX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="568" y="1419"/>
         </scene>
     </scenes>
     <resources>
         <image name="geisha" width="25" height="25"/>
         <image name="great_wall" width="25" height="25"/>
+        <image name="torii" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6ja-Po-S8y"/>

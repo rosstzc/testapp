@@ -15,7 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var RemindListVC = RemindListViewController()
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         print("app start")
@@ -26,7 +25,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if (value != nil) {
                 print("刚刚有一个提醒")
             }
+ 
         }
+        
+        //判断是否已经登录，如果有就跳转
+        let user = NSUserDefaults.standardUserDefaults()
+        if user.valueForKey("logined") as? Bool == true {
+            print("333")
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil);
+            let vc = storyboard.instantiateViewControllerWithIdentifier("tab") as UIViewController;
+            self.window?.rootViewController = vc
+        }
+        
         
         
         return true

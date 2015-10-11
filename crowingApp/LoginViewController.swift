@@ -11,7 +11,7 @@ import CoreData
 
 class LoginViewController: UIViewController {
     var users:[User] = []
-    
+
     
     @IBOutlet weak var txtName: UITextField!
     
@@ -21,7 +21,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // Do any additional setup after loading the view
         
         //
         let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
@@ -31,7 +31,10 @@ class LoginViewController: UIViewController {
         print("user count：",  tempp.count)
         for i in tempp {
             print("name",i.name ," email",i.email, " pwd", i.password)
+            
+        // 当用户已登录，即跳到首页
         }
+
 
         
     }
@@ -51,6 +54,23 @@ class LoginViewController: UIViewController {
         } catch _ {
         }
         
+        // 把注册信息写到 NSUserDefaults
+            //待完善？ 这里应该有网络部分，并且上面写coredata是没有用户的
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let uuid = NSUUID().UUIDString
+        userDefaults.setObject(uuid, forKey: "uid")
+        userDefaults.setObject(txtName.text, forKey: "name")
+        userDefaults.setObject(txtMail.text, forKey: "email")
+        userDefaults.setObject(txtPwd.text, forKey: "password")
+        userDefaults.setBool(true, forKey:"logined")
+        userDefaults.setBool(true, forKey:"fristLaunch") //引导界面完成后设为false
+        userDefaults.synchronize()
+        
+        //测试读取userDefault
+        let tst = NSUserDefaults.standardUserDefaults()
+        print("read userDefault",tst.valueForKey("name"))
+        print("uuid",tst.valueForKey("uid"))
+        
         
         //通过查询刚才是否增加了一个用户
         let request =  NSFetchRequest(entityName: "User")
@@ -58,7 +78,8 @@ class LoginViewController: UIViewController {
         tempp = (try! context.executeFetchRequest(request)) as! [User]
         print("user count：",  tempp.count)
       
-        
+        self.performSegueWithIdentifier("segueLogin", sender: self)
+
         
     }
     
@@ -83,6 +104,20 @@ class LoginViewController: UIViewController {
         }
         
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        let user = NSUserDefaults.standardUserDefaults()
+        print(user.valueForKey("logined"))
+        
+        if user.valueForKey("logined") as? Bool == true {
+        
+        print("555")
+
+            
+        }
+    }
+    
+
     
     
 //    //登录成功

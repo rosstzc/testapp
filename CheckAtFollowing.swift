@@ -2,21 +2,16 @@
 //  CheckAtFollowing.swift
 //  crowingApp
 //
-//  Created by a a a a a on 15/9/24.
-//  Copyright (c) 2015年 mike公司. All rights reserved.
+//  Created by michaeltam on 15/10/7.
+//  Copyright © 2015年 mike公司. All rights reserved.
 //
 
 import Foundation
 import CoreData
 
+
 class CheckAtFollowing: NSManagedObject {
 
-    @NSManaged var content: String
-    @NSManaged var dbID: NSNumber
-    @NSManaged var remindTitle: String
-    @NSManaged var uid: NSNumber
-    @NSManaged var userID: NSNumber
-    @NSManaged var userImage: NSData
-    @NSManaged var userName: String
+// Insert code here to add functionality to your managed object subclass
 
 }

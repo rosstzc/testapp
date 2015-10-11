@@ -13,6 +13,9 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
     
     var reminds:[Remind] = []
     var MainVC = RemindListViewController()
+    
+    let user = NSUserDefaults.standardUserDefaults()
+
 
     @IBOutlet weak var textTitle: UITextField!
     @IBOutlet weak var textContent: UITextField!
@@ -26,6 +29,11 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
         
         //通知初始化设置
         setupNotificationSettings()
+        
+        //获取用户uid
+        print("read userDefault",user.valueForKey("name"))
+        print("uuid",user.valueForKey("uid"))
+        
     }
 
 
@@ -36,12 +44,10 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
         let remind = NSEntityDescription.insertNewObjectForEntityForName("Remind",inManagedObjectContext: context) as! Remind
         remind.title = textTitle.text!
         remind.content = textContent.text!
-        remind.remind_time = datePicker.date
-        remind.remind_id = NSUUID().UUIDString
-        
-        remind.repeat_type = "everMinute"  // 未完，需要在界面选择
-       
-        
+        remind.remindTime = datePicker.date
+        remind.remindId = NSUUID().UUIDString
+        remind.repeatType = "everMinute"  // 未完，需要在界面选择
+        remind.uid = user.valueForKey("uid") as? String
         self.dismissViewControllerAnimated(true, completion: nil)
         
         //先删除所有通知

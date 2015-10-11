@@ -1,33 +1,28 @@
 //
-//  ViewController.swift
+//  RemindSumListViewController.swift
 //  crowingApp
 //
-//  Created by a a a a a on 15/8/28.
-//  Copyright (c) 2015年 mike公司. All rights reserved.
+//  Created by michaeltam on 15/10/7.
+//  Copyright © 2015年 mike公司. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-class RemindListCreateViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
-    
+class RemindSumListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+
     @IBOutlet weak var tableView: UITableView!
     var reminds:[Remind] = []
     var selectRemind:Remind? = nil
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        tableView.delegate = self
         tableView.dataSource = self
+        tableView.delegate = self
+        // Do any additional setup after loading the view.
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         reminds = getDataFromCoreData()
         
@@ -73,6 +68,7 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
         tableView.reloadData()
     }
     
+    
     func getDataFromCoreData() -> [Remind] {
         let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         let request =  NSFetchRequest(entityName: "Remind")
@@ -81,6 +77,4 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     
-    
 }
-

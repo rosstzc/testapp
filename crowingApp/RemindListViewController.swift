@@ -34,7 +34,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         self.messages = getRemindMessageData()
     
         let sortedResults = messages.sort({
-            $0.time_remind.compare($1.time_remind) == NSComparisonResult.OrderedDescending
+            $0.timeRemind!.compare($1.timeRemind!) == NSComparisonResult.OrderedDescending
         })
         messages = sortedResults
         self.tabBarItem.badgeValue = "9"
@@ -49,15 +49,15 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         let dateFormat: NSDateFormatter = NSDateFormatter()
         let message = messages[indexPath.row]
         dateFormat.dateFormat =  "yyyy-MM-dd HH:mm:ss EEEE"
-        let timeString:String = dateFormat.stringFromDate(message.time_remind)
+        let timeString:String = dateFormat.stringFromDate(message.timeRemind!)
 //        println(messages[indexPath.row].time_remind)
 //        println(timeString)
         //read or not
         print(message.state)
-        cell.textLabel!.text = message.title + " " + timeString
+        cell.textLabel!.text = message.title! + " " + timeString
 
         if message.state == 0 {
-            cell.textLabel!.text = message.title + "(N)" + timeString
+            cell.textLabel!.text = message.title! + "(N)" + timeString
         }
         cell.imageView?.image = UIImage(named:"0.jpeg")
         
@@ -94,7 +94,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         print(selectMessage?.title)
         cell.textLabel!.text = selectMessage!.title
         
-        self.selectMessageRemindId = selectMessage?.remind_id
+        self.selectMessageRemindId = selectMessage?.remindId
         self.performSegueWithIdentifier("segueShowRemind", sender: self)
     }
     
@@ -106,8 +106,8 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
             
             //删除coredata上的数据
             let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-            let id = messages[indexPath.row].remind_id
-            let filter:NSPredicate = NSPredicate(format: "remind_id = %@", id) //不显示已删除的
+            let id = messages[indexPath.row].remindId
+            let filter:NSPredicate = NSPredicate(format: "remindId = %@", id!) //不显示已删除的
             let request =  NSFetchRequest(entityName: "RemindMessage")
             request.predicate = filter
             var temp:[RemindMessage] = []
@@ -138,12 +138,12 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         if segue.identifier == "segueShowRemind" {
             let nextVC = segue.destinationViewController as! ShowRemindViewController
             
-            //根据remind_ID获取该remind的数据
+            //根据remindId获取该remind的数据
             reminds = getRemindData()
             for i in reminds {
-                let remind_id = i.remind_id
+                let remindId = i.remindId
                 let id: String = selectMessageRemindId!
-                if (remind_id == id) {
+                if (remindId == id) {
                     nextVC.remind = i
                     break
                 }
@@ -168,23 +168,23 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
             var lastMessageTime: NSDate
             let now:NSDate = NSDate()
             let sortedResults = messages.sort({
-                $0.time_remind.compare($1.time_remind) == NSComparisonResult.OrderedDescending
+                $0.timeRemind!.compare($1.timeRemind!) == NSComparisonResult.OrderedDescending
             })
             messages = sortedResults
-            lastMessageTime =  messages[0].time_remind
+            lastMessageTime =  messages[0].timeRemind!
             print(lastMessageTime)
             
             
             //循环所有关注的提醒，如果大于最后信息，并且少于当前时间，那么就到信息表写信息。。
             for i in reminds {
-                if (i.remind_time.compare(lastMessageTime) == NSComparisonResult.OrderedDescending) && (now.compare(i.remind_time) == NSComparisonResult.OrderedDescending)   {
+                if (i.remindTime!.compare(lastMessageTime) == NSComparisonResult.OrderedDescending) && (now.compare(i.remindTime!) == NSComparisonResult.OrderedDescending)   {
                     // 写入信息表
                     let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
                     let Message = NSEntityDescription.insertNewObjectForEntityForName("RemindMessage",inManagedObjectContext: context) as! RemindMessage
                     Message.title = i.title
                     Message.content = i.content
-                    Message.time_remind = i.remind_time
-                    Message.remind_id = i.remind_id
+                    Message.timeRemind = i.remindTime
+                    Message.remindId = i.remindId
 
                     Message.state = 0
                     do {
@@ -205,8 +205,8 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
                 let Message = NSEntityDescription.insertNewObjectForEntityForName("RemindMessage",inManagedObjectContext: context) as! RemindMessage
                 Message.title = i.title
                 Message.content = i.content
-                Message.time_remind = i.remind_time
-                Message.remind_id = i.remind_id
+                Message.timeRemind = i.remindTime
+                Message.remindId = i.remindId
                 Message.state = 0
                 do {
                     //                    remind.repeat_type = "everMinute"  // 未完，需要在界面选择

@@ -43,7 +43,7 @@ class ShowRemindViewController: UIViewController {
         let check = NSEntityDescription.insertNewObjectForEntityForName("CheckAtFollowing",inManagedObjectContext: context) as! CheckAtFollowing
         check.remindTitle = remindTitle.text!
         check.content = checkContent.text!
-        check.userID = 2
+        check.userId = "2"
         check.userName = "mike"
         do {
             //        check.userImage =

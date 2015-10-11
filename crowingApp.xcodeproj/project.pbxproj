@@ -22,10 +22,17 @@
 		004F4BE41B90A556007DABE7 /* 0.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 004F4BE31B90A556007DABE7 /* 0.jpeg */; };
 		00EB3AF51B93DEE8008B061A /* RemindListCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EB3AF41B93DEE8008B061A /* RemindListCreateViewController.swift */; };
 		00EB3AF71B93DEFE008B061A /* RemindListFollowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EB3AF61B93DEFE008B061A /* RemindListFollowViewController.swift */; };
-		00EC56461BB3753100443FFC /* RemindMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EC56451BB3753100443FFC /* RemindMessage.swift */; };
-		00EC56481BB3753200443FFC /* Remind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EC56471BB3753200443FFC /* Remind.swift */; };
-		00EC564A1BB3753200443FFC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EC56491BB3753200443FFC /* User.swift */; };
-		00EC564C1BB3753200443FFC /* CheckAtFollowing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EC564B1BB3753200443FFC /* CheckAtFollowing.swift */; };
+		55D86AAB1BC4C8200059ECA7 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D86AA11BC4C8200059ECA7 /* User+CoreDataProperties.swift */; };
+		55D86AAC1BC4C8200059ECA7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D86AA21BC4C8200059ECA7 /* User.swift */; };
+		55D86AAD1BC4C8200059ECA7 /* RemindMessage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D86AA31BC4C8200059ECA7 /* RemindMessage+CoreDataProperties.swift */; };
+		55D86AAE1BC4C8200059ECA7 /* RemindMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D86AA41BC4C8200059ECA7 /* RemindMessage.swift */; };
+		55D86AAF1BC4C8200059ECA7 /* FollowAtRemind+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D86AA51BC4C8200059ECA7 /* FollowAtRemind+CoreDataProperties.swift */; };
+		55D86AB01BC4C8200059ECA7 /* FollowAtRemind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D86AA61BC4C8200059ECA7 /* FollowAtRemind.swift */; };
+		55D86AB11BC4C8200059ECA7 /* Remind+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D86AA71BC4C8200059ECA7 /* Remind+CoreDataProperties.swift */; };
+		55D86AB21BC4C8200059ECA7 /* Remind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D86AA81BC4C8200059ECA7 /* Remind.swift */; };
+		55D86AB31BC4C8200059ECA7 /* CheckAtFollowing+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D86AA91BC4C8200059ECA7 /* CheckAtFollowing+CoreDataProperties.swift */; };
+		55D86AB41BC4C8200059ECA7 /* CheckAtFollowing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D86AAA1BC4C8200059ECA7 /* CheckAtFollowing.swift */; };
+		55D86AB61BC4CB3E0059ECA7 /* RemindSumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D86AB51BC4CB3E0059ECA7 /* RemindSumListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,10 +65,18 @@
 		004F4BE31B90A556007DABE7 /* 0.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 0.jpeg; sourceTree = "<group>"; };
 		00EB3AF41B93DEE8008B061A /* RemindListCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindListCreateViewController.swift; sourceTree = "<group>"; };
 		00EB3AF61B93DEFE008B061A /* RemindListFollowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindListFollowViewController.swift; sourceTree = "<group>"; };
-		00EC56451BB3753100443FFC /* RemindMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindMessage.swift; sourceTree = "<group>"; };
-		00EC56471BB3753200443FFC /* Remind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Remind.swift; sourceTree = "<group>"; };
-		00EC56491BB3753200443FFC /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		00EC564B1BB3753200443FFC /* CheckAtFollowing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckAtFollowing.swift; sourceTree = "<group>"; };
+		55CE97CF1BC3D2D00057F5C5 /* crowingApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "crowingApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		55D86AA11BC4C8200059ECA7 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		55D86AA21BC4C8200059ECA7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		55D86AA31BC4C8200059ECA7 /* RemindMessage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RemindMessage+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		55D86AA41BC4C8200059ECA7 /* RemindMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindMessage.swift; sourceTree = "<group>"; };
+		55D86AA51BC4C8200059ECA7 /* FollowAtRemind+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FollowAtRemind+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		55D86AA61BC4C8200059ECA7 /* FollowAtRemind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowAtRemind.swift; sourceTree = "<group>"; };
+		55D86AA71BC4C8200059ECA7 /* Remind+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Remind+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		55D86AA81BC4C8200059ECA7 /* Remind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Remind.swift; sourceTree = "<group>"; };
+		55D86AA91BC4C8200059ECA7 /* CheckAtFollowing+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CheckAtFollowing+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		55D86AAA1BC4C8200059ECA7 /* CheckAtFollowing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckAtFollowing.swift; sourceTree = "<group>"; };
+		55D86AB51BC4CB3E0059ECA7 /* RemindSumListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindSumListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,13 +100,20 @@
 		004F4BB01B909442007DABE7 = {
 			isa = PBXGroup;
 			children = (
-				00EC564B1BB3753200443FFC /* CheckAtFollowing.swift */,
-				00EC56491BB3753200443FFC /* User.swift */,
-				00EC56471BB3753200443FFC /* Remind.swift */,
-				00EC56451BB3753100443FFC /* RemindMessage.swift */,
+				55D86AA11BC4C8200059ECA7 /* User+CoreDataProperties.swift */,
+				55D86AA21BC4C8200059ECA7 /* User.swift */,
+				55D86AA31BC4C8200059ECA7 /* RemindMessage+CoreDataProperties.swift */,
+				55D86AA41BC4C8200059ECA7 /* RemindMessage.swift */,
+				55D86AA51BC4C8200059ECA7 /* FollowAtRemind+CoreDataProperties.swift */,
+				55D86AA61BC4C8200059ECA7 /* FollowAtRemind.swift */,
+				55D86AA71BC4C8200059ECA7 /* Remind+CoreDataProperties.swift */,
+				55D86AA81BC4C8200059ECA7 /* Remind.swift */,
+				55D86AA91BC4C8200059ECA7 /* CheckAtFollowing+CoreDataProperties.swift */,
+				55D86AAA1BC4C8200059ECA7 /* CheckAtFollowing.swift */,
 				004F4BBB1B909442007DABE7 /* crowingApp */,
 				004F4BD41B909442007DABE7 /* crowingAppTests */,
 				004F4BBA1B909442007DABE7 /* Products */,
+				55CE97CF1BC3D2D00057F5C5 /* crowingApp-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,6 +135,7 @@
 				002D47601B91403600A43D5D /* ShowRemindViewController.swift */,
 				004F4BC31B909442007DABE7 /* RemindListViewController.swift */,
 				004F4BE11B9097B9007DABE7 /* CheckViewController.swift */,
+				55D86AB51BC4CB3E0059ECA7 /* RemindSumListViewController.swift */,
 				004F4BC51B909442007DABE7 /* Main.storyboard */,
 				004F4BC81B909442007DABE7 /* Images.xcassets */,
 				004F4BCA1B909442007DABE7 /* LaunchScreen.xib */,
@@ -254,17 +277,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00EC564A1BB3753200443FFC /* User.swift in Sources */,
 				002D47611B91403600A43D5D /* ShowRemindViewController.swift in Sources */,
+				55D86AB31BC4C8200059ECA7 /* CheckAtFollowing+CoreDataProperties.swift in Sources */,
+				55D86AB61BC4CB3E0059ECA7 /* RemindSumListViewController.swift in Sources */,
 				004F4BE21B9097B9007DABE7 /* CheckViewController.swift in Sources */,
+				55D86AAD1BC4C8200059ECA7 /* RemindMessage+CoreDataProperties.swift in Sources */,
 				00EB3AF71B93DEFE008B061A /* RemindListFollowViewController.swift in Sources */,
 				004F4BC41B909442007DABE7 /* RemindListViewController.swift in Sources */,
-				00EC564C1BB3753200443FFC /* CheckAtFollowing.swift in Sources */,
 				002D475D1B91326700A43D5D /* AddRemindViewController.swift in Sources */,
+				55D86AB21BC4C8200059ECA7 /* Remind.swift in Sources */,
+				55D86AB11BC4C8200059ECA7 /* Remind+CoreDataProperties.swift in Sources */,
+				55D86AB01BC4C8200059ECA7 /* FollowAtRemind.swift in Sources */,
 				004F4BBF1B909442007DABE7 /* AppDelegate.swift in Sources */,
-				00EC56481BB3753200443FFC /* Remind.swift in Sources */,
 				000862651B98337E0031607D /* MyselfViewController.swift in Sources */,
-				00EC56461BB3753100443FFC /* RemindMessage.swift in Sources */,
+				55D86AAB1BC4C8200059ECA7 /* User+CoreDataProperties.swift in Sources */,
+				55D86AB41BC4C8200059ECA7 /* CheckAtFollowing.swift in Sources */,
+				55D86AAF1BC4C8200059ECA7 /* FollowAtRemind+CoreDataProperties.swift in Sources */,
+				55D86AAC1BC4C8200059ECA7 /* User.swift in Sources */,
+				55D86AAE1BC4C8200059ECA7 /* RemindMessage.swift in Sources */,
 				00EB3AF51B93DEE8008B061A /* RemindListCreateViewController.swift in Sources */,
 				001A365E1BB21F2900D94F34 /* LoginViewController.swift in Sources */,
 				004F4BC21B909442007DABE7 /* crowingApp.xcdatamodeld in Sources */,
@@ -399,10 +429,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = crowingApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mike.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "crowingApp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -411,10 +444,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = crowingApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mike.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "crowingApp-Bridging-Header.h";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;

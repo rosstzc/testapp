@@ -1,5 +1,5 @@
 //
-//  RemindMessage.swift
+//  FollowAtRemind.swift
 //  crowingApp
 //
 //  Created by michaeltam on 15/10/7.
@@ -9,8 +9,8 @@
 import Foundation
 import CoreData
 
-
-class RemindMessage: NSManagedObject {
+@objc(FollowAtRemind)
+class FollowAtRemind: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 
