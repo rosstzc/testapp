@@ -15,7 +15,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
     var MainVC = RemindListViewController()
     
     let user = NSUserDefaults.standardUserDefaults()
-
+    
 
     @IBOutlet weak var textTitle: UITextField!
     @IBOutlet weak var textContent: UITextField!
@@ -48,6 +48,15 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
         remind.remindId = NSUUID().UUIDString
         remind.repeatType = "everMinute"  // 未完，需要在界面选择
         remind.uid = user.valueForKey("uid") as? String
+
+        do {
+            //        user.online = false
+            try context.save()
+        } catch {
+            print(error)
+        }
+
+        
         self.dismissViewControllerAnimated(true, completion: nil)
         
         //先删除所有通知
@@ -94,7 +103,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
         textContent.resignFirstResponder()
     }
     
-    
+    //可定义出发时间和循环周期的提醒函数
     func scheduleLocalNotificationWith(time: NSDate, `repeat`: NSCalendarUnit){
         let localNotification = UILocalNotification()
         localNotification.fireDate = time
@@ -109,6 +118,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
         localNotification.category = "shoppingListReminderCategory"
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
     }
+    
     //配置通知
     func scheduleLocalNotification(){
         let localNotification = UILocalNotification()

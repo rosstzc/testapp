@@ -17,6 +17,8 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     var reminds:[Remind] = []
     var selectMessage:RemindMessage? = nil
     var selectMessageRemindId:String? = nil
+    let user = NSUserDefaults.standardUserDefaults()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,14 +33,15 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("numberOfRow")
-        self.messages = getRemindMessageData()
+        let uid:String = user.valueForKey("uid") as! String
+        self.messages = getRemindMessageData2("state != 2 && uid = '\(uid)'")
     
         let sortedResults = messages.sort({
             $0.timeRemind!.compare($1.timeRemind!) == NSComparisonResult.OrderedDescending
         })
         messages = sortedResults
         self.tabBarItem.badgeValue = "9"
-        print("message count", messages.count     )
+        print("message count", messages.count )
         return messages.count
      
         
@@ -175,7 +178,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
             print(lastMessageTime)
             
             
-            //循环所有关注的提醒，如果大于最后信息，并且少于当前时间，那么就到信息表写信息。。
+            //循环所有创建+关注的提醒，如果大于最后信息，并且少于当前时间，那么就到信息表写信息。。
             for i in reminds {
                 if (i.remindTime!.compare(lastMessageTime) == NSComparisonResult.OrderedDescending) && (now.compare(i.remindTime!) == NSComparisonResult.OrderedDescending)   {
                     // 写入信息表
@@ -185,7 +188,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
                     Message.content = i.content
                     Message.timeRemind = i.remindTime
                     Message.remindId = i.remindId
-
+                    Message.uid = (user.valueForKey("uid") as! String)
                     Message.state = 0
                     do {
                         //                    remind.repeat_type = "e   / 未完，需要在界面选择
@@ -207,6 +210,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
                 Message.content = i.content
                 Message.timeRemind = i.remindTime
                 Message.remindId = i.remindId
+                Message.uid = (user.valueForKey("uid") as! String)
                 Message.state = 0
                 do {
                     //                    remind.repeat_type = "everMinute"  // 未完，需要在界面选择

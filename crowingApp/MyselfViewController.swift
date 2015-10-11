@@ -19,7 +19,7 @@ class MyselfViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        labelUserName.text = userDefaults.valueForKey("name") as? String
+        labelUserName.text = userDefaults.valueForKey("email") as? String
 
         // Do any additional setup after loading the view.
     }
@@ -43,9 +43,23 @@ class MyselfViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     @IBAction func btnLogout(sender: AnyObject) {
         
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaults.setBool(false, forKey:"logined")
+        
+        userDefaults.setObject("", forKey: "uid")
+        userDefaults.setObject("", forKey: "name")
+        userDefaults.setObject("", forKey: "email")
+        userDefaults.setObject("", forKey: "password")
+        userDefaults.setBool(false, forKey:"fristLaunch") //引导界面完成后设为false
+        userDefaults.synchronize()
         
         
+        userDefaults.synchronize()
         
+        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+        let vc = storyboard.instantiateViewControllerWithIdentifier("login") as UIViewController
+        self.presentViewController(vc, animated: true, completion: nil)
+
     }
     
     

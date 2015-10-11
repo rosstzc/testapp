@@ -305,7 +305,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uio-uJ-eZH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2998" y="-43"/>
+            <point key="canvasLocation" x="2630" y="1455"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="H5m-nb-NRt">
@@ -331,7 +331,7 @@
         <!--Login View Controller-->
         <scene sceneID="XEa-9a-mlt">
             <objects>
-                <viewController id="ucs-K3-hHX" customClass="LoginViewController" customModule="crowingApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="login" id="ucs-K3-hHX" customClass="LoginViewController" customModule="crowingApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3RI-S5-V6b"/>
                         <viewControllerLayoutGuide type="bottom" id="qo5-Va-tby"/>
@@ -499,12 +499,6 @@
                                 <rect key="frame" x="0.0" y="-5" width="600" height="190"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lx0-4C-hlK">
-                                <rect key="frame" x="255" y="285" width="90" height="30"/>
-                                <state key="normal" title="我关注的提醒">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xXU-hF-75x">
                                 <rect key="frame" x="255" y="393" width="90" height="30"/>
                                 <state key="normal" title="我创建的提醒">
@@ -527,6 +521,15 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lx0-4C-hlK">
+                                <rect key="frame" x="255" y="285" width="90" height="30"/>
+                                <state key="normal" title="我关注的提醒">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="uUG-TS-oZW" kind="show" id="Ky1-Fn-jTq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -587,6 +590,34 @@
             </objects>
             <point key="canvasLocation" x="1436" y="2233"/>
         </scene>
+        <!--Remind List Follow View Controller-->
+        <scene sceneID="Yt8-hC-eSk">
+            <objects>
+                <viewController id="uUG-TS-oZW" customClass="RemindListFollowViewController" customModule="crowingApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FUJ-RU-aPs"/>
+                        <viewControllerLayoutGuide type="bottom" id="v11-JW-ovF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fH8-7X-xtO">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="M8d-zD-UCC">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="M8d-zD-UCC" id="isA-wg-Wh2"/>
+                        <segue destination="1kW-WW-GMC" kind="show" identifier="segueShowRemind" id="Fdc-cP-2HI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dbu-SS-ORY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1394" y="2967"/>
+        </scene>
         <!--我-->
         <scene sceneID="IEE-jy-Rmr">
             <objects>
@@ -633,6 +664,6 @@
         <image name="torii" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6ja-Po-S8y"/>
+        <segue reference="Fdc-cP-2HI"/>
     </inferredMetricsTieBreakers>
 </document>

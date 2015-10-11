@@ -7,29 +7,100 @@
 //
 
 import UIKit
+import CoreData
 
-class RemindListFollowViewController: UIViewController {
+class RemindListFollowViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
 
+    @IBOutlet weak var tableView: UITableView!
+    var reminds:[FollowAtRemind] = []
+    var selectRemind:Remind? = nil
+    let user = NSUserDefaults.standardUserDefaults()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        // Do any additional setup after loading the view, typically from a nib.
+        tableView.delegate = self
+        tableView.dataSource = self
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        reminds = getDataFromCoreData()
+        
+        
+        //提醒时间倒序
+        let sortedResults = reminds.sort({
+            $0.remindTime!.compare($1.remindTime!) == NSComparisonResult.OrderedDescending
+        })
+        reminds = sortedResults
+        print("follow count: ", reminds.count)
+        return reminds.count
     }
-    */
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        let dateFormat: NSDateFormatter = NSDateFormatter()
+        dateFormat.dateFormat =  "yyyy-MM-dd HH:mm:ss EEEE"
+        let timeString:String = dateFormat.stringFromDate(reminds[indexPath.row].remindTime!)
+        cell.textLabel!.text = reminds[indexPath.row].title! + " " + timeString
+        print(reminds[indexPath.row].remindTime)
+        print(reminds[indexPath.row].uid)
+        
+        cell.imageView?.image = UIImage(named:"0.jpeg")
+        return cell
+    }
+    
+    
+    //传递数据
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "segueShowRemind" {
+            let nextVC = segue.destinationViewController as! ShowRemindViewController
+            
+            nextVC.remind = self.selectRemind
+        }
+        
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //把从关注提醒表读取的值传递到 创建提醒表
+        selectRemind?.content = reminds[indexPath.row].content
+        selectRemind?.remindId = reminds[indexPath.row].rid
+        selectRemind?.remindTime = reminds[indexPath.row].remindTime
+        selectRemind?.repeatType = reminds[indexPath.row].repeatType
+        selectRemind?.schedule = reminds[indexPath.row].schedule
+        selectRemind?.title = reminds[indexPath.row].title
+        
+        self.performSegueWithIdentifier("segueShowRemind", sender: self)
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        tableView.reloadData()
+    }
+    
+    func getDataFromCoreData() -> [FollowAtRemind] {
+        
+        let uid:String = user.valueForKey("uid") as! String
+        
+        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+        let request =  NSFetchRequest(entityName: "FollowAtRemind")
+        let filter:NSPredicate = NSPredicate(format: "uid= %@", uid) //不显示已删除的
+        request.predicate = filter
+        self.reminds = (try! context.executeFetchRequest(request)) as! [FollowAtRemind]
+        return self.reminds
+    }
+    
+    
+    
+
+    
+
+
+    
+    
 
 }

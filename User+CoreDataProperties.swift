@@ -2,7 +2,7 @@
 //  User+CoreDataProperties.swift
 //  crowingApp
 //
-//  Created by michaeltam on 15/10/7.
+//  Created by michaeltam on 15/10/11.
 //  Copyright © 2015年 mike公司. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -18,6 +18,6 @@ extension User {
     @NSManaged var name: String?
     @NSManaged var online: NSNumber?
     @NSManaged var password: String?
-    @NSManaged var rr: NSNumber?
+    @NSManaged var uid: String?
 
 }

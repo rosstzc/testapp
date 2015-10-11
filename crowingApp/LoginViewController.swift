@@ -18,12 +18,15 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var txtMail: UITextField!
 
     @IBOutlet weak var txtPwd: UITextField!
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view
         
-        //
+
         let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         let request =  NSFetchRequest(entityName: "User")
         var tempp:[User] = []
@@ -56,14 +59,18 @@ class LoginViewController: UIViewController {
         
         // 把注册信息写到 NSUserDefaults
             //待完善？ 这里应该有网络部分，并且上面写coredata是没有用户的
-        let userDefaults = NSUserDefaults.standardUserDefaults()
         let uuid = NSUUID().UUIDString
+        let userDict:NSDictionary = ["uid":uuid, "name":txtName.text!, "email":txtMail.text!, "password":txtPwd.text!]
+//        userDict.setValue(uuid, forKey: "uid")
+        
         userDefaults.setObject(uuid, forKey: "uid")
         userDefaults.setObject(txtName.text, forKey: "name")
         userDefaults.setObject(txtMail.text, forKey: "email")
         userDefaults.setObject(txtPwd.text, forKey: "password")
         userDefaults.setBool(true, forKey:"logined")
         userDefaults.setBool(true, forKey:"fristLaunch") //引导界面完成后设为false
+        userDefaults.setObject(userDict, forKey: "\(txtMail.text!)") //用字典把数据保存下来
+        
         userDefaults.synchronize()
         
         //测试读取userDefault
@@ -98,6 +105,16 @@ class LoginViewController: UIViewController {
             print("yes")
             for i in temp {
                 print("name",i.name ," email",i.email, " pwd", i.password)
+                
+                let userDict = userDefaults.valueForKey("\(txtMail.text!)")
+                
+                userDefaults.setObject(userDict?.valueForKey("uid"), forKey: "uid")
+                userDefaults.setObject(userDict?.valueForKey("name"), forKey: "name")
+                userDefaults.setObject(userDict?.valueForKey("email"), forKey: "email")
+                userDefaults.setObject(userDict?.valueForKey("password"), forKey: "password")
+                userDefaults.setBool(true, forKey:"logined")
+                userDefaults.synchronize()
+
                 self.performSegueWithIdentifier("segueLogin", sender: self)
             }
             

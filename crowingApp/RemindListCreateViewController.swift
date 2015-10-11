@@ -14,7 +14,7 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var tableView: UITableView!
     var reminds:[Remind] = []
     var selectRemind:Remind? = nil
-    
+    let user = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,8 +74,13 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func getDataFromCoreData() -> [Remind] {
+        
+        let uid:String = user.valueForKey("uid") as! String
+
         let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         let request =  NSFetchRequest(entityName: "Remind")
+        let filter:NSPredicate = NSPredicate(format: "uid= %@", uid) //不显示已删除的
+        request.predicate = filter
         self.reminds = (try! context.executeFetchRequest(request)) as! [Remind]
         return self.reminds
     }

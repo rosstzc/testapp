@@ -16,23 +16,42 @@ class ShowRemindViewController: UIViewController {
     @IBOutlet weak var tappedFollow: UIButton!
    
     @IBOutlet weak var checkContent: UITextField!
-    
+    var remindFollows:[FollowAtRemind] = []
     var remind:Remind? = nil
-    var remindId:NSManagedObjectID!
-    
+    let user = NSUserDefaults.standardUserDefaults()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        remindTitle.text = remind?.title
-        remindContent.text = remind?.content
+        if remind != nil {
+            remindTitle.text = remind?.title
+            remindContent.text = remind?.content
+        }
         
         
     }
 
     @IBAction func follow(sender: AnyObject) {
+        
+        let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+        let temp = NSEntityDescription.insertNewObjectForEntityForName("FollowAtRemind",inManagedObjectContext: context) as! FollowAtRemind
+        temp.rid = remind!.remindId
+        temp.uid = user.valueForKey("uid") as? String
+        temp.title = remind?.title
+        temp.content = remind?.content
+        temp.remindTime = remind?.remindTime
+        temp.repeatType = remind?.repeatType
+        temp.schedule = remind?.schedule
+        
+        do {
+            //        user.online = false
+            try context.save()
+        } catch {
+            print(error)
+        }
+        
         
 
     }
@@ -49,7 +68,7 @@ class ShowRemindViewController: UIViewController {
             //        check.userImage =
             //        check.dbID =
             try context.save()
-        } catch _ {
+        } catch {
         }
         
         
@@ -64,6 +83,20 @@ class ShowRemindViewController: UIViewController {
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         checkContent.resignFirstResponder()
     }
+    
+    //for test
+//    func getRemindFollow() ->[FollowAtRemind] {
+//        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+//        let request =  NSFetchRequest(entityName: "FollowAtRemind")
+//        self.remindFollows = (try! context.executeFetchRequest(request)) as! [FollowAtRemind]
+//        
+//        for i in remindFollows {
+//            print(i.title)
+//        }
+//        
+//        return remindFollows
+//    }
+    
 
 
 }
