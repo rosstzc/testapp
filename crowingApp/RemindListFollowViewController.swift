@@ -12,8 +12,8 @@ import CoreData
 class RemindListFollowViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
 
     @IBOutlet weak var tableView: UITableView!
-    var reminds:[FollowAtRemind] = []
-    var selectRemind:Remind? = nil
+    var reminds:[Remind] = []
+    var selectRemind:Remind! = nil
     let user = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
@@ -67,13 +67,7 @@ class RemindListFollowViewController: UIViewController, UITableViewDataSource, U
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //把从关注提醒表读取的值传递到 创建提醒表
-        selectRemind?.content = reminds[indexPath.row].content
-        selectRemind?.remindId = reminds[indexPath.row].rid
-        selectRemind?.remindTime = reminds[indexPath.row].remindTime
-        selectRemind?.repeatType = reminds[indexPath.row].repeatType
-        selectRemind?.schedule = reminds[indexPath.row].schedule
-        selectRemind?.title = reminds[indexPath.row].title
-        
+        selectRemind = reminds[indexPath.row]
         self.performSegueWithIdentifier("segueShowRemind", sender: self)
         
     }
@@ -82,15 +76,15 @@ class RemindListFollowViewController: UIViewController, UITableViewDataSource, U
         tableView.reloadData()
     }
     
-    func getDataFromCoreData() -> [FollowAtRemind] {
+    func getDataFromCoreData() -> [Remind] {
         
         let uid:String = user.valueForKey("uid") as! String
         
         let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-        let request =  NSFetchRequest(entityName: "FollowAtRemind")
-        let filter:NSPredicate = NSPredicate(format: "uid= %@", uid) //不显示已删除的
+        let request =  NSFetchRequest(entityName: "Remind")
+        let filter:NSPredicate = NSPredicate(format: "uid= %@ && createNot = '0'", uid) //不显示已删除的
         request.predicate = filter
-        self.reminds = (try! context.executeFetchRequest(request)) as! [FollowAtRemind]
+        self.reminds = (try! context.executeFetchRequest(request)) as! [Remind]
         return self.reminds
     }
     

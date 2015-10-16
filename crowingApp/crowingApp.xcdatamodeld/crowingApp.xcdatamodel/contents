@@ -11,15 +11,16 @@
     </entity>
     <entity name="FollowAtRemind" representedClassName="FollowAtRemind" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="remindId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remindTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="repeatType" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="rid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="schedule" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Remind" representedClassName="crowingApp.Remind" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createNot" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remindId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remindTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="repeatType" optional="YES" attributeType="String" syncable="YES"/>
@@ -45,7 +46,7 @@
     <elements>
         <element name="CheckAtFollowing" positionX="-54" positionY="-9" width="128" height="150"/>
         <element name="FollowAtRemind" positionX="-54" positionY="54" width="128" height="150"/>
-        <element name="Remind" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="Remind" positionX="-63" positionY="-18" width="128" height="165"/>
         <element name="RemindMessage" positionX="-54" positionY="36" width="128" height="135"/>
         <element name="User" positionX="-54" positionY="45" width="128" height="120"/>
     </elements>

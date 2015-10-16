@@ -46,6 +46,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
         remind.content = textContent.text!
         remind.remindTime = datePicker.date
         remind.remindId = NSUUID().UUIDString
+        remind.createNot = "1"
         remind.repeatType = "everMinute"  // 未完，需要在界面选择
         remind.uid = user.valueForKey("uid") as? String
 

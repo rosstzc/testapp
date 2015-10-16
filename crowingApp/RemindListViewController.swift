@@ -14,11 +14,11 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     
     @IBOutlet weak var tableView: UITableView!
     var messages:[RemindMessage] = []
-    var reminds:[Remind] = []
+    var reminds:[Remind]! = []
     var selectMessage:RemindMessage? = nil
     var selectMessageRemindId:String? = nil
     let user = NSUserDefaults.standardUserDefaults()
-
+    var uid:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,8 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.delegate = self
         tableView.dataSource = self
         print("home page")
+        uid = user.valueForKey("uid") as! String
+        
         
     }
 
@@ -33,8 +35,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("numberOfRow")
-        let uid:String = user.valueForKey("uid") as! String
-        self.messages = getRemindMessageData2("state != 2 && uid = '\(uid)'")
+        self.messages = getRemindMessageData2("state != 2 && uid = '\(uid)'")  // state=0表示未读， 1表示已读， 2表示已删除
     
         let sortedResults = messages.sort({
             $0.timeRemind!.compare($1.timeRemind!) == NSComparisonResult.OrderedDescending
@@ -73,7 +74,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         print(indexPath.row)
         
         selectMessage = messages[indexPath.row]
-        print(selectMessage?.title)
+        print(selectMessage!.title)
         let id = selectMessage!.objectID
         
         // 从coredata中找到id的行，然后修改保存
@@ -153,8 +154,6 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             
             
-            
-            
         }
         
     }
@@ -164,7 +163,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
 //        var followReminds:[FollowAtRemind] = []
         
         reminds = getRemindData()
-        messages = getRemindMessageData2("state >= 0") //标示取所有提醒信息
+        messages = getRemindMessageData2("state >= 0 && uid='\(uid)'") //表示取与自己香港的所有提醒信息
       
         if messages.count > 0 {
             // 倒序后取message最后获取信息时间，然后用这个时间去remind表比较
@@ -188,7 +187,9 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
                     Message.content = i.content
                     Message.timeRemind = i.remindTime
                     Message.remindId = i.remindId
-                    Message.uid = (user.valueForKey("uid") as! String)
+                    print(i.remindId)
+
+                    Message.uid = uid
                     Message.state = 0
                     do {
                         //                    remind.repeat_type = "e   / 未完，需要在界面选择
@@ -210,7 +211,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
                 Message.content = i.content
                 Message.timeRemind = i.remindTime
                 Message.remindId = i.remindId
-                Message.uid = (user.valueForKey("uid") as! String)
+                Message.uid = uid
                 Message.state = 0
                 do {
                     //                    remind.repeat_type = "everMinute"  // 未完，需要在界面选择
@@ -275,6 +276,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     func getRemindData() ->[Remind] {
         let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         let request =  NSFetchRequest(entityName: "Remind")
+        request.predicate = NSPredicate(format: "uid='\(uid)'")
         
         reminds = (try! context.executeFetchRequest(request)) as! [Remind]
         return reminds
