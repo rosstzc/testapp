@@ -9,10 +9,13 @@
 import UIKit
 import CoreData
 
-class AddRemindViewController: UIViewController,UITextFieldDelegate {
+class AddRemindViewController: UIViewController,UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var tableView: UITableView!
     var reminds:[Remind] = []
     var MainVC = RemindListViewController()
+    var remindTimeArray: [AnyObject] = []
+//    var remindTime:NSDictionary = ["time":"", "repeatInterval":""]
     
     let user = NSUserDefaults.standardUserDefaults()
     
@@ -21,19 +24,38 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var textContent: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.textContent.delegate = self
         self.textTitle.delegate = self
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         // Do any additional setup after loading the view.
         
         //通知初始化设置
         setupNotificationSettings()
         
+        print(remindTimeArray)
         //获取用户uid
         print("read userDefault",user.valueForKey("name"))
         print("uuid",user.valueForKey("uid"))
         
+        for i in remindTimeArray {
+            print(i)
+        }
+        
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return remindTimeArray.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell =  UITableViewCell()
+        print("1")
+        return cell
     }
 
 
@@ -65,7 +87,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
         
         //触发通知
         let repeatType: NSCalendarUnit = NSCalendarUnit.Minute   //未完，根据界面选项生成
-        scheduleLocalNotificationWith(datePicker.date, `repeat`: repeatType )
+        scheduleLocalNotificationWith(datePicker.date, repeated: repeatType )
 //        scheduleLocalNotification()
 
     }
@@ -75,7 +97,12 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
     
     
     @IBAction func tappedCancel(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+//        self.dismissViewControllerAnimated(true, completion: nil)
+//        self.navigationController?.popToViewController(RemindListViewController() as UIViewController, animated: true)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+        let vc = storyboard.instantiateViewControllerWithIdentifier("tab") as UIViewController;
+        self.presentViewController(vc, animated: true, completion: nil)
+    
     }
 
     
@@ -105,14 +132,14 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate {
     }
     
     //可定义出发时间和循环周期的提醒函数
-    func scheduleLocalNotificationWith(time: NSDate, `repeat`: NSCalendarUnit){
+    func scheduleLocalNotificationWith(time: NSDate, repeated: NSCalendarUnit){
         let localNotification = UILocalNotification()
         localNotification.fireDate = time
         localNotification.timeZone = NSCalendar.currentCalendar().timeZone
         localNotification.alertBody = "you must go shopping, remember!"
         localNotification.alertAction = "View list"
-        localNotification.repeatInterval = `repeat`
-        print("repeat",`repeat`)
+        localNotification.repeatInterval = repeated
+        print("repeat", repeated)
         
         localNotification.applicationIconBadgeNumber++
         
