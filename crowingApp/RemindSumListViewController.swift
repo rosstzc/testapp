@@ -29,7 +29,7 @@ class RemindSumListViewController: UIViewController, UITableViewDataSource, UITa
         
         //提醒时间倒序
         let sortedResults = reminds.sort({
-            $0.remindTime!.compare($1.remindTime!) == NSComparisonResult.OrderedDescending
+            $0.updateTime!.compare($1.updateTime!) == NSComparisonResult.OrderedDescending
         })
         reminds = sortedResults
         return reminds.count
@@ -39,10 +39,10 @@ class RemindSumListViewController: UIViewController, UITableViewDataSource, UITa
         let cell = UITableViewCell()
         let dateFormat: NSDateFormatter = NSDateFormatter()
         dateFormat.dateFormat =  "yyyy-MM-dd HH:mm:ss EEEE"
-        let timeString:String = dateFormat.stringFromDate(reminds[indexPath.row].remindTime!)
-        cell.textLabel!.text = reminds[indexPath.row].title! + " " + timeString
-        print(reminds[indexPath.row].remindTime)
-        print(reminds[indexPath.row].uid)
+//        let timeString:String = dateFormat.stringFromDate(reminds[indexPath.row].remindTime!)
+        cell.textLabel!.text = reminds[indexPath.row].title! + " "
+//        print(reminds[indexPath.row].remindTime)
+//        print(reminds[indexPath.row].uid)
         
         cell.imageView?.image = UIImage(named:"0.jpeg")
         return cell

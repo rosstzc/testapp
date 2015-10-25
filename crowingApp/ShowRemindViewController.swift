@@ -61,6 +61,7 @@ class ShowRemindViewController: UIViewController {
         
     }
 
+    //关注某个提醒，createNot状态是0
     @IBAction func follow(sender: AnyObject) {
         
         if self.remindRelation == 1 {
@@ -88,8 +89,7 @@ class ShowRemindViewController: UIViewController {
                 temp.uid = user.valueForKey("uid") as? String
                 temp.title = remind?.title
                 temp.content = remind?.content
-                temp.remindTime = remind?.remindTime
-                temp.repeatType = remind?.repeatType
+                temp.remindTimeArray = remind?.remindTimeArray
                 temp.schedule = remind?.schedule
                 temp.createNot = "0"
                 

@@ -11,7 +11,9 @@ import UIKit
 class AddOneDayRemindTimeViewController: UIViewController{
 
     @IBOutlet weak var datePicker: UIDatePicker!
-    var remindTime:NSMutableDictionary = ["time":"", "repeatInterval":""]
+    var remindTime:NSMutableDictionary = ["remindTime":"", "repeatInterval":""]
+    let user = NSUserDefaults.standardUserDefaults()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +45,17 @@ class AddOneDayRemindTimeViewController: UIViewController{
 //        let repeatInterval:NSCalendarUnit = NSCalendarUnit.Minute
         let repeatInterval:String  = "none"
         
-        remindTime.setValue(timeString, forKey: "time")
+        remindTime.setValue(timeString, forKey: "remindTime")
         remindTime.setValue(repeatInterval, forKey: "repeatInterval")
-    
+        
+        
+        //假设user已经有remindTimeArray键
+        var remindTimeArray = user.arrayForKey("remindTimeArray")!
+        remindTimeArray.append(remindTime)
+        user.setObject(remindTimeArray, forKey: "remindTimeArray")
+        
+
     }
-    
     
     //把值传递到目的VC，并执行逻辑处理
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

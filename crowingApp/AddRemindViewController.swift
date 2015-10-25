@@ -11,18 +11,19 @@ import CoreData
 
 class AddRemindViewController: UIViewController,UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
+//    @IBOutlet weak var remindTime: UILabel!
+//    @IBOutlet weak var repeatInterval: UILabel!
+    
     @IBOutlet weak var tableView: UITableView!
     var reminds:[Remind] = []
     var MainVC = RemindListViewController()
     var remindTimeArray: [AnyObject] = []
-//    var remindTime:NSDictionary = ["time":"", "repeatInterval":""]
     
     let user = NSUserDefaults.standardUserDefaults()
     
 
     @IBOutlet weak var textTitle: UITextField!
     @IBOutlet weak var textContent: UITextField!
-    @IBOutlet weak var datePicker: UIDatePicker!
     
     
     override func viewDidLoad() {
@@ -37,14 +38,15 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate, UITableView
         //通知初始化设置
         setupNotificationSettings()
         
-        print(remindTimeArray)
         //获取用户uid
         print("read userDefault",user.valueForKey("name"))
         print("uuid",user.valueForKey("uid"))
         
-        for i in remindTimeArray {
-            print(i)
-        }
+        
+        remindTimeArray = user.arrayForKey("remindTimeArray")!
+//        for i in remindTimeArray {
+//            print(i)
+//        }
         
     }
     
@@ -53,42 +55,64 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell =  UITableViewCell()
-        print("1")
-        return cell
+        var cell =  tableView.dequeueReusableCellWithIdentifier("remindTimeCell")
+        if cell == nil {
+            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "remindTimeCell")
+        }
+        let remindTime = cell!.viewWithTag(11) as! UILabel
+        let repeatInterval = cell!.viewWithTag(15) as! UILabel
+        var test:Dictionary = ["remindTime":"", "repeatInterval":""]
+        test = remindTimeArray[indexPath.row] as! [String : String]
+        
+        remindTime.text = test["remindTime"]
+        repeatInterval.text = test["repeatInterval"]
+        return cell!
     }
 
 
 
     @IBAction func tappedSave(sender: AnyObject) {
-        
+
         let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         let remind = NSEntityDescription.insertNewObjectForEntityForName("Remind",inManagedObjectContext: context) as! Remind
         remind.title = textTitle.text!
         remind.content = textContent.text!
-        remind.remindTime = datePicker.date
+        remind.remindTimeArray = remindTimeArray
+        remind.updateTime = NSDate()
         remind.remindId = NSUUID().UUIDString
         remind.createNot = "1"
-        remind.repeatType = "everMinute"  // 未完，需要在界面选择
         remind.uid = user.valueForKey("uid") as? String
 
         do {
             //        user.online = false
             try context.save()
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+            //先删除所有通知
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            //触发通知
+            for i in  (user.valueForKey("remindTimeArray") as! NSArray) {
+                print(i)
+                print(i["remindTime"])
+                
+                let remindTimeString = i["remindTime"] as! String
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                let remindTime = dateFormatter.dateFromString(remindTimeString)
+//                var repeatIntervel = i["repeatIntervel"]
+                
+                let repeatType: NSCalendarUnit = NSCalendarUnit.Minute   //未完根据界面选项生成
+                scheduleLocalNotificationWith(remindTime!, repeated: repeatType )
+            }
+            //保存后，要把userDefault的remindTimeArray清空
+            let null: [AnyObject] = []
+            user.setObject(null, forKey: "remindTimeArray")
+            user.synchronize()
+            
         } catch {
             print(error)
         }
 
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
-        
-        //先删除所有通知
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
-        
-        //触发通知
-        let repeatType: NSCalendarUnit = NSCalendarUnit.Minute   //未完，根据界面选项生成
-        scheduleLocalNotificationWith(datePicker.date, repeated: repeatType )
-//        scheduleLocalNotification()
 
     }
     
@@ -151,7 +175,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate, UITableView
     func scheduleLocalNotification(){
         let localNotification = UILocalNotification()
 //        localNotification.fireDate = datePicker.date
-        print(datePicker.date)
+//        print(datePicker.date)
         localNotification.fireDate = NSDate(timeIntervalSinceNow: 8)
         print("test", NSDate(timeIntervalSinceNow: 8))
         localNotification.timeZone = NSCalendar.currentCalendar().timeZone

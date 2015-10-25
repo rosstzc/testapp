@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 
+
 class RemindListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
     
@@ -179,13 +180,35 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
             
             //循环所有创建+关注的提醒，如果大于最后信息，并且少于当前时间，那么就到信息表写信息。。
             for i in reminds {
-                if (i.remindTime!.compare(lastMessageTime) == NSComparisonResult.OrderedDescending) && (now.compare(i.remindTime!) == NSComparisonResult.OrderedDescending)   {
+                if i.remindTimeArray == []  {
+                    print("没有填写 remindTime")
+                    continue
+                }
+
+                //先从remindTimeArray中找到最近的提醒时间，然后再纳入下面比较
+                
+                //变量time是要得出这个任务中最大的时间。 当然这个涉及重复提醒，未完
+                let timeString = (i.remindTimeArray as! NSArray)[0].valueForKey("remindTime") as! String
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                var time = dateFormatter.dateFromString(timeString)
+                
+                for j in (i.remindTimeArray as! NSArray)   {
+                    let tempTimeString = j.valueForKey("remindTime") as! String
+                    let tempTime = dateFormatter.dateFromString(tempTimeString)
+                    if tempTime!.compare(time!) ==  NSComparisonResult.OrderedAscending  {
+                        time = tempTime
+                    }
+                }
+                
+                //把提醒时间最近的拿来比较
+                if (time!.compare(lastMessageTime) == NSComparisonResult.OrderedDescending) && (now.compare(time!) == NSComparisonResult.OrderedDescending)   {
                     // 写入信息表
                     let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
                     let Message = NSEntityDescription.insertNewObjectForEntityForName("RemindMessage",inManagedObjectContext: context) as! RemindMessage
                     Message.title = i.title
                     Message.content = i.content
-                    Message.timeRemind = i.remindTime
+                    Message.timeRemind = time
                     Message.remindId = i.remindId
                     print(i.remindId)
 
@@ -204,12 +227,37 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         } else {
             
             for i in reminds {
+                
+                if i.remindTimeArray == []  {
+                    print("没有填写 remindTime")
+                    continue
+                }
+                
+                //变量time是要得出这个任务中最大的时间(把时间字符转为NSDate)。 当然这个涉及重复提醒，未完
+                let timeString = (i.remindTimeArray as! NSArray)[0].valueForKey("remindTime") as! String
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                var time = dateFormatter.dateFromString(timeString)
+                
+                
+                for j in (i.remindTimeArray as! NSArray)   {
+                    
+                    
+                    let tempTimeString = j.valueForKey("remindTime") as! String
+                    let tempTime = dateFormatter.dateFromString(tempTimeString)
+                    
+                    if tempTime!.compare(time!) ==  NSComparisonResult.OrderedAscending  {
+                        time = tempTime
+                    }
+                }
+                
+                
                 // 写入信息表
                 let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
                 let Message = NSEntityDescription.insertNewObjectForEntityForName("RemindMessage",inManagedObjectContext: context) as! RemindMessage
                 Message.title = i.title
                 Message.content = i.content
-                Message.timeRemind = i.remindTime
+                Message.timeRemind = time
                 Message.remindId = i.remindId
                 Message.uid = uid
                 Message.state = 0

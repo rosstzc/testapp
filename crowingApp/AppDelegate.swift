@@ -28,8 +28,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
  
         }
         
-        //判断是否已经登录，如果有就跳转
         let user = NSUserDefaults.standardUserDefaults()
+        //初始化一下userDefault数据
+        if (user.arrayForKey("remindTimeArray") == nil) {
+            let remindTimeArray: [AnyObject] = []
+            user.setObject(remindTimeArray, forKey: "remindTimeArray")
+            print("ee", user.arrayForKey("remindTimeArray"))
+        }
+        
+        
+        //判断是否已经登录，如果有就跳转
         if user.valueForKey("logined") as? Bool == true {
             print("333")
             

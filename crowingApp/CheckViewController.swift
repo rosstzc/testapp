@@ -58,7 +58,7 @@ class CheckViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         
         
-        
+    
         
         
         func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {

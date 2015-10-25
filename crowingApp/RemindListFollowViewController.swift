@@ -34,7 +34,7 @@ class RemindListFollowViewController: UIViewController, UITableViewDataSource, U
         
         //提醒时间倒序
         let sortedResults = reminds.sort({
-            $0.remindTime!.compare($1.remindTime!) == NSComparisonResult.OrderedDescending
+            $0.updateTime!.compare($1.updateTime!) == NSComparisonResult.OrderedDescending
         })
         reminds = sortedResults
         print("follow count: ", reminds.count)
@@ -45,9 +45,9 @@ class RemindListFollowViewController: UIViewController, UITableViewDataSource, U
         let cell = UITableViewCell()
         let dateFormat: NSDateFormatter = NSDateFormatter()
         dateFormat.dateFormat =  "yyyy-MM-dd HH:mm:ss EEEE"
-        let timeString:String = dateFormat.stringFromDate(reminds[indexPath.row].remindTime!)
+        let timeString:String = dateFormat.stringFromDate(reminds[indexPath.row].updateTime!)
         cell.textLabel!.text = reminds[indexPath.row].title! + " " + timeString
-        print(reminds[indexPath.row].remindTime)
+        print(reminds[indexPath.row].updateTime)
         print(reminds[indexPath.row].uid)
         
         cell.imageView?.image = UIImage(named:"0.jpeg")
