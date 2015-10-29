@@ -22,14 +22,15 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     var uid:String = ""
     
     override func viewDidLoad() {
+        
+        
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
         tableView.dataSource = self
         print("home page")
         uid = user.valueForKey("uid") as! String
-        
-        
+
     }
 
 
@@ -136,7 +137,9 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     
     
     
-    
+    @IBAction func close(sugue:UIStoryboardSegue) {
+        print("close")
+    }
     
     //传递数据
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -189,20 +192,18 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
                 
                 //变量time是要得出这个任务中最大的时间。 当然这个涉及重复提醒，未完
                 let timeString = (i.remindTimeArray as! NSArray)[0].valueForKey("remindTime") as! String
-                let dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-                var time = dateFormatter.dateFromString(timeString)
+                var time = Functions.dateFromString(timeString)
                 
                 for j in (i.remindTimeArray as! NSArray)   {
                     let tempTimeString = j.valueForKey("remindTime") as! String
-                    let tempTime = dateFormatter.dateFromString(tempTimeString)
-                    if tempTime!.compare(time!) ==  NSComparisonResult.OrderedAscending  {
+                    let tempTime = Functions.dateFromString(tempTimeString)
+                    if tempTime.compare(time) ==  NSComparisonResult.OrderedAscending  {
                         time = tempTime
                     }
                 }
                 
                 //把提醒时间最近的拿来比较
-                if (time!.compare(lastMessageTime) == NSComparisonResult.OrderedDescending) && (now.compare(time!) == NSComparisonResult.OrderedDescending)   {
+                if (time.compare(lastMessageTime) == NSComparisonResult.OrderedDescending) && (now.compare(time) == NSComparisonResult.OrderedDescending)   {
                     // 写入信息表
                     let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
                     let Message = NSEntityDescription.insertNewObjectForEntityForName("RemindMessage",inManagedObjectContext: context) as! RemindMessage
@@ -235,18 +236,15 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
                 
                 //变量time是要得出这个任务中最大的时间(把时间字符转为NSDate)。 当然这个涉及重复提醒，未完
                 let timeString = (i.remindTimeArray as! NSArray)[0].valueForKey("remindTime") as! String
-                let dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-                var time = dateFormatter.dateFromString(timeString)
+                var time = Functions.dateFromString(timeString)
                 
                 
                 for j in (i.remindTimeArray as! NSArray)   {
                     
-                    
                     let tempTimeString = j.valueForKey("remindTime") as! String
-                    let tempTime = dateFormatter.dateFromString(tempTimeString)
+                    let tempTime = Functions.dateFromString(tempTimeString)
                     
-                    if tempTime!.compare(time!) ==  NSComparisonResult.OrderedAscending  {
+                    if tempTime.compare(time) ==  NSComparisonResult.OrderedAscending  {
                         time = tempTime
                     }
                 }
@@ -328,6 +326,11 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         
         reminds = (try! context.executeFetchRequest(request)) as! [Remind]
         return reminds
+    }
+    
+    class func abc() -> String {
+        print("123")
+        return "123"
     }
 }
 

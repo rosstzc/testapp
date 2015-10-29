@@ -42,6 +42,9 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate, UITableView
         print("read userDefault",user.valueForKey("name"))
         print("uuid",user.valueForKey("uid"))
         
+        textTitle.text = user.valueForKey("remindTitleTemp") as? String
+        textContent.text = user.valueForKey("remindContentTemp") as? String
+        
         
         remindTimeArray = user.arrayForKey("remindTimeArray")!
 //        for i in remindTimeArray {
@@ -70,6 +73,11 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate, UITableView
     }
 
 
+    @IBAction func addRemindTime(sender: AnyObject) {
+        
+        user.setObject(textTitle.text, forKey: "remindTitleTemp")
+        user.setObject(textContent.text, forKey: "remindTitleTemp")
+    }
 
     @IBAction func tappedSave(sender: AnyObject) {
 
@@ -87,7 +95,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate, UITableView
             //        user.online = false
             try context.save()
             
-            self.dismissViewControllerAnimated(true, completion: nil)
+//            self.dismissViewControllerAnimated(true, completion: nil)
             //先删除所有通知
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             //触发通知
@@ -107,12 +115,20 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate, UITableView
             //保存后，要把userDefault的remindTimeArray清空
             let null: [AnyObject] = []
             user.setObject(null, forKey: "remindTimeArray")
+            user.setObject("", forKey: "remindTitleTemp")
+            user.setObject("", forKey: "remindContentTemp")
             user.synchronize()
             
         } catch {
             print(error)
         }
 
+//        self.dismissViewControllerAnimated(true,completion: nil)
+//        self.performSegueWithIdentifier("segueToRemindListCreateVC", sender: self)
+        print("11")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+        let vc = storyboard.instantiateViewControllerWithIdentifier("navToRemindCreate") as UIViewController
+        self.presentViewController(vc, animated: true, completion: nil)
 
     }
     
@@ -121,11 +137,11 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate, UITableView
     
     
     @IBAction func tappedCancel(sender: AnyObject) {
-//        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
 //        self.navigationController?.popToViewController(RemindListViewController() as UIViewController, animated: true)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil);
-        let vc = storyboard.instantiateViewControllerWithIdentifier("tab") as UIViewController;
-        self.presentViewController(vc, animated: true, completion: nil)
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+//        let vc = storyboard.instantiateViewControllerWithIdentifier("tab") as UIViewController;
+//        self.presentViewController(vc, animated: true, completion: nil)
     
     }
 
@@ -241,6 +257,8 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate, UITableView
             
         }
     }
+    
+    
 
     
 }

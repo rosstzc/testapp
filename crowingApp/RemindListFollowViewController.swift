@@ -21,6 +21,9 @@ class RemindListFollowViewController: UIViewController, UITableViewDataSource, U
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
         tableView.dataSource = self
+        self.navigationItem.title = "关注的提醒"
+        self.hidesBottomBarWhenPushed = true   //隐藏低栏
+
     }
     
     override func didReceiveMemoryWarning() {

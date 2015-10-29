@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		000862651B98337E0031607D /* MyselfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000862641B98337E0031607D /* MyselfViewController.swift */; };
 		001A365E1BB21F2900D94F34 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A365D1BB21F2900D94F34 /* LoginViewController.swift */; };
 		002D475D1B91326700A43D5D /* AddRemindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002D475C1B91326700A43D5D /* AddRemindViewController.swift */; };
 		002D47611B91403600A43D5D /* ShowRemindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002D47601B91403600A43D5D /* ShowRemindViewController.swift */; };
@@ -22,6 +21,9 @@
 		004F4BE41B90A556007DABE7 /* 0.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 004F4BE31B90A556007DABE7 /* 0.jpeg */; };
 		00EB3AF51B93DEE8008B061A /* RemindListCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EB3AF41B93DEE8008B061A /* RemindListCreateViewController.swift */; };
 		00EB3AF71B93DEFE008B061A /* RemindListFollowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EB3AF61B93DEFE008B061A /* RemindListFollowViewController.swift */; };
+		153D00791BDDB7AB00F77A62 /* Funtions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153D00781BDDB7AB00F77A62 /* Funtions.swift */; };
+		153D007D1BDE589700F77A62 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153D007C1BDE589600F77A62 /* SettingTableViewController.swift */; };
+		157FEDE81BE11B4100348E61 /* MyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157FEDE71BE11B4100348E61 /* MyTableViewController.swift */; };
 		1599C0381BDC91030064E40E /* Remind+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1599C0361BDC91030064E40E /* Remind+CoreDataProperties.swift */; };
 		1599C0391BDC91030064E40E /* Remind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1599C0371BDC91030064E40E /* Remind.swift */; };
 		15EAB6431BD91F79009F56AC /* AddOneDayRemindTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAB6421BD91F79009F56AC /* AddOneDayRemindTimeViewController.swift */; };
@@ -47,7 +49,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		000862641B98337E0031607D /* MyselfViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyselfViewController.swift; sourceTree = "<group>"; };
 		001A365D1BB21F2900D94F34 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		002D475C1B91326700A43D5D /* AddRemindViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRemindViewController.swift; sourceTree = "<group>"; };
 		002D47601B91403600A43D5D /* ShowRemindViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowRemindViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +67,9 @@
 		004F4BE31B90A556007DABE7 /* 0.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 0.jpeg; sourceTree = "<group>"; };
 		00EB3AF41B93DEE8008B061A /* RemindListCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindListCreateViewController.swift; sourceTree = "<group>"; };
 		00EB3AF61B93DEFE008B061A /* RemindListFollowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindListFollowViewController.swift; sourceTree = "<group>"; };
+		153D00781BDDB7AB00F77A62 /* Funtions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Funtions.swift; sourceTree = "<group>"; };
+		153D007C1BDE589600F77A62 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
+		157FEDE71BE11B4100348E61 /* MyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewController.swift; sourceTree = "<group>"; };
 		1599C0361BDC91030064E40E /* Remind+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Remind+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1599C0371BDC91030064E40E /* Remind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Remind.swift; sourceTree = "<group>"; };
 		15EAB6421BD91F79009F56AC /* AddOneDayRemindTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOneDayRemindTimeViewController.swift; sourceTree = "<group>"; };
@@ -146,8 +150,10 @@
 				004F4BBC1B909442007DABE7 /* Supporting Files */,
 				00EB3AF41B93DEE8008B061A /* RemindListCreateViewController.swift */,
 				00EB3AF61B93DEFE008B061A /* RemindListFollowViewController.swift */,
-				000862641B98337E0031607D /* MyselfViewController.swift */,
+				157FEDE71BE11B4100348E61 /* MyTableViewController.swift */,
+				153D007C1BDE589600F77A62 /* SettingTableViewController.swift */,
 				001A365D1BB21F2900D94F34 /* LoginViewController.swift */,
+				153D00781BDDB7AB00F77A62 /* Funtions.swift */,
 			);
 			path = crowingApp;
 			sourceTree = "<group>";
@@ -289,6 +295,8 @@
 				55C62A331BCB2A1B002C6BE8 /* User.swift in Sources */,
 				55C62A2F1BCB2A1B002C6BE8 /* FollowAtRemind.swift in Sources */,
 				00EB3AF71B93DEFE008B061A /* RemindListFollowViewController.swift in Sources */,
+				153D007D1BDE589700F77A62 /* SettingTableViewController.swift in Sources */,
+				153D00791BDDB7AB00F77A62 /* Funtions.swift in Sources */,
 				004F4BC41B909442007DABE7 /* RemindListViewController.swift in Sources */,
 				55C62A371BCB2A1B002C6BE8 /* CheckAtFollowing.swift in Sources */,
 				002D475D1B91326700A43D5D /* AddRemindViewController.swift in Sources */,
@@ -296,7 +304,7 @@
 				004F4BBF1B909442007DABE7 /* AppDelegate.swift in Sources */,
 				1599C0391BDC91030064E40E /* Remind.swift in Sources */,
 				15EAB6431BD91F79009F56AC /* AddOneDayRemindTimeViewController.swift in Sources */,
-				000862651B98337E0031607D /* MyselfViewController.swift in Sources */,
+				157FEDE81BE11B4100348E61 /* MyTableViewController.swift in Sources */,
 				1599C0381BDC91030064E40E /* Remind+CoreDataProperties.swift in Sources */,
 				00EB3AF51B93DEE8008B061A /* RemindListCreateViewController.swift in Sources */,
 				001A365E1BB21F2900D94F34 /* LoginViewController.swift in Sources */,

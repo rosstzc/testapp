@@ -38,9 +38,7 @@ class AddOneDayRemindTimeViewController: UIViewController{
     @IBAction func save(sender: AnyObject) {
         
         let time = datePicker.date
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        let timeString = dateFormatter.stringFromDate(time)
+        let timeString = Functions.stringFromDate(time)
         
 //        let repeatInterval:NSCalendarUnit = NSCalendarUnit.Minute
         let repeatInterval:String  = "none"
