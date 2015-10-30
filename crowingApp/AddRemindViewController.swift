@@ -76,7 +76,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate, UITableView
     @IBAction func addRemindTime(sender: AnyObject) {
         
         user.setObject(textTitle.text, forKey: "remindTitleTemp")
-        user.setObject(textContent.text, forKey: "remindTitleTemp")
+        user.setObject(textContent.text, forKey: "remindContentTemp")
     }
 
     @IBAction func tappedSave(sender: AnyObject) {
@@ -123,12 +123,12 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate, UITableView
             print(error)
         }
 
-//        self.dismissViewControllerAnimated(true,completion: nil)
+        self.dismissViewControllerAnimated(true,completion: nil)
 //        self.performSegueWithIdentifier("segueToRemindListCreateVC", sender: self)
         print("11")
-        let storyboard = UIStoryboard(name: "Main", bundle: nil);
-        let vc = storyboard.instantiateViewControllerWithIdentifier("navToRemindCreate") as UIViewController
-        self.presentViewController(vc, animated: true, completion: nil)
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+//        let vc = storyboard.instantiateViewControllerWithIdentifier("navToRemindCreate") as UIViewController
+//        self.presentViewController(vc, animated: true, completion: nil)
 
     }
     

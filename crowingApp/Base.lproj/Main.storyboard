@@ -344,7 +344,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5mP-Ay-l1v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3804" y="-688"/>
+            <point key="canvasLocation" x="3928" y="2622"/>
         </scene>
         <!--Add One Day Remind Time View Controller-->
         <scene sceneID="LTa-ow-qVP">
@@ -385,7 +385,7 @@
                                 <state key="normal" title="保存"/>
                                 <connections>
                                     <action selector="save:" destination="zIx-xZ-veX" eventType="touchUpInside" id="CPj-0s-iTX"/>
-                                    <segue destination="ibo-WO-Heu" kind="show" identifier="addOneDayRemind" id="dtE-6i-ZLa"/>
+                                    <segue destination="z5f-8i-7qd" kind="show" id="39d-aU-VwR"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IpC-rr-gpx">
@@ -427,7 +427,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8dc-QT-uiS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5248" y="-672"/>
+            <point key="canvasLocation" x="5406" y="2810"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="QQ5-hT-5lT">
@@ -482,7 +482,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6ym-D5-v4g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4532" y="-666"/>
+            <point key="canvasLocation" x="4642" y="2583"/>
         </scene>
         <!--Show Remind View Controller-->
         <scene sceneID="IrC-MM-oTy">
@@ -571,7 +571,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uio-uJ-eZH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2630" y="1455"/>
+            <point key="canvasLocation" x="3469" y="1497"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="H5m-nb-NRt">
@@ -1117,9 +1117,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="SCo-ad-BPO">
-                        <barButtonItem key="rightBarButtonItem" title="关闭" id="49c-75-Mz7">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="49c-75-Mz7">
                             <connections>
                                 <action selector="close:" destination="dQK-mN-ZIa" id="2RW-oz-XuI"/>
+                                <segue destination="ibo-WO-Heu" kind="show" id="Rim-cM-6GR"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1130,7 +1131,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kTz-N8-rGp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2314" y="2779"/>
+            <point key="canvasLocation" x="2034" y="3249"/>
         </scene>
         <!--Remind List Follow View Controller-->
         <scene sceneID="Yt8-hC-eSk">
@@ -1160,7 +1161,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dbu-SS-ORY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1290" y="3355"/>
+            <point key="canvasLocation" x="1386" y="2507"/>
         </scene>
         <!--列表-->
         <scene sceneID="amr-3v-2zO">
@@ -1238,7 +1239,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="STI-I0-Qkj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1072" y="2463"/>
+            <point key="canvasLocation" x="1266" y="3617"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Mdu-FW-eGg">
@@ -1257,7 +1258,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KwI-bU-OdD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2992" y="-688"/>
+            <point key="canvasLocation" x="3112" y="2750"/>
         </scene>
     </scenes>
     <resources>
@@ -1266,6 +1267,7 @@
         <image name="torii" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="39d-aU-VwR"/>
         <segue reference="cN5-xr-BiP"/>
         <segue reference="Et2-gr-pql"/>
         <segue reference="e4k-vS-c5R"/>
