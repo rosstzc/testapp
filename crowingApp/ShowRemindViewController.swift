@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ShowRemindViewController: UIViewController {
+class ShowRemindViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var remindTitle: UILabel!
     @IBOutlet weak var remindContent: UILabel!
@@ -21,9 +21,17 @@ class ShowRemindViewController: UIViewController {
     let user = NSUserDefaults.standardUserDefaults()
     var remindRelation:Int = 0
     
+    @IBOutlet weak var tableView: UITableView!
+    var remindTimeArray:NSArray = []
+    
+    @IBOutlet weak var itemEdit: UIBarButtonItem!
+  
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableView.dataSource = self
+        tableView.delegate  = self
         //如果是自己创建或已关注，就不会显示关注按钮
         let uid = user.valueForKey("uid") as! String
         let rid = remind.remindId!
@@ -34,6 +42,8 @@ class ShowRemindViewController: UIViewController {
         condition = "uid = '\(uid)' && remindId = '\(rid)' && createNot = '1'"
         reminds = getOneRemind(condition)
 
+
+        
         if reminds.count > 0 {
             print("我创建的")
             tappedFollow.setTitle("我创建的", forState: .Normal)
@@ -45,6 +55,8 @@ class ShowRemindViewController: UIViewController {
         reminds = getOneRemind(condition)
         if reminds.count > 0 {
             print("我关注的")
+            //非用户自己创建的提醒，隐藏编辑按钮
+            self.navigationItem.rightBarButtonItem = nil
             tappedFollow.setTitle("已关注", forState: .Normal)
             self.remindRelation = 1
             tappedFollow.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
@@ -58,9 +70,43 @@ class ShowRemindViewController: UIViewController {
             remindContent.text = remind?.content
         }
         
+        //获取所有提醒时间
+        remindTimeArray = remind.remindTimeArray as! NSArray
+        
         
     }
 
+    @IBAction func edit(sender: AnyObject) {
+        self.performSegueWithIdentifier("segueEditRemind", sender: self)
+    }
+    
+    //为修改提醒而设计回退，只有从这个页面过去addRemind才会调用unwind
+    @IBAction func close(sugue:UIStoryboardSegue) {
+        print("unwind close")
+
+//        remind = nil
+//        self.view.setNeedsDisplay()
+    }
+    
+    //传递数据
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "segueEditRemind" {
+            let nextVC = segue.destinationViewController as! AddRemindViewController
+            nextVC.remind = self.remind
+        }
+        
+    }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        print("view refresh")
+        self.viewDidLoad()
+        self.tableView.reloadData()
+        
+        
+    }
+    
+    
     //关注某个提醒，createNot状态是0
     @IBAction func follow(sender: AnyObject) {
         
@@ -153,8 +199,22 @@ class ShowRemindViewController: UIViewController {
     
     
     
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+        return remindTimeArray.count
+        
+    }
 
     
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "")
+        var test:Dictionary = ["remindTime":"", "repeatInterval":""]
+        test = remindTimeArray.reverse()[indexPath.row] as! [String : String]
+        
+        cell.textLabel?.text = test["remindTime"]
+        cell.detailTextLabel?.text  = test["repeatInterval"]
+        return cell
+    }
     
     
     

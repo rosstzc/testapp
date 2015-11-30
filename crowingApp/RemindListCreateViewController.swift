@@ -29,12 +29,7 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
         
         self.navigationItem.title = "创建的提醒"
         
-        //当从个人页的nav过来，就隐藏自己创建的nav bar
-        if fromSegue == "toRmindCreate" {
-        
-//            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "toAddRemind")
-            
-        }
+
     }
     
     func toAddRemind() {

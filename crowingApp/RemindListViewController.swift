@@ -135,11 +135,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-    
-    
-    @IBAction func close(sugue:UIStoryboardSegue) {
-        print("close")
-    }
+
     
     //传递数据
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -157,8 +153,8 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             }
             
-            
         }
+
         
     }
     
