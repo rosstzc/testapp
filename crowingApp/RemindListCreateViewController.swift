@@ -57,6 +57,8 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
         })
         reminds = sortedResults
         return reminds.count
+        
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

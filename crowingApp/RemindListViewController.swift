@@ -12,8 +12,12 @@ import CoreData
 
 class RemindListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
+    @IBOutlet weak var dd: UILabel!
     
     @IBOutlet weak var tableView: UITableView!
+
+    
+    
     var messages:[RemindMessage] = []
     var reminds:[Remind]! = []
     var selectMessage:RemindMessage? = nil
@@ -21,8 +25,8 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     let user = NSUserDefaults.standardUserDefaults()
     var uid:String = ""
     
+    
     override func viewDidLoad() {
-        
         
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -51,24 +55,36 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCellWithIdentifier("messageCell")!
         let dateFormat: NSDateFormatter = NSDateFormatter()
         let message = messages[indexPath.row]
         dateFormat.dateFormat =  "yyyy-MM-dd HH:mm:ss EEEE"
-        let timeString:String = dateFormat.stringFromDate(message.timeRemind!)
-//        println(messages[indexPath.row].time_remind)
-//        println(timeString)
+//        let timeString:String = dateFormat.stringFromDate(message.timeRemind!)
+        let timeString:String = timeStringForMessage(message.timeRemind!)
+
+        let state = cell.viewWithTag(10) as! UILabel
+        let titleLabel = cell.viewWithTag(11) as! UILabel
+        let time = cell.viewWithTag(12) as! UILabel
+        let repeatLabel = cell.viewWithTag(13) as! UILabel
+
+   
         //read or not
         print(message.state)
-        cell.textLabel!.text = message.title! + " " + timeString
+        titleLabel.text = message.title! + " " + timeString
+        state.text = String(message.state)
+        time.text = timeString
+        
 
         if message.state == 0 {
-            cell.textLabel!.text = message.title! + "(N)" + timeString
+            state.text = "(N)"
         }
-        cell.imageView?.image = UIImage(named:"0.jpeg")
-        
+        else {
+            state.text = "(Y)"
+        }
+//        cell.imageView?.image = UIImage(named:"0.jpeg")
         return cell
     }
+    
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
