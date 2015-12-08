@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ShowRemindViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ShowRemindViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
 
     @IBOutlet weak var remindTitle: UILabel!
     @IBOutlet weak var remindContent: UILabel!
@@ -216,6 +216,14 @@ class ShowRemindViewController: UIViewController, UITableViewDataSource, UITable
         return cell
     }
     
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        var previousOffset:CGFloat = CGFloat()
+        var rect:CGRect = self.view.frame
+        rect.origin.y += previousOffset - scrollView.contentOffset.y
+        previousOffset = scrollView.contentOffset.y
+        self.view.frame = rect
+    }
     
     
     

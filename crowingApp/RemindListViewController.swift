@@ -10,14 +10,14 @@ import UIKit
 import CoreData
 
 
-class RemindListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class RemindListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var dd: UILabel!
     
     @IBOutlet weak var tableView: UITableView!
 
     
-    
+
     var messages:[RemindMessage] = []
     var reminds:[Remind]! = []
     var selectMessage:RemindMessage? = nil
@@ -35,6 +35,8 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         print("home page")
         uid = user.valueForKey("uid") as! String
 
+//        UIGraphicsBeginImageContextWithOptions(<#T##size: CGSize##CGSize#>, <#T##opaque: Bool##Bool#>, <#T##scale: CGFloat##CGFloat#>)
+        
     }
 
 
@@ -62,10 +64,10 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
 //        let timeString:String = dateFormat.stringFromDate(message.timeRemind!)
         let timeString:String = timeStringForMessage(message.timeRemind!)
 
-        let state = cell.viewWithTag(10) as! UILabel
+        let state = UILabel()
         let titleLabel = cell.viewWithTag(11) as! UILabel
         let time = cell.viewWithTag(12) as! UILabel
-        let repeatLabel = cell.viewWithTag(13) as! UILabel
+//        let repeatLabel = cell.viewWithTag(13) as! UILabel
 
    
         //read or not
@@ -151,6 +153,8 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    
+
 
     
     //传递数据
