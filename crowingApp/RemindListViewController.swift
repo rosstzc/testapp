@@ -29,13 +29,25 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        
+ 
+        
+        
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
         tableView.dataSource = self
         print("home page")
         uid = user.valueForKey("uid") as! String
 
-//        UIGraphicsBeginImageContextWithOptions(<#T##size: CGSize##CGSize#>, <#T##opaque: Bool##Bool#>, <#T##scale: CGFloat##CGFloat#>)
+        // 测试一下 leanCloud
+//        AVOSCloud.setApplicationId("3KyUWfvl0GsYhqVdEWHldBsW", clientKey: "aQbFi4NSkbUsaKG0WUqh0tlH")
+//        let object:AVObject = AVObject()
+//        object.setObject("12333", forKey: "name3")
+//        object.save()
+        
+        
+        
         
     }
 
@@ -119,7 +131,10 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.textLabel!.text = selectMessage!.title
         
         self.selectMessageRemindId = selectMessage?.remindId
-        self.performSegueWithIdentifier("segueShowRemind", sender: self)
+//        self.performSegueWithIdentifier("segueShowRemind", sender: self)
+                self.performSegueWithIdentifier("segueShowRemind2", sender: self)
+
+        
     }
     
     
@@ -159,9 +174,10 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     
     //传递数据
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "segueShowRemind" {
-            let nextVC = segue.destinationViewController as! ShowRemindViewController
-            
+        if segue.identifier == "segueShowRemind2" {
+//            let nextVC = segue.destinationViewController as! ShowRemindViewController
+            let nextVC = segue.destinationViewController as! ShowRemindTableViewController
+
             //根据remindId获取该remind的数据
             reminds = getRemindData()
             for i in reminds {

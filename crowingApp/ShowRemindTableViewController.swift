@@ -1,48 +1,57 @@
 //
-//  ShowRemindViewController.swift
+//  ShowRemindTableViewController.swift
 //  crowingApp
 //
-//  Created by a a a a a on 15/8/29.
-//  Copyright (c) 2015年 mike公司. All rights reserved.
+//  Created by michaeltam on 15/12/9.
+//  Copyright © 2015年 mike公司. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-class ShowRemindViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
+class ShowRemindTableViewController: UITableViewController {
 
     @IBOutlet weak var remindTitle: UILabel!
     @IBOutlet weak var remindContent: UILabel!
     @IBOutlet weak var tappedFollow: UIButton!
-   
+    
     @IBOutlet weak var checkContent: UITextField!
     var remind:Remind! = nil
     var reminds:[Remind] = []
     let user = NSUserDefaults.standardUserDefaults()
     var remindRelation:Int = 0
     
-    @IBOutlet weak var tableView: UITableView!
     var remindTimeArray:NSArray = []
     
     @IBOutlet weak var itemEdit: UIBarButtonItem!
-  
+    
+    @IBOutlet weak var checkBarButtonItem: UIBarButtonItem!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //显示toolbar，用程序增加toolbar
+        self.navigationController?.setToolbarHidden(false, animated: true)
+
         tableView.dataSource = self
         tableView.delegate  = self
+        
+        
+
+        
+        
+        
         //如果是自己创建或已关注，就不会显示关注按钮
         let uid = user.valueForKey("uid") as! String
         let rid = remind.remindId!
         
-            //自己创建
+        //自己创建
         var condition:String
-//        condition = "createNot = '1'"
+        //        condition = "createNot = '1'"
         condition = "uid = '\(uid)' && remindId = '\(rid)' && createNot = '1'"
         reminds = getOneRemind(condition)
-
-
+        
+        
         
         if reminds.count > 0 {
             print("我创建的")
@@ -60,7 +69,7 @@ class ShowRemindViewController: UIViewController, UITableViewDataSource, UITable
             tappedFollow.setTitle("已关注", forState: .Normal)
             self.remindRelation = 1
             tappedFollow.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
-
+            
         }
         
         
@@ -75,17 +84,22 @@ class ShowRemindViewController: UIViewController, UITableViewDataSource, UITable
         
         
     }
-
+    
+    @IBAction func checkAction(sender: AnyObject) {
+        
+        print("我要check一下")
+    }
     @IBAction func edit(sender: AnyObject) {
         self.performSegueWithIdentifier("segueEditRemind", sender: self)
+    
     }
     
     //为修改提醒而设计回退，只有从这个页面过去addRemind才会调用unwind
     @IBAction func close(sugue:UIStoryboardSegue) {
         print("unwind close")
-
-//        remind = nil
-//        self.view.setNeedsDisplay()
+        
+        //        remind = nil
+        //        self.view.setNeedsDisplay()
     }
     
     //传递数据
@@ -99,6 +113,7 @@ class ShowRemindViewController: UIViewController, UITableViewDataSource, UITable
     
     
     override func viewWillAppear(animated: Bool) {
+
         print("view refresh")
         self.viewDidLoad()
         self.tableView.reloadData()
@@ -152,9 +167,9 @@ class ShowRemindViewController: UIViewController, UITableViewDataSource, UITable
         }
         
         
-
         
-
+        
+        
     }
     
     @IBAction func submit(sender: AnyObject) {
@@ -199,14 +214,14 @@ class ShowRemindViewController: UIViewController, UITableViewDataSource, UITable
     
     
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return remindTimeArray.count
         
     }
-
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "")
         var test:Dictionary = ["remindTime":"", "repeatInterval":""]
         test = remindTimeArray.reverse()[indexPath.row] as! [String : String]
@@ -217,35 +232,34 @@ class ShowRemindViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     //滚动tableView时让uiview滚动
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-//        var previousOffset:CGFloat = CGFloat()
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        //        var previousOffset:CGFloat = CGFloat()
+//        //        var rect:CGRect = self.view.frame
+//        //        rect.origin.y += previousOffset - scrollView.contentOffset.y
+//        //        previousOffset = scrollView.contentOffset.y
+//        //        self.view.frame = rect
+//        //
 //        var rect:CGRect = self.view.frame
-//        rect.origin.y += previousOffset - scrollView.contentOffset.y
-//        previousOffset = scrollView.contentOffset.y
-//        self.view.frame = rect
 //        
-        var rect:CGRect = self.view.frame
-        
-        rect.origin.y =  -scrollView.contentOffset.y
-        
-        self.view.frame = rect
-    }
-    
+//        rect.origin.y =  -scrollView.contentOffset.y
+//        
+//        self.view.frame = rect
+//    }
+//    
     
     
     //for test
-//    func getRemindFollow() ->[FollowAtRemind] {
-//        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-//        let request =  NSFetchRequest(entityName: "FollowAtRemind")
-//        self.remindFollows = (try! context.executeFetchRequest(request)) as! [FollowAtRemind]
-//        
-//        for i in remindFollows {
-//            print(i.title)
-//        }
-//        
-//        return remindFollows
-//    }
+    //    func getRemindFollow() ->[FollowAtRemind] {
+    //        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+    //        let request =  NSFetchRequest(entityName: "FollowAtRemind")
+    //        self.remindFollows = (try! context.executeFetchRequest(request)) as! [FollowAtRemind]
+    //        
+    //        for i in remindFollows {
+    //            print(i.title)
+    //        }
+    //        
+    //        return remindFollows
+    //    }
     
-
 
 }

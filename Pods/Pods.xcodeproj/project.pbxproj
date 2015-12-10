@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		2CE580004DB10DAC0CF09E87E1C3E64D /* Pods-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 894E5DA93A9F359521A89826BE6DA777 /* Pods-dummy.m */; };
-		3350E28DC77D780A5277F1C931812431 /* SwiftDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FE4BF4E09AF213F84385763335692F /* SwiftDate.swift */; };
+		3350E28DC77D780A5277F1C931812431 /* SwiftDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0662CAAA1C8A9F0A9D6E76A7AE5A5C5E /* SwiftDate.swift */; };
 		7BFE0E4280863AC6A86ECF8B924F5038 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */; };
 		8A49883432CC88D80006D13DFFDC8247 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */; };
 		AF943DE9345521C618CEDEE3769A6212 /* Pods-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BCC458FDD5F692BBB2BFC64BB5701FC /* Pods-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D52750D38015BF298B70C94666DC1360 /* SwiftDate-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1535228A395E73A3181186B299D8BDA6 /* SwiftDate-dummy.m */; };
-		F9A0832F94E8398CCFE6014E30C1E59A /* SwiftDate-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C1EA7B82FB8D464A23CC6A170A9F1F07 /* SwiftDate-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D52750D38015BF298B70C94666DC1360 /* SwiftDate-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C909697491A43D1FFEE9C1D9EACE21 /* SwiftDate-dummy.m */; };
+		F9A0832F94E8398CCFE6014E30C1E59A /* SwiftDate-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A4989212A537B6AC52099D9BFEA32F4C /* SwiftDate-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,27 +27,57 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1535228A395E73A3181186B299D8BDA6 /* SwiftDate-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftDate-dummy.m"; sourceTree = "<group>"; };
-		2304CA44BD5CCBFD929C887F7F076303 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04933A95790FC94E37CDB879BA5C83D9 /* AVObject+Subclass.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AVObject+Subclass.h"; sourceTree = "<group>"; };
+		0662CAAA1C8A9F0A9D6E76A7AE5A5C5E /* SwiftDate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDate.swift; path = SwiftDate/SwiftDate.swift; sourceTree = "<group>"; };
+		0F25B9013EB996AD6CDD6C9B0BBC9527 /* libAVOSCloud.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; path = libAVOSCloud.a; sourceTree = "<group>"; };
+		1022F94251EE500F6130BC91CCD0FED1 /* AVStatus.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVStatus.h; sourceTree = "<group>"; };
+		13FBB1556FC782ECFE6464257C4E98B4 /* AVRole.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVRole.h; sourceTree = "<group>"; };
+		1D47DCE10E38CF7FD73DC675E1997E67 /* AVMessage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVMessage.h; sourceTree = "<group>"; };
+		2557314F2ED142DAEEE9ECE90C3B3496 /* AVSearchSortBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVSearchSortBuilder.h; sourceTree = "<group>"; };
+		26EC6BE7A8E442E9B338BDE9A4641F60 /* AVPush.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVPush.h; sourceTree = "<group>"; };
+		2A05BE820C97B30E7C0670D71912D45E /* AVConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVConstants.h; sourceTree = "<group>"; };
 		2BCC458FDD5F692BBB2BFC64BB5701FC /* Pods-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-umbrella.h"; sourceTree = "<group>"; };
+		31A9A5D4BF5193A8FCEB21E65D5B416C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3288F2F911CCEDB71B675FAE01E968E7 /* AVGeoPoint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVGeoPoint.h; sourceTree = "<group>"; };
+		39E85B7A67FA824F25BA48BC045C9C9F /* AVLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVLogger.h; sourceTree = "<group>"; };
+		3BD23469555A671F80B9CA1B0198CD42 /* AVUser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVUser.h; sourceTree = "<group>"; };
 		3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		3E54D6C3403A8DE00CAED778E531310E /* SwiftDate-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftDate-prefix.pch"; sourceTree = "<group>"; };
+		5731B89DF3406F61855DAFE901C52609 /* AVCloudQueryResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVCloudQueryResult.h; sourceTree = "<group>"; };
+		5BC98604C7DC5FB4B8CF178F04AA255C /* AVACL.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVACL.h; sourceTree = "<group>"; };
+		6CCDE2741806B03BD36554174E855766 /* AVFile.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVFile.h; sourceTree = "<group>"; };
+		6DCD4287ABEE4FE63FD93393627BD285 /* AVFileQuery.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVFileQuery.h; sourceTree = "<group>"; };
+		74BA7B52FC963F0E9C1A5C879F685C42 /* AVRelation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVRelation.h; sourceTree = "<group>"; };
 		79A9DEDC89FE8336BF5FEDAAF75BF7FC /* Pods.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Pods.modulemap; sourceTree = "<group>"; };
-		7C44C4D3C02DA46EF5C412B8AE66D81B /* SwiftDate.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftDate.xcconfig; sourceTree = "<group>"; };
+		7FDC72C815B3970269D1883387645161 /* AVInstallation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVInstallation.h; sourceTree = "<group>"; };
+		82BFE8363F83E7A60D6481A1A7F3B307 /* SwiftDate.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftDate.xcconfig; sourceTree = "<group>"; };
 		87B213035BAC5F75386F62D3C75D2342 /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = "<group>"; };
 		894E5DA93A9F359521A89826BE6DA777 /* Pods-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-dummy.m"; sourceTree = "<group>"; };
+		8B9B9EA5D9308695E9E2A39D68817F13 /* AVHistoryMessage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVHistoryMessage.h; sourceTree = "<group>"; };
+		8E613DA2BE82D0DC86E28FF4FD41F812 /* AVOSCloud.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVOSCloud.h; sourceTree = "<group>"; };
+		90C6A6E8985E7EADBFD17AC537B7BB10 /* SwiftDate.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SwiftDate.modulemap; sourceTree = "<group>"; };
 		977577C045EDA9D9D1F46E2598D19FC7 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.debug.xcconfig; sourceTree = "<group>"; };
 		A0A40BF11DD278BE517D72A3F4B7C1C4 /* SwiftDate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftDate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A452166F625910B2016F5E564620B585 /* AVObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVObject.h; sourceTree = "<group>"; };
+		A4989212A537B6AC52099D9BFEA32F4C /* SwiftDate-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftDate-umbrella.h"; sourceTree = "<group>"; };
+		ACDF4F44F3C7AA927124FCE63E10E9A1 /* AVHistoryMessageQuery.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVHistoryMessageQuery.h; sourceTree = "<group>"; };
+		AD38DED7EE0171F9850029A91DA4F18C /* AVSubclassing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVSubclassing.h; sourceTree = "<group>"; };
+		B4C909697491A43D1FFEE9C1D9EACE21 /* SwiftDate-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftDate-dummy.m"; sourceTree = "<group>"; };
 		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		C1EA7B82FB8D464A23CC6A170A9F1F07 /* SwiftDate-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftDate-umbrella.h"; sourceTree = "<group>"; };
-		C3FE4BF4E09AF213F84385763335692F /* SwiftDate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDate.swift; path = SwiftDate/SwiftDate.swift; sourceTree = "<group>"; };
+		CB0B0DBF2A82ED98495074617BDECF9A /* AVAnalytics.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVAnalytics.h; sourceTree = "<group>"; };
 		CBC0F7C552B739C909B650A0F42F7F38 /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-resources.sh"; sourceTree = "<group>"; };
+		CE3C1409F0F7F853013B38A6626AA580 /* AVSignature.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVSignature.h; sourceTree = "<group>"; };
 		D0405803033A2A777B8E4DFA0C1800ED /* Pods-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-acknowledgements.markdown"; sourceTree = "<group>"; };
 		D9707AC9A977AEF3299F11DAE8DF62CF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA312349A49333542E6F4B36B329960E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.release.xcconfig; sourceTree = "<group>"; };
+		DFA033EC0BF4D4E948583536959FA0ED /* AVSession.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVSession.h; sourceTree = "<group>"; };
+		E280FE85E3A7D611255C7BAE0FB42D2F /* AVGroup.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVGroup.h; sourceTree = "<group>"; };
 		E7F21354943D9F42A70697D5A5EF72E9 /* Pods-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-frameworks.sh"; sourceTree = "<group>"; };
 		E8446514FBAD26C0E18F24A5715AEF67 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EB7A2086C7AB9A185CF50FC6DCBC2568 /* SwiftDate.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SwiftDate.modulemap; sourceTree = "<group>"; };
+		EDD1E7D0BF0EBC741E1F7986B5BBF92B /* AVQuery.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVQuery.h; sourceTree = "<group>"; };
+		F3C58B722408564B8EF0849B000800AB /* AVCloud.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVCloud.h; sourceTree = "<group>"; };
+		F4A196FA82A5722E5BD1FF0B933C35EF /* AVSearchQuery.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVSearchQuery.h; sourceTree = "<group>"; };
+		FA8CC4F8A8207483D4D5B5E02A73B7D4 /* AVAnonymousUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AVAnonymousUtils.h; sourceTree = "<group>"; };
+		FD2B8CB20A631E13249A75D699B193DE /* SwiftDate-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftDate-prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,24 +100,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		02B6976774114C66A25492D344CF530F /* Support Files */ = {
+		31A9CF0E3A8BE70D9460520CA726D30D /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				2304CA44BD5CCBFD929C887F7F076303 /* Info.plist */,
-				EB7A2086C7AB9A185CF50FC6DCBC2568 /* SwiftDate.modulemap */,
-				7C44C4D3C02DA46EF5C412B8AE66D81B /* SwiftDate.xcconfig */,
-				1535228A395E73A3181186B299D8BDA6 /* SwiftDate-dummy.m */,
-				3E54D6C3403A8DE00CAED778E531310E /* SwiftDate-prefix.pch */,
-				C1EA7B82FB8D464A23CC6A170A9F1F07 /* SwiftDate-umbrella.h */,
+				31A9A5D4BF5193A8FCEB21E65D5B416C /* Info.plist */,
+				90C6A6E8985E7EADBFD17AC537B7BB10 /* SwiftDate.modulemap */,
+				82BFE8363F83E7A60D6481A1A7F3B307 /* SwiftDate.xcconfig */,
+				B4C909697491A43D1FFEE9C1D9EACE21 /* SwiftDate-dummy.m */,
+				FD2B8CB20A631E13249A75D699B193DE /* SwiftDate-prefix.pch */,
+				A4989212A537B6AC52099D9BFEA32F4C /* SwiftDate-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/SwiftDate";
 			sourceTree = "<group>";
 		};
-		5403A65D6FA6FB795E0F80DF39CD1B9D /* Pods */ = {
+		4589CA100D59A72E83B66876A735E214 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				A34ABAFD61E36C47BAE5013EC660DCD3 /* SwiftDate */,
+				BAB9E7A85F0590BB3122587CEE30C61D /* AVOSCloud */,
+				BD0F153B494CD23B0954342F51E34B7E /* SwiftDate */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -115,19 +146,10 @@
 			children = (
 				BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
-				5403A65D6FA6FB795E0F80DF39CD1B9D /* Pods */,
+				4589CA100D59A72E83B66876A735E214 /* Pods */,
 				B26F8F17E18F1198A12917B80D0BFB13 /* Products */,
 				B7B80995527643776607AFFA75B91E24 /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		A34ABAFD61E36C47BAE5013EC660DCD3 /* SwiftDate */ = {
-			isa = PBXGroup;
-			children = (
-				C3FE4BF4E09AF213F84385763335692F /* SwiftDate.swift */,
-				02B6976774114C66A25492D344CF530F /* Support Files */,
-			);
-			path = SwiftDate;
 			sourceTree = "<group>";
 		};
 		B26F8F17E18F1198A12917B80D0BFB13 /* Products */ = {
@@ -147,6 +169,43 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
+		BAB9E7A85F0590BB3122587CEE30C61D /* AVOSCloud */ = {
+			isa = PBXGroup;
+			children = (
+				5BC98604C7DC5FB4B8CF178F04AA255C /* AVACL.h */,
+				CB0B0DBF2A82ED98495074617BDECF9A /* AVAnalytics.h */,
+				FA8CC4F8A8207483D4D5B5E02A73B7D4 /* AVAnonymousUtils.h */,
+				F3C58B722408564B8EF0849B000800AB /* AVCloud.h */,
+				5731B89DF3406F61855DAFE901C52609 /* AVCloudQueryResult.h */,
+				2A05BE820C97B30E7C0670D71912D45E /* AVConstants.h */,
+				6CCDE2741806B03BD36554174E855766 /* AVFile.h */,
+				6DCD4287ABEE4FE63FD93393627BD285 /* AVFileQuery.h */,
+				3288F2F911CCEDB71B675FAE01E968E7 /* AVGeoPoint.h */,
+				E280FE85E3A7D611255C7BAE0FB42D2F /* AVGroup.h */,
+				8B9B9EA5D9308695E9E2A39D68817F13 /* AVHistoryMessage.h */,
+				ACDF4F44F3C7AA927124FCE63E10E9A1 /* AVHistoryMessageQuery.h */,
+				7FDC72C815B3970269D1883387645161 /* AVInstallation.h */,
+				39E85B7A67FA824F25BA48BC045C9C9F /* AVLogger.h */,
+				1D47DCE10E38CF7FD73DC675E1997E67 /* AVMessage.h */,
+				A452166F625910B2016F5E564620B585 /* AVObject.h */,
+				04933A95790FC94E37CDB879BA5C83D9 /* AVObject+Subclass.h */,
+				8E613DA2BE82D0DC86E28FF4FD41F812 /* AVOSCloud.h */,
+				26EC6BE7A8E442E9B338BDE9A4641F60 /* AVPush.h */,
+				EDD1E7D0BF0EBC741E1F7986B5BBF92B /* AVQuery.h */,
+				74BA7B52FC963F0E9C1A5C879F685C42 /* AVRelation.h */,
+				13FBB1556FC782ECFE6464257C4E98B4 /* AVRole.h */,
+				F4A196FA82A5722E5BD1FF0B933C35EF /* AVSearchQuery.h */,
+				2557314F2ED142DAEEE9ECE90C3B3496 /* AVSearchSortBuilder.h */,
+				DFA033EC0BF4D4E948583536959FA0ED /* AVSession.h */,
+				CE3C1409F0F7F853013B38A6626AA580 /* AVSignature.h */,
+				1022F94251EE500F6130BC91CCD0FED1 /* AVStatus.h */,
+				AD38DED7EE0171F9850029A91DA4F18C /* AVSubclassing.h */,
+				3BD23469555A671F80B9CA1B0198CD42 /* AVUser.h */,
+				F1EC4D144E0AE0EAE1440C5878017A38 /* Frameworks */,
+			);
+			path = AVOSCloud;
+			sourceTree = "<group>";
+		};
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,12 +214,29 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BD0F153B494CD23B0954342F51E34B7E /* SwiftDate */ = {
+			isa = PBXGroup;
+			children = (
+				0662CAAA1C8A9F0A9D6E76A7AE5A5C5E /* SwiftDate.swift */,
+				31A9CF0E3A8BE70D9460520CA726D30D /* Support Files */,
+			);
+			path = SwiftDate;
+			sourceTree = "<group>";
+		};
 		BF6342C8B29F4CEEA088EFF7AB4DE362 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
 				3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */,
 			);
 			name = iOS;
+			sourceTree = "<group>";
+		};
+		F1EC4D144E0AE0EAE1440C5878017A38 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0F25B9013EB996AD6CDD6C9B0BBC9527 /* libAVOSCloud.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,7 +386,7 @@
 		};
 		571764C249DB923A0A690E2247CDF676 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7C44C4D3C02DA46EF5C412B8AE66D81B /* SwiftDate.xcconfig */;
+			baseConfigurationReference = 82BFE8363F83E7A60D6481A1A7F3B307 /* SwiftDate.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -337,7 +413,7 @@
 		};
 		585813637092FA200700E03144A79D63 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7C44C4D3C02DA46EF5C412B8AE66D81B /* SwiftDate.xcconfig */;
+			baseConfigurationReference = 82BFE8363F83E7A60D6481A1A7F3B307 /* SwiftDate.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;

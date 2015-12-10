@@ -61,11 +61,11 @@ class RemindListFollowViewController: UIViewController, UITableViewDataSource, U
     //传递数据
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "segueShowRemind" {
-            let nextVC = segue.destinationViewController as! ShowRemindViewController
+            let nextVC = segue.destinationViewController as! ShowRemindTableViewController
             
             nextVC.remind = self.selectRemind
         }
-        
+    
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
