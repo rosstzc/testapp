@@ -36,11 +36,9 @@ class ShowRemindTableViewController: UITableViewController {
         tableView.dataSource = self
         tableView.delegate  = self
         
+        self.navigationItem.title = remind.title
         
 
-        
-        
-        
         //如果是自己创建或已关注，就不会显示关注按钮
         let uid = user.valueForKey("uid") as! String
         let rid = remind.remindId!
@@ -89,8 +87,8 @@ class ShowRemindTableViewController: UITableViewController {
         
         print("我要check一下")
     }
-    @IBAction func edit(sender: AnyObject) {
-        self.performSegueWithIdentifier("segueEditRemind", sender: self)
+    @IBAction func goInfo(sender: AnyObject) {
+        self.performSegueWithIdentifier("segueRemindInfo", sender: self)
     
     }
     
@@ -104,8 +102,12 @@ class ShowRemindTableViewController: UITableViewController {
     
     //传递数据
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "segueEditRemind" {
-            let nextVC = segue.destinationViewController as! AddRemindViewController
+//        if segue.identifier == "segueEditRemind" {
+//            let nextVC = segue.destinationViewController as! AddRemindViewController
+//            nextVC.remind = self.remind
+//        }
+        if segue.identifier == "segueRemindInfo" {
+            let nextVC = segue.destinationViewController as! RemindInfoTableViewController
             nextVC.remind = self.remind
         }
         
