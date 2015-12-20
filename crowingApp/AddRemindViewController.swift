@@ -282,6 +282,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             //        user.online = false
             try context.save()
 //            self.dismissViewControllerAnimated(true, completion: nil)
+            
             //先删除所有通知
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             //触发通知
@@ -305,6 +306,8 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             user.setObject("", forKey: "remindContentTemp")
             user.setObject(nil, forKey: "remindId")
             user.synchronize()
+            
+            
             
         } catch {
             print(error)

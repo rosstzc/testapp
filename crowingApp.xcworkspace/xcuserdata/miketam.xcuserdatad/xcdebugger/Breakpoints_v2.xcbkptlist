@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "crowingApp/ShowRemindTableViewController.swift"
-            timestampString = "471631638.798032"
+            filePath = "crowingApp/RemindInfoTableViewController.swift"
+            timestampString = "471767326.134971"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
-            landmarkName = "goInfo(_:)"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "followBtn(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

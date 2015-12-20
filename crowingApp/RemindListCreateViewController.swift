@@ -18,6 +18,7 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
     
     var fromSegue:String = ""
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.hidesBottomBarWhenPushed = true   //隐藏低栏
@@ -28,6 +29,10 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
 
         
         self.navigationItem.title = "创建的提醒"
+        
+        if fromSegue == "RemindListVC" {
+            self.performSegueWithIdentifier("segueToCreateRemind", sender: self)
+        }
         
 
     }

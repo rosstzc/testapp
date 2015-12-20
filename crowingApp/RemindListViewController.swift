@@ -190,6 +190,12 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             
         }
+        
+        if segue.identifier == "RemindListToCreateList" {
+            
+            let nextVC = segue.destinationViewController as! RemindListCreateViewController
+            nextVC.fromSegue = "RemindListVC"
+        }
 
         
     }

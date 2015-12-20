@@ -31,7 +31,7 @@ class ShowRemindTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //显示toolbar，用程序增加toolbar
-        self.navigationController?.setToolbarHidden(false, animated: true)
+//        self.navigationController?.setToolbarHidden(false, animated: true)
 
         tableView.dataSource = self
         tableView.delegate  = self
