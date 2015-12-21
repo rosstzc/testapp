@@ -21,7 +21,10 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
     var remind:Remind! = nil
     var remindId:String = ""
     
+    var remindLC = AVObject(className: "Remind")
+    
     let user = NSUserDefaults.standardUserDefaults()
+    let currentUser = AVUser.currentUser()
     
     @IBOutlet weak var pic: UIImageView!
 
@@ -41,7 +44,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
         // Do any additional setup after loading the view.
         
         //通知初始化设置
-        setupNotificationSettings()
+//        setupNotificationSettings()  //不用本地提醒，所以屏蔽它
         
         //获取用户uid
         print("read userDefault",user.valueForKey("name"))
@@ -62,7 +65,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
 //        }
 //        
         
-        //如果是修改remind流程，第一次加载view时就把remind内容写入userDefault中
+        //如果是“修改remind流程”，第一次加载view时就把remind内容写入userDefault中
         if remind != nil {
             user.setObject(remind.remindId, forKey: "remindId")
             user.setObject(remind.title, forKey: "remindTitleTemp")
@@ -87,53 +90,6 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
         }
     
         remindTimeArray = user.arrayForKey("remindTimeArray")! 
-        //重排数组
-        
-//        if remindTimeArray.count > 0 {
-////            print(user.arrayForKey("remindTimeArray"))
-//            print("4444")
-//            var temp:[AnyObject] = []
-//            print(remindTimeArray[0])
-//            var n = remindTimeArray.count
-//            for _ in 0...n {
-//                if n == 0 {
-//                    break
-//                }
-//                n = n - 1
-//                temp.append(remindTimeArray[n])
-//                print (temp)
-//            }
-//            remindTimeArray = temp
-//        }
-
-        
-
-        
-        
-//        if user.arrayForKey("remindTimeArray")  == [] {
-//            print("4444")
-//
-//        }
-        
-//        if user.arrayForKey("remindTimeArray") != nil {
-//            
-//            var temp = remindTimeArray[0]
-//            print("eee")
-//            print(temp)
-////            
-////            remindTimeArray = user.arrayForKey("remindTimeArray")! as NSMutableArray as [AnyObject] as [AnyObject]
-////            var temp: [AnyObject] = []
-////            
-////            temp = remindTimeArray[0]
-////            
-////            var n = remindTimeArray.count
-////            for _ in 0...n {
-////                temp.append(remindTimeArray[n])
-////                n = n - 1
-////            }
-////            remindTimeArray = temp
-//        }
-        
         
     }
     
@@ -253,6 +209,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
 
         
         if remindId != "" {   //修改
+            print(remindId)
             let filter:NSPredicate = NSPredicate(format: "remindId = %@", remindId)
             let request = NSFetchRequest(entityName: "Remind")
             request.predicate = filter
@@ -263,7 +220,14 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             remind.remindTimeArray = remindTimeArray
             remind.updateTime = NSDate()
 
-
+            
+            //先从LC查询到对应的remind
+            let query = AVQuery(className: "Remind")
+            remindLC = query.getObjectWithId(remindId)
+            remindLC.setObject(textTitle.text!, forKey: "title")
+            remindLC.setObject(textViewContent.text!, forKey: "content")
+            remindLC.setObject(remindTimeArray, forKey: "remindTimeArray")
+            
 
         } else { //新创建
             remind = NSEntityDescription.insertNewObjectForEntityForName("Remind",inManagedObjectContext: context) as! Remind
@@ -271,64 +235,110 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             remind.content = textViewContent.text!
             remind.remindTimeArray = remindTimeArray
             remind.updateTime = NSDate()
-            remind.remindId = NSUUID().UUIDString
             remind.createNot = "1"
             remind.uid = user.valueForKey("uid") as? String
+            
+            
+            //写入LC数据库
+            remindLC.setObject(textTitle.text!, forKey: "title")
+            remindLC.setObject(textViewContent.text!, forKey: "content")
+            remindLC.setObject(remindTimeArray, forKey: "remindTimeArray")
+            remindLC.setObject(currentUser, forKey: "uid")
+ 
         }
 
         
+        //触发先保存到LC，如果LC成功再保存本地
+        remindLC.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
+            if (error != nil) {
+                print(error)
+            } else {
+                
+                do {
+                    self.remind.remindId = self.remindLC.objectId   //获取LC上objectId, 写入到本地
+                    try context.save()
+                    
+                    
+                    //删除LC的RemindTime表中对应该remind的时间
+                    let remindTemp = AVObject(withoutDataWithClassName: "Remind", objectId: self.remindId)
+                    let queryRemindTime = AVQuery(className: "RemindTime")
+                    print(self.remindId)
+                    queryRemindTime.whereKey("remindId", equalTo: remindTemp )
+                    let temp = queryRemindTime.findObjects()
+                    print(queryRemindTime.countObjects())
+                    AVObject.deleteAll(temp)
+                    
+                    
+                    //创建 提醒时间表，把提醒时间逐个加入
+                    for i in self.remindTimeArray {
+                        let remindTime = AVObject(className: "RemindTime")
+                        let timeTemp = i.valueForKey("remindTime") as! String
+                        let interval = i.valueForKey("repeatInterval") as! String
+                        remindTime.setObject(timeTemp, forKey: "remindTime")
+                        remindTime.setObject(interval, forKey: "interval")
+                        remindTime.setObject(self.remindLC, forKey: "remindId")
+                        remindTime.save()
+                    }
+                    
+                    //            self.dismissViewControllerAnimated(true, completion: nil)
+                    
+                    //先删除所有通知
+                    //            UIApplication.sharedApplication().cancelAllLocalNotifications()
+                    //            //触发通知
+                    //            for i in  (user.valueForKey("remindTimeArray") as! NSArray) {
+                    //                print(i)
+                    //                print(i["remindTime"])
+                    //
+                    //                let remindTimeString = i["remindTime"] as! String
+                    //                let dateFormatter = NSDateFormatter()
+                    //                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                    //                let remindTime = dateFormatter.dateFromString(remindTimeString)
+                    //
+                    //                let repeatType: NSCalendarUnit = NSCalendarUnit.Minute   //未完根据界面选项生成
+                    //                scheduleLocalNotificationWith(remindTime!, repeated: repeatType )
+                    //            }
+                    
+                    
+                    //保存后，要把userDefault的remindTimeArray清空
+                    let null: [AnyObject] = []
+                    self.user.setObject(null, forKey: "remindTimeArray")
+                    self.user.setObject("", forKey: "remindTitleTemp")
+                    self.user.setObject("", forKey: "remindContentTemp")
+                    self.user.setObject(nil, forKey: "remindId")
+                    self.user.synchronize()
+                    
+                    self.dismissViewControllerAnimated(true, completion: nil)
 
-        do {
-            //        user.online = false
-            try context.save()
-//            self.dismissViewControllerAnimated(true, completion: nil)
-            
-            //先删除所有通知
-            UIApplication.sharedApplication().cancelAllLocalNotifications()
-            //触发通知
-            for i in  (user.valueForKey("remindTimeArray") as! NSArray) {
-                print(i)
-                print(i["remindTime"])
+                    
+                    
+                } catch {
+                    print(error)
+                }
                 
-                let remindTimeString = i["remindTime"] as! String
-                let dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-                let remindTime = dateFormatter.dateFromString(remindTimeString)
-//                var repeatIntervel = i["repeatIntervel"]
+                //        self.navigationController?.popViewControllerAnimated(true)
                 
-                let repeatType: NSCalendarUnit = NSCalendarUnit.Minute   //未完根据界面选项生成
-                scheduleLocalNotificationWith(remindTime!, repeated: repeatType )
+                
+                
+                //        self.performSegueWithIdentifier("segueToRemindListCreateVC", sender: self)
+                //        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+                //        let vc = storyboard.instantiateViewControllerWithIdentifier("navToRemindCreate") as UIViewController
+                //        self.presentViewController(vc, animated: true, completion: nil)
+                
             }
-            //保存后，要把userDefault的remindTimeArray清空
-            let null: [AnyObject] = []
-            user.setObject(null, forKey: "remindTimeArray")
-            user.setObject("", forKey: "remindTitleTemp")
-            user.setObject("", forKey: "remindContentTemp")
-            user.setObject(nil, forKey: "remindId")
-            user.synchronize()
-            
-            
-            
-        } catch {
-            print(error)
-        }
+        })
         
-        self.dismissViewControllerAnimated(true, completion: nil)
-//        self.navigationController?.popViewControllerAnimated(true)
+        
         
 
         
-//        self.performSegueWithIdentifier("segueToRemindListCreateVC", sender: self)
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil);
-//        let vc = storyboard.instantiateViewControllerWithIdentifier("navToRemindCreate") as UIViewController
-//        self.presentViewController(vc, animated: true, completion: nil)
+        
+
+
 
     }
     
 
-//    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-//        if identifier == ""
-//    }
+
     
     @IBAction func tappedCancel(sender: AnyObject) {
         print("tapped cancel")

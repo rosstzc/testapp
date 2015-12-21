@@ -149,3 +149,54 @@ class Functions: UIViewController {
     */
 
 }
+
+
+
+
+//重排数组  --自己实现但没有用
+
+//        if remindTimeArray.count > 0 {
+////            print(user.arrayForKey("remindTimeArray"))
+//            print("4444")
+//            var temp:[AnyObject] = []
+//            print(remindTimeArray[0])
+//            var n = remindTimeArray.count
+//            for _ in 0...n {
+//                if n == 0 {
+//                    break
+//                }
+//                n = n - 1
+//                temp.append(remindTimeArray[n])
+//                print (temp)
+//            }
+//            remindTimeArray = temp
+//        }
+
+
+
+
+
+//        if user.arrayForKey("remindTimeArray")  == [] {
+//            print("4444")
+//
+//        }
+
+//        if user.arrayForKey("remindTimeArray") != nil {
+//
+//            var temp = remindTimeArray[0]
+//            print("eee")
+//            print(temp)
+////
+////            remindTimeArray = user.arrayForKey("remindTimeArray")! as NSMutableArray as [AnyObject] as [AnyObject]
+////            var temp: [AnyObject] = []
+////
+////            temp = remindTimeArray[0]
+////
+////            var n = remindTimeArray.count
+////            for _ in 0...n {
+////                temp.append(remindTimeArray[n])
+////                n = n - 1
+////            }
+////            remindTimeArray = temp
+//        }
+

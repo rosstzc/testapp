@@ -40,8 +40,10 @@ class SettingTableViewController: UITableViewController {
         userDefaults.setBool(false, forKey:"fristLaunch") //引导界面完成后设为false
         userDefaults.synchronize()
         
+        //退出LC用户
+        AVUser.logOut()
         
-        userDefaults.synchronize()
+        
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil);
         let vc = storyboard.instantiateViewControllerWithIdentifier("login") as UIViewController

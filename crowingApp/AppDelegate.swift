@@ -47,9 +47,66 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         
+        //接入leanCloud
+        AVOSCloud.setApplicationId("3KyUWfvl0GsYhqVdEWHldBsW", clientKey: "aQbFi4NSkbUsaKG0WUqh0tlH")
+        
+        //注册远程推送
+        let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound ], categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        UIApplication.sharedApplication().registerForRemoteNotifications()
+        
         
         return true
+        
+        
+        
     }
+    
+    
+    //注册了远程推送后，记录用户的设备token
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        print("Got token data! \(deviceToken)")
+        let currentInstallation = AVInstallation.currentInstallation()
+        currentInstallation.setDeviceTokenFromData(deviceToken)
+        
+        //测试订阅频道
+        currentInstallation.addUniqueObject("subscripe1", forKey: "channels")
+        currentInstallation.addUniqueObject("subscripe2", forKey: "channels")
+        
+        currentInstallation.saveInBackground()
+        
+        let channels = currentInstallation.channels
+        print(channels)
+        
+        
+        
+    }
+    
+
+    
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        print("yes i get")
+    }
+    
+    
+    
+    
+    
+    //如果注册失败
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("Couldn't register: \(error)")
+    }
+    
+    
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        print("注册成功")
+        print(notificationSettings.types.rawValue)
+        print("test")
+    }
+    
+    
+    
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -158,13 +215,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    //处理通知动作
-    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        
-        print(notificationSettings.types.rawValue)
-        print("test")
-    }
-    
+
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
         
         if identifier == "editList" {

@@ -12,7 +12,6 @@ import CoreData
 
 class RemindListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet weak var dd: UILabel!
     
     @IBOutlet weak var tableView: UITableView!
 
@@ -30,10 +29,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         
         super.viewDidLoad()
         
-        
  
-        
-        
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
         tableView.dataSource = self
@@ -79,23 +75,28 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         let state = UILabel()
         let titleLabel = cell.viewWithTag(11) as! UILabel
         let time = cell.viewWithTag(12) as! UILabel
+        let imageReadNotIcon = cell.viewWithTag(13) as! UIImageView  //是否已读图标
+        let content = cell.viewWithTag(14) as! UILabel
+        let imagePushNotIcon = cell.viewWithTag(15) as! UIImageView  //是否推送图标
 //        let repeatLabel = cell.viewWithTag(13) as! UILabel
 
    
         //read or not
         print(message.state)
-        titleLabel.text = message.title! + " " + timeString
+        titleLabel.text = message.title!
         state.text = String(message.state)
         time.text = timeString
-        
+        imageReadNotIcon.image = UIImage(named: "twitter")
+        content.text  = ""
+        imagePushNotIcon.image = UIImage(named: "twitter")
 
         if message.state == 0 {
-            state.text = "(N)"
+            imageReadNotIcon.image = UIImage(named: "geisha")
+
         }
         else {
-            state.text = "(Y)"
+            
         }
-//        cell.imageView?.image = UIImage(named:"0.jpeg")
         return cell
     }
     
@@ -200,12 +201,11 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         
     }
     
-    //把未更新的提醒信息列表更新
+    //每次view启动就更新提醒信息列表
     func updateRemindMessage() {
-//        var followReminds:[FollowAtRemind] = []
         
         reminds = getRemindData()
-        messages = getRemindMessageData2("state >= 0 && uid='\(uid)'") //表示取与自己香港的所有提醒信息
+        messages = getRemindMessageData2("state >= 0 && uid='\(uid)'") //表示取与自己相关的所有提醒信息
       
         if messages.count > 0 {
             // 倒序后取message最后获取信息时间，然后用这个时间去remind表比较

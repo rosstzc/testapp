@@ -35,7 +35,7 @@ class LoginViewController: UIViewController {
         for i in tempp {
             print("name",i.name ," email",i.email, " pwd", i.password)
             
-        // 当用户已登录，即跳到首页
+        // 上面代码只是用户检查有多少个用户
         }
 
 
@@ -56,6 +56,41 @@ class LoginViewController: UIViewController {
             try context.save()
         } catch _ {
         }
+        
+        //到LeanCloud注册
+        let userLC = AVUser()
+        userLC.email = txtMail.text!
+        userLC.username = txtMail.text!
+        userLC.password = txtPwd.text!
+        userLC.setObject(txtName.text!, forKey: "nickName")
+        userLC.signUpInBackgroundWithBlock({(succeeded:Bool, error:NSError?) in
+            if (error == nil ) {
+                let currentUser = AVUser.currentUser()
+                if currentUser != nil {
+                    self.performSegueWithIdentifier("segueLogin", sender: self)
+                }
+            } else  {
+            print(error)
+            print(error?.code)
+                if (error?.code == 125) {
+                    //email地址错误
+                    
+                }
+                if (error?.code == 203) {
+                    //email已经被占用
+                    print("email已被占用")
+                    
+                }
+
+
+            }
+        })
+        
+        
+        // 考虑使用匿名用户，让用户首次登录
+        
+        
+        
         
         // 把注册信息写到 NSUserDefaults
             //待完善？ 这里应该有网络部分，并且上面写coredata是没有用户的
@@ -85,7 +120,7 @@ class LoginViewController: UIViewController {
         tempp = (try! context.executeFetchRequest(request)) as! [User]
         print("user count：",  tempp.count)
       
-        self.performSegueWithIdentifier("segueLogin", sender: self)
+//        self.performSegueWithIdentifier("segueLogin", sender: self)
 
         
     }
@@ -147,7 +182,15 @@ class LoginViewController: UIViewController {
 //    }
     
     
-    
+    //for leanCloud
+    func filterError(error: NSError?) -> Bool{
+        if error != nil {
+            print("%@", error!)
+            return false
+        } else {
+            return true
+        }
+    }
     
 
     override func didReceiveMemoryWarning() {
