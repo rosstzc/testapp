@@ -19,14 +19,14 @@ class LoginViewController: UIViewController {
 
     @IBOutlet weak var txtPwd: UITextField!
     let userDefaults = NSUserDefaults.standardUserDefaults()
-
+    let currentUser = AVUser.currentUser()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view
         
-
+        
         let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         let request =  NSFetchRequest(entityName: "User")
         var tempp:[User] = []
@@ -46,6 +46,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func btnReg(sender: AnyObject) {
         
+        //用户数据都用userDefault保存；写coredata只为统计
         let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         let user = NSEntityDescription.insertNewObjectForEntityForName("User",inManagedObjectContext: context) as! User
         user.name = txtName.text!
@@ -57,7 +58,9 @@ class LoginViewController: UIViewController {
         } catch _ {
         }
         
-        //到LeanCloud注册
+        
+        
+        //先到LeanCloud注册
         let userLC = AVUser()
         userLC.email = txtMail.text!
         userLC.username = txtMail.text!
@@ -65,8 +68,7 @@ class LoginViewController: UIViewController {
         userLC.setObject(txtName.text!, forKey: "nickName")
         userLC.signUpInBackgroundWithBlock({(succeeded:Bool, error:NSError?) in
             if (error == nil ) {
-                let currentUser = AVUser.currentUser()
-                if currentUser != nil {
+                if self.currentUser != nil {
                     self.performSegueWithIdentifier("segueLogin", sender: self)
                 }
             } else  {
@@ -94,7 +96,7 @@ class LoginViewController: UIViewController {
         
         // 把注册信息写到 NSUserDefaults
             //待完善？ 这里应该有网络部分，并且上面写coredata是没有用户的
-        let uuid = NSUUID().UUIDString
+        let uuid = currentUser.objectId
         let userDict:NSDictionary = ["uid":uuid, "name":txtName.text!, "email":txtMail.text!, "password":txtPwd.text!]
 //        userDict.setValue(uuid, forKey: "uid")
         

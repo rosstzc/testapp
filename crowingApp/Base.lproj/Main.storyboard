@@ -81,7 +81,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d7w-Mo-KRb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1448" y="512"/>
+            <point key="canvasLocation" x="1459" y="494"/>
         </scene>
         <!--信息-->
         <scene sceneID="dcE-vU-Qft">
@@ -106,8 +106,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="125"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="12" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XeR-jo-dA5">
-                                                    <rect key="frame" x="512" y="18" width="72" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="12" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XeR-jo-dA5">
+                                                    <rect key="frame" x="512" y="19" width="72" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="XuM-JG-6Vf"/>
                                                         <constraint firstAttribute="width" constant="72" id="gpU-3F-9Py"/>
@@ -116,8 +116,8 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="11" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="标题" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTZ-hY-tRH">
-                                                    <rect key="frame" x="40" y="20" width="447" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="11" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTZ-hY-tRH">
+                                                    <rect key="frame" x="40" y="21" width="447" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="yHf-9C-asZ"/>
                                                     </constraints>
@@ -154,6 +154,12 @@
                                                     <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="11111" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6dB-Dh-Jqz">
+                                                    <rect key="frame" x="12" y="87" width="38" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="7IR-jt-Vst" firstAttribute="top" secondItem="aF8-Rd-xhq" secondAttribute="topMargin" constant="35" id="27m-u2-ZkF"/>
@@ -180,7 +186,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -707,7 +713,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uio-uJ-eZH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2212" y="904"/>
+            <point key="canvasLocation" x="2218" y="774"/>
         </scene>
         <!--ShowRemindTableVC-->
         <scene sceneID="9sR-Yb-lOU">
@@ -847,7 +853,7 @@
                     </items>
                 </toolbar>
             </objects>
-            <point key="canvasLocation" x="3044" y="1094"/>
+            <point key="canvasLocation" x="2960" y="761"/>
         </scene>
         <!--RemindInfoTableVC-->
         <scene sceneID="7kZ-Gg-nTo">
@@ -1672,8 +1678,8 @@
         <image name="torii" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aDb-HG-oTS"/>
         <segue reference="GyE-TL-Uxy"/>
+        <segue reference="aDb-HG-oTS"/>
         <segue reference="NqS-Yr-eAZ"/>
     </inferredMetricsTieBreakers>
 </document>

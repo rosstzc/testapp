@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Automatic">
     <entity name="CheckAtFollowing" representedClassName="crowingApp.CheckAtFollowing" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dbId" optional="YES" attributeType="String" syncable="YES"/>
@@ -20,10 +20,12 @@
     </entity>
     <entity name="Remind" representedClassName="crowingApp.Remind" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="createNot" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remindId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remindTimeArray" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="schedule" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sentTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updateTime" optional="YES" attributeType="Date" syncable="YES"/>
@@ -46,7 +48,7 @@
     <elements>
         <element name="CheckAtFollowing" positionX="-54" positionY="-9" width="128" height="150"/>
         <element name="FollowAtRemind" positionX="-54" positionY="54" width="128" height="150"/>
-        <element name="Remind" positionX="-63" positionY="-18" width="128" height="165"/>
+        <element name="Remind" positionX="-63" positionY="-18" width="128" height="195"/>
         <element name="RemindMessage" positionX="-54" positionY="36" width="128" height="135"/>
         <element name="User" positionX="-54" positionY="45" width="128" height="120"/>
     </elements>

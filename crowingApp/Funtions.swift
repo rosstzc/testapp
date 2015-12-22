@@ -7,12 +7,33 @@
 //
 
 import UIKit
-
+import CoreData
 
 let siteUrl:String = "http://"
 
 func temp2() {
     print("666")
+}
+
+
+func addRemindMessage(remind:Remind, uid:String, time:NSDate, state:Int = 0) {
+    // 写入提醒信息
+    let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+    let Message = NSEntityDescription.insertNewObjectForEntityForName("RemindMessage",inManagedObjectContext: context) as! RemindMessage
+    Message.title = remind.title
+    Message.content = remind.content
+    Message.timeRemind = time
+    Message.remindId = remind.remindId
+    Message.uid = uid
+    Message.state = state
+    do {
+        //                    remind.repeat_type = "e   / 未完，需要在界面选择
+        try context.save()
+//        return true
+    } catch _ {
+//        return false
+    }
+    
 }
 
 

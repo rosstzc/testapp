@@ -6,22 +6,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "crowingApp/RemindListViewController.swift"
-            timestampString = "472353595.372248"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
-            landmarkName = "RemindListViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -41,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "crowingApp/LoginViewController.swift"
-            timestampString = "472297518.670987"
+            filePath = "crowingApp/RemindListViewController.swift"
+            timestampString = "472488101.681937"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "btnReg(_:)"
+            startingLineNumber = "425"
+            endingLineNumber = "425"
+            landmarkName = "updateRemindMessage()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "crowingApp/LoginViewController.swift"
-            timestampString = "472297518.670987"
+            filePath = "crowingApp/RemindListViewController.swift"
+            timestampString = "472488101.681937"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
-            landmarkName = "btnReg(_:)"
+            startingLineNumber = "530"
+            endingLineNumber = "530"
+            landmarkName = "deleteRemindMessage(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -73,13 +57,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "crowingApp/LoginViewController.swift"
-            timestampString = "472296761.374167"
+            filePath = "crowingApp/Funtions.swift"
+            timestampString = "472487559.969571"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "btnReg(_:)"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "addRemindMessage(_:uid:time:state:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "crowingApp/RemindListViewController.swift"
+            timestampString = "472489405.59981"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
+            landmarkName = "updateRemindMessage2()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -89,13 +89,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "crowingApp/LoginViewController.swift"
-            timestampString = "472297564.867973"
+            filePath = "crowingApp/RemindListViewController.swift"
+            timestampString = "472489413.935767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
-            landmarkName = "btnReg(_:)"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
+            landmarkName = "updateRemindMessage2()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "crowingApp/RemindListViewController.swift"
+            timestampString = "472489417.223746"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
+            landmarkName = "updateRemindMessage2()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

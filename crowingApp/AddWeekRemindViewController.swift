@@ -41,7 +41,8 @@ class AddWeekRemindViewController: UIViewController, UITableViewDelegate, UITabl
     
     func save() {
         let time = datePicker.date
-        let timeString = Functions.stringFromDate(time)
+//        let timeString = Functions.stringFromDate(time)
+        let timeString = stringFromDateWithFormat(time, format: "HH:mm")
         var repeatInterval:String  = "none"
 
         for i in listNo {

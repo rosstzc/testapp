@@ -28,7 +28,7 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
         tableView.dataSource = self
 
         
-        self.navigationItem.title = "创建的提醒"
+        self.navigationItem.title = "我创建的提醒"
         
         if fromSegue == "RemindListVC" {  
             self.performSegueWithIdentifier("segueToCreateRemind", sender: self)

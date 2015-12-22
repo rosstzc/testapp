@@ -20,6 +20,8 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
     var placeHolder = "补充（可为空）"
     var remind:Remind! = nil
     var remindId:String = ""
+    var messages:[RemindMessage] = []
+
     
     var remindLC = AVObject(className: "Remind")
     
@@ -49,7 +51,6 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
         //获取用户uid
         print("read userDefault",user.valueForKey("name"))
         print("uuid",user.valueForKey("uid"))
-        
         
 
 
@@ -138,6 +139,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
         if editingStyle == UITableViewCellEditingStyle.Delete {
             
             //在userdefault删除某个提醒时间
+            remindTimeArray = remindTimeArray.reverse()
             remindTimeArray.removeAtIndex(indexPath.row)
             user.setObject(remindTimeArray, forKey: "remindTimeArray")
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -219,6 +221,8 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             remind.content = textViewContent.text!
             remind.remindTimeArray = remindTimeArray
             remind.updateTime = NSDate()
+            remind.sentTime = NSDate()
+            remind.createAt = NSDate()
 
             
             //先从LC查询到对应的remind
@@ -227,7 +231,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             remindLC.setObject(textTitle.text!, forKey: "title")
             remindLC.setObject(textViewContent.text!, forKey: "content")
             remindLC.setObject(remindTimeArray, forKey: "remindTimeArray")
-            
+            remindLC.setObject(NSDate(), forKey: "sentTime")
 
         } else { //新创建
             remind = NSEntityDescription.insertNewObjectForEntityForName("Remind",inManagedObjectContext: context) as! Remind
@@ -237,6 +241,8 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             remind.updateTime = NSDate()
             remind.createNot = "1"
             remind.uid = user.valueForKey("uid") as? String
+            remind.sentTime = NSDate()
+            remind.createAt = NSDate()
             
             
             //写入LC数据库
@@ -244,7 +250,10 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             remindLC.setObject(textViewContent.text!, forKey: "content")
             remindLC.setObject(remindTimeArray, forKey: "remindTimeArray")
             remindLC.setObject(currentUser, forKey: "uid")
- 
+            remindLC.setObject(NSDate(), forKey: "sentTime")
+            
+            
+            
         }
 
         
@@ -258,6 +267,12 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
                     self.remind.remindId = self.remindLC.objectId   //获取LC上objectId, 写入到本地
                     try context.save()
                     
+                    //创建时，即触发一条已读提醒信息（让用户在首页感知关注了什么）
+                    if self.remindId == "" {
+                        let uid = self.user.valueForKey("uid") as? String
+                        addRemindMessage(self.remind, uid: uid!, time: NSDate(), state: 1)
+                    }
+
                     
                     //删除LC的RemindTime表中对应该remind的时间
                     let remindTemp = AVObject(withoutDataWithClassName: "Remind", objectId: self.remindId)
@@ -275,7 +290,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
                         let timeTemp = i.valueForKey("remindTime") as! String
                         let interval = i.valueForKey("repeatInterval") as! String
                         remindTime.setObject(timeTemp, forKey: "remindTime")
-                        remindTime.setObject(interval, forKey: "interval")
+                        remindTime.setObject(interval, forKey: "repeatInterval")
                         remindTime.setObject(self.remindLC, forKey: "remindId")
                         remindTime.save()
                     }
@@ -327,13 +342,6 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             }
         })
         
-        
-        
-
-        
-        
-
-
 
     }
     
@@ -353,6 +361,10 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
         
     
     }
+    
+    
+
+    
 
     override func viewWillAppear(animated: Bool) {
 //        self.viewDidLoad()

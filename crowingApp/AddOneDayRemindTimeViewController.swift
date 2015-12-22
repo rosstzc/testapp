@@ -82,6 +82,7 @@ class AddOneDayRemindTimeViewController: UIViewController{
         remindTime.setValue(repeatInterval, forKey: "repeatInterval")
         
         
+        
         //假设user已经有remindTimeArray键
         var remindTimeArray = user.arrayForKey("remindTimeArray")!
         remindTimeArray.append(remindTime)

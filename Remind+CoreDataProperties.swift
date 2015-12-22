@@ -2,7 +2,7 @@
 //  Remind+CoreDataProperties.swift
 //  crowingApp
 //
-//  Created by michaeltam on 15/10/25.
+//  Created by michaeltam on 15/12/22.
 //  Copyright © 2015年 mike公司. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -22,5 +22,7 @@ extension Remind {
     @NSManaged var title: String?
     @NSManaged var uid: String?
     @NSManaged var updateTime: NSDate?
+    @NSManaged var createAt: NSDate?
+    @NSManaged var sentTime: NSDate?
 
 }
