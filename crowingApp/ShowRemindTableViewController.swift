@@ -38,6 +38,12 @@ class ShowRemindTableViewController: UITableViewController {
         
         self.navigationItem.title = remind.title
         
+        //按目前逻辑，只要从本地能查到的remind，都能保证最新； 只有在本地去不到然后才需要到LC上查，因此segue那个页面操作，比如动态页，不在这个页面获取数据
+        //请看function.swift
+        
+        
+       
+        
 
         //如果是自己创建或已关注，就不会显示关注按钮
         let uid = user.valueForKey("uid") as! String
@@ -48,7 +54,6 @@ class ShowRemindTableViewController: UITableViewController {
         //        condition = "createNot = '1'"
         condition = "uid = '\(uid)' && remindId = '\(rid)' && createNot = '1'"
         reminds = getOneRemind(condition)
-        
         
         
         if reminds.count > 0 {
@@ -123,86 +128,9 @@ class ShowRemindTableViewController: UITableViewController {
         
     }
     
+
     
-    //关注某个提醒，createNot状态是0
-    @IBAction func follow(sender: AnyObject) {
-        
-        if self.remindRelation == 1 {
-            
-        }
-        if self.remindRelation == 2 {
-            
-        }
-        
-        
-        if self.remindRelation == 0 {
-            let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-            
-            //再次检查是否已关注，避免重复造成逻辑错误
-            let request = NSFetchRequest(entityName: "Remind")
-            request.predicate = NSPredicate(format: "uid = %@ && remindId = %@",(user.valueForKey("uid") as? String)!, (remind?.remindId)!)
-            self.reminds = (try! context.executeFetchRequest(request)) as! [Remind]
-            if reminds.count > 0 {
-                //不做处理
-            }
-            else {
-                let temp = NSEntityDescription.insertNewObjectForEntityForName("Remind",inManagedObjectContext: context) as! Remind
-                
-                temp.remindId = remind?.remindId
-                temp.uid = user.valueForKey("uid") as? String
-                temp.title = remind?.title
-                temp.content = remind?.content
-                temp.remindTimeArray = remind?.remindTimeArray
-                temp.schedule = remind?.schedule
-                temp.createNot = "0"
-                
-                do {
-                    try context.save()
-                } catch {
-                    print(error)
-                }
-                
-                tappedFollow.setTitle("已关注", forState: .Normal)
-                
-            }
-            
-        }
-        
-        
-        
-        
-        
-    }
-    
-    @IBAction func submit(sender: AnyObject) {
-        //点按钮，触发写入 followAtRemind 表
-        let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-        let check = NSEntityDescription.insertNewObjectForEntityForName("CheckAtFollowing",inManagedObjectContext: context) as! CheckAtFollowing
-        
-        
-        check.remindTitle = remindTitle.text!
-        check.content = checkContent.text!
-        check.userId = "2"
-        check.userName = "mike"
-        do {
-            //        check.userImage =
-            //        check.dbID =
-            try context.save()
-        } catch {
-        }
-        
-        
-    }
-    
-    
-    func getOneRemind(condition:String) -> [Remind]{
-        let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-        let request = NSFetchRequest(entityName: "Remind")
-        request.predicate = NSPredicate(format: condition as String)
-        self.reminds = (try! context.executeFetchRequest(request)) as! [Remind]
-        return self.reminds
-    }
-    
+
     
     //输入键盘屏蔽
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -233,35 +161,7 @@ class ShowRemindTableViewController: UITableViewController {
         return cell
     }
     
-    //滚动tableView时让uiview滚动
-//    func scrollViewDidScroll(scrollView: UIScrollView) {
-//        //        var previousOffset:CGFloat = CGFloat()
-//        //        var rect:CGRect = self.view.frame
-//        //        rect.origin.y += previousOffset - scrollView.contentOffset.y
-//        //        previousOffset = scrollView.contentOffset.y
-//        //        self.view.frame = rect
-//        //
-//        var rect:CGRect = self.view.frame
-//        
-//        rect.origin.y =  -scrollView.contentOffset.y
-//        
-//        self.view.frame = rect
-//    }
-//    
-    
-    
-    //for test
-    //    func getRemindFollow() ->[FollowAtRemind] {
-    //        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-    //        let request =  NSFetchRequest(entityName: "FollowAtRemind")
-    //        self.remindFollows = (try! context.executeFetchRequest(request)) as! [FollowAtRemind]
-    //        
-    //        for i in remindFollows {
-    //            print(i.title)
-    //        }
-    //        
-    //        return remindFollows
-    //    }
+
     
 
 }

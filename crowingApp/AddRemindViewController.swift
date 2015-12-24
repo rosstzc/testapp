@@ -231,7 +231,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             remindLC.setObject(textTitle.text!, forKey: "title")
             remindLC.setObject(textViewContent.text!, forKey: "content")
             remindLC.setObject(remindTimeArray, forKey: "remindTimeArray")
-            remindLC.setObject(NSDate(), forKey: "sentTime")
+//            remindLC.setObject(NSDate(), forKey: "sentTime")
 
         } else { //新创建
             remind = NSEntityDescription.insertNewObjectForEntityForName("Remind",inManagedObjectContext: context) as! Remind
@@ -250,7 +250,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             remindLC.setObject(textViewContent.text!, forKey: "content")
             remindLC.setObject(remindTimeArray, forKey: "remindTimeArray")
             remindLC.setObject(currentUser, forKey: "uid")
-            remindLC.setObject(NSDate(), forKey: "sentTime")
+//            remindLC.setObject(NSDate(), forKey: "sentTime")
             
             
             
@@ -266,6 +266,9 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
                 do {
                     self.remind.remindId = self.remindLC.objectId   //获取LC上objectId, 写入到本地
                     try context.save()
+                    
+                    //写入订阅
+                    addLCInstallation(self.remindLC.objectId)
                     
                     //创建时，即触发一条已读提醒信息（让用户在首页感知关注了什么）
                     if self.remindId == "" {
@@ -357,13 +360,9 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             user.setObject("", forKey: "remindTitleTemp")
             user.setObject("", forKey: "remindContentTemp")
             user.setObject(nil, forKey: "remindId")
-        }
-        
-    
+        } 
     }
     
-    
-
     
 
     override func viewWillAppear(animated: Bool) {

@@ -20,6 +20,7 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
     var condition:String = ""
 
     let user = NSUserDefaults.standardUserDefaults()
+    let currentUser = AVUser.currentUser()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,17 +84,47 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
     
     //关注按钮
     @IBAction func followBtn(sender: AnyObject) {
+        let uid = user.valueForKey("uid") as! String
+        let rid = remind.remindId
         
         //已关注，去取消关注
         if self.remindRelation == 1 {
-            
-            reminds = getOneRemind(condition)
-            
+            //先删除LC上关注记录，再删除本地记录
+            let query = AVQuery(className: "FollowAtRemind")
+            query.whereKey("uid", equalTo: uid)
+            query.whereKey("rid", equalTo: rid)
+            var result = query.findObjects()
+            let followOid = result[0].objectId
+            let follow = AVObject(withoutDataWithClassName: "FollowAtRemind", objectId: followOid)
+            follow.deleteInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
+                if (error != nil) {
+                    print("错误")
+                }else {
+                    //删除本地记录（关注记录、message记录）
+                    deleteRemindMessage("uid = '\(uid)' && remindId = '\(rid)'")
+                    deleteRemind("uid = '\(uid)' && remindId = '\(rid)'")
+                    
+                    //删除LC上的installtion
+                    deleteLCInstallation(rid!)
+                }
+            })
+
         }
+        
+        
         //自己创建，要删除
         if self.remindRelation == 2 {
-            
-            
+            //执行删除本地记录，不需要删除LC上的记录（在LC要做个标记）。但记得删除intallation的订阅； （用户下次看到该提醒将当非自己的提醒处理）
+            let remindTemp = AVObject(withoutDataWithClassName: "Remind", objectId: rid)
+            remindTemp.setObject("1", forKey: "deleteKey")
+            remindTemp.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
+                if (error != nil) {
+                    print("错误")
+                }else {
+                    deleteRemind("uid = '\(uid)' && remindId = '\(rid)'")
+                    deleteLCInstallation(rid!)
+                }
+            })
         }
         
         //去关注
@@ -110,31 +141,54 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
             else {
                 let temp = NSEntityDescription.insertNewObjectForEntityForName("Remind",inManagedObjectContext: context) as! Remind
                 // 在本地，把关注的信息保存下来
-                temp.remindId = remind?.remindId
-                temp.uid = user.valueForKey("uid") as? String
+                temp.remindId = rid
+                temp.uid = uid
                 temp.title = remind?.title
                 temp.content = remind?.content
                 temp.remindTimeArray = remind?.remindTimeArray
                 temp.schedule = remind?.schedule
+                temp.updateTime = remind?.updateTime
                 temp.createNot = "0"
                 
-                do {
-                    try context.save()
-                } catch {
-                    print(error)
-                }
+                
+                //先写入LC，然后再写入本地
+                let followAtRemind = AVObject(className:"FollowAtRemind")
+                followAtRemind.setObject(currentUser, forKey: "uid")
+                followAtRemind.setObject(remind, forKey: "rid")
+                    //写入LC的follow表
+                followAtRemind.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
+                    if (error != nil) {
+                        
+                    }else {
+                        
+                        //写入LC的installation表
+                        addLCInstallation(rid!)
+                        
+                        // 写入本地
+                        do {
+                            try context.save()
+                        } catch {
+                            print(error)
+                        }
+                        
+                        //关注时，即触发一条已读提醒信息
+                        addRemindMessage(self.remind, uid: uid, time: NSDate(), state: 1)
+                    }
+          
+                })
+
                 
                 //用actionSheet给出提示
                 
-                
-                
-                followText.setTitle("取消关注", forState: .Normal)
+           followText.setTitle("取消关注", forState: .Normal)
                 
             }
             
         }
         
     }
+    
+
     
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -150,7 +204,7 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if (self.remindRelation != 2
 && indexPath.row == 1 && indexPath.section == 1){
-        return 0
+        return 0  //高度为0
         } else {
         return 44
         }
@@ -160,14 +214,7 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
 
 
    
-    
-    func getOneRemind(condition:String) -> [Remind]{
-        let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-        let request = NSFetchRequest(entityName: "Remind")
-        request.predicate = NSPredicate(format: condition as String)
-        self.reminds = (try! context.executeFetchRequest(request)) as! [Remind]
-        return self.reminds
-    }
+
     
     
     //传递数据

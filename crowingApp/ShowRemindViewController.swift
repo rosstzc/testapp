@@ -178,14 +178,7 @@ class ShowRemindViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     
-    func getOneRemind(condition:String) -> [Remind]{
-        let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-        let request = NSFetchRequest(entityName: "Remind")
-        request.predicate = NSPredicate(format: condition as String)
-        self.reminds = (try! context.executeFetchRequest(request)) as! [Remind]
-        return self.reminds
-    }
-    
+
     
     //输入键盘屏蔽
     func textFieldShouldReturn(textField: UITextField) -> Bool {

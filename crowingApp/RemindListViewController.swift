@@ -298,13 +298,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
                 
             }
 
-            
 
-            
-            
-            
- 
-            
             
         }
     }
@@ -312,193 +306,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     
     
     
-    
-    //每次view启动就更新提醒信息列表
-    func updateRemindMessage() {
-        
-        reminds = getRemindData()
-        messages = getRemindMessageData2("state >= 0 && uid='\(uid)'") //表示取与自己相关的所有提醒信息
-        
-        if messages.count > 0 {
-            // 倒序后取message最后获取信息时间，然后用这个时间去remind表比较
-            var lastMessageTime: NSDate
-            let now:NSDate = NSDate()
-            let sortedResults = messages.sort({
-                $0.timeRemind!.compare($1.timeRemind!) == NSComparisonResult.OrderedDescending
-            })
-            messages = sortedResults
-            lastMessageTime =  messages[0].timeRemind!
-            print(lastMessageTime)
-            
-            
-            //循环所有创建+关注的提醒，如果大于最后信息，并且少于当前时间，那么就到信息表写信息。。(注意识别周期提醒)
-            for i in reminds {
-                if i.remindTimeArray == []  {
-                    print("没有填写 remindTime")
-                    continue
-                }
 
-                //先从remindTimeArray中找到最近的提醒时间，然后再纳入下面比较
-                
-//                //先以第一个提醒时间为标准
-//                var timeString = (i.remindTimeArray as! NSArray)[0].valueForKey("remindTime") as! String
-////                var time = Functions.dateFromString(timeString)
-                
-                
-                    //把单次、转换后的循环时间,统一为日期+时间格式后放入到临时数组
-                var tempTimeArray = [""]
-                tempTimeArray.removeAll()
-                for j in (i.remindTimeArray as! NSArray)   {
-                    let interval = j.valueForKey("repeatInterval") as! NSString
-                    let time = j.valueForKey("remindTime") as! String
-                    
-                        //处理单次提醒，塞入临时数组
-                    if (interval.isEqual("none") ) {
-                        tempTimeArray.append(time)
-                        print(tempTimeArray)
-                    }
-                    
-                        //处理周循环提醒
-                    if (interval.rangeOfString("周").location != NSNotFound) {
-                        //判断今天是星期几，如果interval大于今天就丢弃，如果少于今天就计算其具体的date
-                        let nowWeekDay:Int = NSDate().weekday
-                        let intervalWeekDay:Int = 1
-                        switch interval {
-                            case "每周日" :
-                                intervalWeekDay == 1
-                            case "每周一" :
-                                intervalWeekDay == 2
-                            case "每周二" :
-                                intervalWeekDay == 3
-                            case "每周三" :
-                                intervalWeekDay == 4
-                            case "每周四" :
-                                intervalWeekDay == 5
-                            case "每周五" :
-                                intervalWeekDay == 6
-                            case "每周六" :
-                                intervalWeekDay == 7
-                        default:
-                            break
-                        }
-                        if intervalWeekDay > nowWeekDay {
-                            //大于当前日
-                            continue
-                        } else {
-                            let timeDate:NSDate = now+(nowWeekDay - intervalWeekDay).day
-                            var timeString = stringFromDateWithFormat(timeDate, format: "yyyy-MM-dd")
-                            timeString = timeString + " " + time
-                            tempTimeArray.append(timeString)
-                        }
-                    }
-
-                }
-                
-                //给临时数组的时间排序，找到时间最大但少于当前时间的那个时间
-                var time = Functions.dateFromString(tempTimeArray[0])
-                for x in tempTimeArray {
-                    let tempTime = Functions.dateFromString(x)
-                    if tempTime >= now {
-                        continue
-                    } else {
-                        if time.compare(tempTime) ==  NSComparisonResult.OrderedAscending  {
-                            time = tempTime
-                        }
-                    }
-
-                }
-                
-                
-                //把remindTimeArray的时间进行排序
-//                for j in (i.remindTimeArray as! NSArray)   {
-//                    let tempTimeString = j.valueForKey("remindTime") as! String
-//                    let tempTime = Functions.dateFromString(tempTimeString)
-//                    
-//                    if tempTime.compare(time) ==  NSComparisonResult.OrderedAscending  {
-//                        time = tempTime
-//                    }
-//                }
-                
-                
-                //删除该remindId之前的提醒信息 （日后要保留另外创建 remindMessageList表）
-                print(i.remindId)
-                deleteRemindMessage("remindId = '\(i.remindId! as String)'")
-   
-                
-                //把提醒时间最近的拿来比较 (大于上次提醒信息的发出时间，而少于当前时间)
-                if (time.compare(lastMessageTime) == NSComparisonResult.OrderedDescending) && (now.compare(time) == NSComparisonResult.OrderedDescending)   {
-                    // 写入信息表
-                    let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-                    let Message = NSEntityDescription.insertNewObjectForEntityForName("RemindMessage",inManagedObjectContext: context) as! RemindMessage
-                    Message.title = i.title
-                    Message.content = i.content
-                    Message.timeRemind = time
-                    Message.remindId = i.remindId
-                    print(i.remindId)
-
-                    Message.uid = uid
-                    Message.state = 0
-                    do {
-                        //                    remind.repeat_type = "e   / 未完，需要在界面选择
-                        try context.save()
-                    } catch _ {
-                    }
-                    
-                }
-                
-                
-            }
-        } else {
-            
-            for i in reminds {
-                
-                if i.remindTimeArray == []  {
-                    print("没有填写 remindTime")
-                    continue
-                }
-                
-                //变量time是要得出这个任务中最大的时间(把时间字符转为NSDate)。 当然这个涉及重复提醒，未完
-                let timeString = (i.remindTimeArray as! NSArray)[0].valueForKey("remindTime") as! String
-                var time = Functions.dateFromString(timeString)
-                
-                
-                for j in (i.remindTimeArray as! NSArray)   {
-                    
-                    let tempTimeString = j.valueForKey("remindTime") as! String
-                    let tempTime = Functions.dateFromString(tempTimeString)
-                    
-                    if tempTime.compare(time) ==  NSComparisonResult.OrderedAscending  {
-                        time = tempTime
-                    }
-                }
-                
-                
-                // 写入信息表
-                let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-                let request =  NSFetchRequest(entityName: "Remind")
-                request.predicate = NSPredicate(format: "remindId='\(uid)'")
-                reminds = (try! context.executeFetchRequest(request)) as! [Remind]
-                
-                    //写入信息表
-                let Message = NSEntityDescription.insertNewObjectForEntityForName("RemindMessage",inManagedObjectContext: context) as! RemindMessage
-                Message.title = i.title
-                Message.content = i.content
-                Message.timeRemind = time
-                Message.remindId = i.remindId
-                Message.uid = uid
-                Message.state = 0
-                do {
-                    //                    remind.repeat_type = "everMinute"  // 未完，需要在界面选择
-                    try context.save()
-                } catch _ {
-                }
-                
-                
-            }
-            
-        }
-        
-    }
 
     //传递数据
 //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -526,26 +334,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     
-    func deleteRemindMessage(condition:String) {
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-        print(condition)
-        let filter:NSPredicate = NSPredicate(format: condition)
-        let request =  NSFetchRequest(entityName: "RemindMessage")
-        request.predicate = filter
-        var temp:[RemindMessage] = []
-        temp = (try! context.executeFetchRequest(request)) as! [RemindMessage]
-        if temp.count > 0 {
-            for i in temp {
-                //            i.state = 2 //表示删除，但不真实删除，可能以后有用
-                context.deleteObject(i)
-            }
-            do {
-                try context.save()
-            } catch _ {
-            }
-        }
 
-    }
     
     
     func getRemindMessageData2(condition:NSString) ->[RemindMessage] {

@@ -16,6 +16,120 @@ func temp2() {
 }
 
 
+//按目前逻辑，只要从本地能查到的remind，都能保证最新； 只有在本地去不到然后才需要到LC上查，因此segue那个页面操作，比如动态页，不在这个页面获取数据
+func getRemindFromLC(rid:String, uid: String ) -> Remind{
+    var remind:Remind! = nil
+    let reminds = getOneRemind("uid = '\(uid)' && remindId = '\(rid)'")
+    if reminds.count > 0 {
+        remind = reminds[0] as Remind
+    } else {
+        let remindLC = AVObject(withoutDataWithClassName: "Remind", objectId: rid )
+        remind.content = remindLC.objectForKey("content") as? String
+        remind.remindTimeArray = remindLC.objectForKey("remindTimeArray") as! NSArray
+        remind.title = (remindLC.objectForKey("title") as! String)
+        remind.updateTime = remindLC.objectForKey("updatedAt") as? NSDate
+        
+        //        remind.createNot = remindLC.objectForKey(String!)
+        //        remind.schedule = remindLC.objectForKey(<#T##key: String!##String!#>)
+        //        remind.uid = remindLC.objectForKey(<#T##key: String!##String!#>)
+        //        remind.updateTime = remindLC.objectForKey(<#T##key: String!##String!#>)
+        //        remind.sentTime = remindLC.objectForKey(<#T##key: String!##String!#>)
+    }
+    return remind
+    
+}
+
+
+// 在主页每次更新关注提醒的信息
+func updateFollowRemind(remindId: String, uid: String) {
+    
+    
+    var reminds:[Remind]! = []
+    reminds = getOneRemind("uid = '\(uid)' && create = '0'")
+    var ridArray = [String]()
+    for i in reminds {
+        ridArray.append(i.remindId!)
+    }
+    //从LC找到用所有关注的提醒
+    var query = AVQuery(className: "Remind")
+    query.whereKey("", containedIn: ridArray)
+    let result = query.findObjects()
+    
+    for i in result {
+        
+    }
+    
+    
+}
+
+
+func getOneRemind(condition:String) -> [Remind]{
+    let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+    let request = NSFetchRequest(entityName: "Remind")
+    request.predicate = NSPredicate(format: condition as String)
+    let reminds = (try! context.executeFetchRequest(request)) as! [Remind]
+    return reminds
+}
+
+
+func addLCInstallation(remindId:String) {
+    let currentInstallation = AVInstallation.currentInstallation()
+    currentInstallation.addUniqueObject(remindId, forKey: "channels")
+    currentInstallation.save()
+}
+
+
+func deleteLCInstallation(remindId:String) {
+    let currentInstallation = AVInstallation.currentInstallation()
+    currentInstallation.removeObject(remindId, forKey: "channels")
+    currentInstallation.save()
+}
+
+
+func deleteRemind(condition:String) {
+    let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+    print(condition)
+    let filter:NSPredicate = NSPredicate(format: condition)
+    let request =  NSFetchRequest(entityName: "Remind")
+    request.predicate = filter
+    var temp:[Remind] = []
+    temp = (try! context.executeFetchRequest(request)) as! [Remind]
+    if temp.count > 0 {
+        for i in temp {
+            context.deleteObject(i)
+        }
+        do {
+            try context.save()
+        } catch _ {
+        }
+    }
+    
+}
+
+
+func deleteRemindMessage(condition:String) {
+    let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+    print(condition)
+    let filter:NSPredicate = NSPredicate(format: condition)
+    let request =  NSFetchRequest(entityName: "RemindMessage")
+    request.predicate = filter
+    var temp:[RemindMessage] = []
+    temp = (try! context.executeFetchRequest(request)) as! [RemindMessage]
+    if temp.count > 0 {
+        for i in temp {
+            //            i.state = 2 //表示删除，但不真实删除，可能以后有用
+            context.deleteObject(i)
+        }
+        do {
+            try context.save()
+        } catch _ {
+        }
+    }
+    
+}
+
+
+
 func addRemindMessage(remind:Remind, uid:String, time:NSDate, state:Int = 0) {
     // 写入提醒信息
     let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
