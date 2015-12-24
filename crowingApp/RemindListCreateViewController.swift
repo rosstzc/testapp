@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class RemindListCreateViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class RemindListCreateViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate{
     
     @IBOutlet weak var tableView: UITableView!
     var reminds:[Remind] = []
@@ -98,28 +98,31 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
         if editingStyle == UITableViewCellEditingStyle.Delete {
             //            messages.removeAtIndex(indexPath.row)
             
-            //删除coredata上的数据
-            let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-            let id = reminds[indexPath.row].remindId
-            let filter:NSPredicate = NSPredicate(format: "remindId = %@", id!) //不显示已删除的
-            let request =  NSFetchRequest(entityName: "Remind")
-            request.predicate = filter
-            var temp:[Remind] = []
-            temp = (try! context.executeFetchRequest(request)) as! [Remind]
-//            context.delete(te)
-            for i in temp {
-                context.deleteObject(i)
-            }
-            do {
-                try context.save()
-            } catch _ {
-            }
-            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            let rid = reminds[indexPath.row].remindId
+            let uid = self.user.valueForKey("uid") as? String
             
-            //顺便删除最近一个提醒信息前的所有state=2的信息，待补充
-            //
-            //
-            //
+            //给一个actionsheet来提醒
+            let actionSheet = UIAlertController(title: nil, message: "删除后将收不到其提醒信息", preferredStyle: UIAlertControllerStyle.ActionSheet)
+            let action1:UIAlertAction = UIAlertAction(title: "删除该提醒", style: UIAlertActionStyle.Destructive, handler: {(action) -> Void in
+                //执行删除本地记录，不需要删除LC上的记录（在LC要做个标记）。但记得删除intallation的订阅； （用户下次看到该提醒将当非自己的提醒处理）
+                let remindTemp = AVObject(withoutDataWithClassName: "Remind", objectId: rid)
+                remindTemp.setObject("1", forKey: "deleteKey")
+                remindTemp.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
+                    if (error != nil) {
+                        print("错误")
+                    }else {
+                        let condition = "uid = '\(uid)' && remindId = '\(rid)'"
+                        deleteRemind(condition)
+                        deleteLCInstallation(rid!)
+                        deleteRemindMessage(condition)
+                    }
+                })
+                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            })
+            let action2:UIAlertAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil )
+            actionSheet.addAction(action1)
+            actionSheet.addAction(action2)
+            presentViewController(actionSheet, animated: true, completion: nil)
         }
     }
     

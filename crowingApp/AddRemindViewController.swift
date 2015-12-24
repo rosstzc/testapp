@@ -271,11 +271,24 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
                     addLCInstallation(self.remindLC.objectId)
                     
                     //创建时，即触发一条已读提醒信息（让用户在首页感知关注了什么）
+                    let uid = self.user.valueForKey("uid") as? String
                     if self.remindId == "" {
-                        let uid = self.user.valueForKey("uid") as? String
                         addRemindMessage(self.remind, uid: uid!, time: NSDate(), state: 1)
                     }
 
+                    
+                    //当修改remind时，修改FollowRemind表的changeKey标记为true
+                    if self.remindId != "" {
+                        let query = AVQuery(className: "FollowAtRemind")
+                        query.whereKey("rid", equalTo: self.remindId)
+                        let result = query.findObjects()
+                        for i in result {
+                            i.setObject(true , forKey: "changeKey")
+                        }
+                        AVObject.saveAll(result)
+                    }
+
+                            
                     
                     //删除LC的RemindTime表中对应该remind的时间
                     let remindTemp = AVObject(withoutDataWithClassName: "Remind", objectId: self.remindId)

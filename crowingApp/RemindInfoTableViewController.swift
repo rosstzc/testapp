@@ -101,8 +101,9 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
                     print("错误")
                 }else {
                     //删除本地记录（关注记录、message记录）
-                    deleteRemindMessage("uid = '\(uid)' && remindId = '\(rid)'")
-                    deleteRemind("uid = '\(uid)' && remindId = '\(rid)'")
+                    let condition = "uid = '\(uid)' && remindId = '\(rid)'"
+                    deleteRemindMessage(condition)
+                    deleteRemind(condition)
                     
                     //删除LC上的installtion
                     deleteLCInstallation(rid!)
@@ -121,7 +122,10 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
                 if (error != nil) {
                     print("错误")
                 }else {
-                    deleteRemind("uid = '\(uid)' && remindId = '\(rid)'")
+                    
+                    let condition = "uid = '\(uid)' && remindId = '\(rid)'"
+                    deleteRemindMessage(condition)
+                    deleteRemind(condition)
                     deleteLCInstallation(rid!)
                 }
             })
@@ -152,9 +156,10 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
                 
                 
                 //先写入LC，然后再写入本地
+                let remindLC = AVObject(withoutDataWithClassName: "Remind", objectId: rid )
                 let followAtRemind = AVObject(className:"FollowAtRemind")
                 followAtRemind.setObject(currentUser, forKey: "uid")
-                followAtRemind.setObject(remind, forKey: "rid")
+                followAtRemind.setObject(remindLC, forKey: "rid")
                     //写入LC的follow表
                 followAtRemind.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
                     if (error != nil) {

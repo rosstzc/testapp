@@ -58,6 +58,48 @@ class RemindListFollowViewController: UIViewController, UITableViewDataSource, U
     }
     
     
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            //            messages.removeAtIndex(indexPath.row)
+            
+            let rid = reminds[indexPath.row].remindId
+            let uid = self.user.valueForKey("uid") as? String
+            
+            //给一个actionsheet来提醒
+            let actionSheet = UIAlertController(title: nil, message: "取消关注后将收不到其提醒信息", preferredStyle: UIAlertControllerStyle.ActionSheet)
+            let action1:UIAlertAction = UIAlertAction(title: "删除该提醒", style: UIAlertActionStyle.Destructive, handler: {(action) -> Void in
+                //先删除LC上关注记录，再删除本地记录
+                let query = AVQuery(className: "FollowAtRemind")
+                query.whereKey("uid", equalTo: uid)
+                query.whereKey("rid", equalTo: rid)
+                var result = query.findObjects()
+                let followOid = result[0].objectId
+                let follow = AVObject(withoutDataWithClassName: "FollowAtRemind", objectId: followOid)
+                follow.deleteInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
+                    if (error != nil) {
+                        print("错误")
+                    }else {
+                        //删除本地记录（关注记录、message记录）
+                        let condition = "uid = '\(uid)' && remindId = '\(rid)'"
+                        deleteRemindMessage(condition)
+                        deleteRemind(condition)
+                        
+                        //删除LC上的installtion
+                        deleteLCInstallation(rid!)
+                    }
+                })
+                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            })
+            let action2:UIAlertAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil )
+            actionSheet.addAction(action1)
+            actionSheet.addAction(action2)
+            presentViewController(actionSheet, animated: true, completion: nil)
+        }
+    }
+    
+    
+    
     //传递数据
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "segueShowRemind" {

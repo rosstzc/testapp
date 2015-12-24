@@ -41,7 +41,7 @@ func getRemindFromLC(rid:String, uid: String ) -> Remind{
 
 
 // 在主页每次更新关注提醒的信息
-func updateFollowRemind(remindId: String, uid: String) {
+func updateFollowRemind(uid: String) {
     
     
     var reminds:[Remind]! = []
@@ -50,16 +50,52 @@ func updateFollowRemind(remindId: String, uid: String) {
     for i in reminds {
         ridArray.append(i.remindId!)
     }
-    //从LC找到用所有关注的提醒
-    var query = AVQuery(className: "Remind")
-    query.whereKey("", containedIn: ridArray)
+    //从LC找到最近有更新的关注提醒项目 （这里有个前提是每次在LC上的remind更新都会触发FollowAtRemind表的changeKey），更新本地内容
+    let query = AVQuery(className: "FollowAtRemind")
+    query.whereKey("changeKey", equalTo: true)
+    query.whereKey("uid", equalTo: uid)
+    query.includeKey("rid")
     let result = query.findObjects()
     
-    for i in result {
+    if query.countObjects() > 0 {
         
+        //把LC最新的remind（关注的提醒）信息 copy到本地
+        for i in result {
+            let remindLC = i.objectForKey("rid")
+            
+            let ridTemp = remindLC!.objectForKey("rid") as! String
+            let title = remindLC!.objectForKey("title") as! String
+            let content = remindLC!.objectForKey("content") as! String
+            let remindTimeArray = remindLC!.objectForKey("remindTimeArray") as! NSArray
+            let updateTime = remindLC!.objectForKey("updatedAt") as! NSDate
+
+            let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+            let filter:NSPredicate = NSPredicate(format: "remindId = '\(ridTemp)' && uid = '\(uid)' && createNot = '0'")
+            let request = NSFetchRequest(entityName: "Remind")
+            request.predicate = filter
+            let temp = (try! context.executeFetchRequest(request)) as! [Remind]
+            if temp.count > 0  {
+                let remind = temp[0]
+                remind.title = title
+                remind.content = content
+                remind.remindTimeArray = remindTimeArray
+                remind.updateTime = updateTime
+                
+                do {
+                    try context.save()
+                }catch {
+                    print(error)
+                }
+                // 把处理了的项目的标记设置为false
+                i.setObject("changeKey", forKey: false)
+            }
+        }
+        AVObject.saveAllInBackground(result)  //批量保存LC
     }
     
     
+    
+
 }
 
 

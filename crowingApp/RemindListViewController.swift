@@ -327,6 +327,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewWillAppear(animated: Bool) {
         //检查是否有信息的通知信息，如果有就刷新
         updateRemindMessage2()
+        updateFollowRemind(uid) //刷新已关注的提醒信息
         if !self.isViewLoaded() {
             return
         }
