@@ -16,6 +16,8 @@ func temp2() {
 }
 
 
+
+
 //按目前逻辑，只要从本地能查到的remind，都能保证最新； 只有在本地去不到然后才需要到LC上查，因此segue那个页面操作，比如动态页，不在这个页面获取数据
 func getRemindFromLC(rid:String, uid: String ) -> Remind{
     var remind:Remind! = nil
@@ -269,7 +271,7 @@ func timeStringForMessage(time:NSDate, type:String = "message") ->String{
 }
 
 
-class Functions: UIViewController {
+class Functions: UIViewController, UIPickerViewDelegate {
     class func temp() ->String {
         print("2222")
         return "34"

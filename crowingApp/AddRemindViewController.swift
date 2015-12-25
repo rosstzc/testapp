@@ -155,10 +155,40 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
     
     
     @IBAction func addPic(sender: AnyObject) {
+        
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "拍照", style: UIAlertActionStyle.Default,  handler: { (action) -> Void in
+            self.launchCamera()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "从手机相册", style: UIAlertActionStyle.Default,  handler: { (action) -> Void in
+            self.launchPhotoLibrary()
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.Cancel,  handler: { (action) -> Void in
+        }))
+        
+        presentViewController(actionSheet, animated: true, completion: nil)
         launchCamera()
         
     }
     
+    
+    //看相册
+    func launchPhotoLibrary() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum) {
+            print ("access library")
+            
+        }
+        picker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
+        picker.allowsEditing   = false
+        self.presentViewController(picker, animated: true, completion:nil)
+    }
+    
+    
+    //触发拍照
     func launchCamera() {
         if UIImagePickerController.isSourceTypeAvailable(.Camera) {
             let picker = UIImagePickerController()
@@ -178,12 +208,22 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
         
     }
     
+
+    
     //处理图片，代理逻辑
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         pic.image = image
         picker.dismissViewControllerAnimated(true, completion: nil)
         
     }
+    
+    func saveImageToLC(image:UIImage) -> AVFile{
+        let temp = UIImageJPEGRepresentation(image, 95)
+        let imageFile = AVFile(name: "image.jpg", data: temp)
+        imageFile.save()
+        return imageFile
+    }
+
 
     
 
@@ -251,9 +291,11 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             remindLC.setObject(remindTimeArray, forKey: "remindTimeArray")
             remindLC.setObject(currentUser, forKey: "uid")
 //            remindLC.setObject(NSDate(), forKey: "sentTime")
-            
-            
-            
+            //保存图片
+            if pic.image != nil {
+                remindLC.setObject(saveImageToLC(pic.image!), forKey: "images")
+            }
+
         }
 
         
@@ -286,19 +328,18 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
                             i.setObject(true , forKey: "changeKey")
                         }
                         AVObject.saveAll(result)
+                        
+                        
+                        //删除LC的RemindTime表中对应该remind的时间
+                        let remindTemp = AVObject(withoutDataWithClassName: "Remind", objectId: self.remindId)
+                        let queryRemindTime = AVQuery(className: "RemindTime")
+                        print(self.remindId)
+                        queryRemindTime.whereKey("remindId", equalTo: remindTemp )
+                        let temp = queryRemindTime.findObjects()
+                        print(queryRemindTime.countObjects())
+                        AVObject.deleteAll(temp)
                     }
 
-                            
-                    
-                    //删除LC的RemindTime表中对应该remind的时间
-                    let remindTemp = AVObject(withoutDataWithClassName: "Remind", objectId: self.remindId)
-                    let queryRemindTime = AVQuery(className: "RemindTime")
-                    print(self.remindId)
-                    queryRemindTime.whereKey("remindId", equalTo: remindTemp )
-                    let temp = queryRemindTime.findObjects()
-                    print(queryRemindTime.countObjects())
-                    AVObject.deleteAll(temp)
-                    
                     
                     //创建 提醒时间表，把提醒时间逐个加入
                     for i in self.remindTimeArray {
@@ -310,6 +351,13 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
                         remindTime.setObject(self.remindLC, forKey: "remindId")
                         remindTime.save()
                     }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     
                     //            self.dismissViewControllerAnimated(true, completion: nil)
                     
@@ -361,7 +409,6 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
 
     }
     
-
 
     
     @IBAction func tappedCancel(sender: AnyObject) {

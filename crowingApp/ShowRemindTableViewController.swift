@@ -13,17 +13,16 @@ class ShowRemindTableViewController: UITableViewController {
 
     @IBOutlet weak var remindTitle: UILabel!
     @IBOutlet weak var remindContent: UILabel!
-    @IBOutlet weak var tappedFollow: UIButton!
+    @IBOutlet weak var image: UIImageView!
     
     @IBOutlet weak var checkContent: UITextField!
     var remind:Remind! = nil
     var reminds:[Remind] = []
     let user = NSUserDefaults.standardUserDefaults()
+    let currentUser = AVUser.currentUser()
     var remindRelation:Int = 0
     
     var remindTimeArray:NSArray = []
-    
-    @IBOutlet weak var itemEdit: UIBarButtonItem!
     
     @IBOutlet weak var checkBarButtonItem: UIBarButtonItem!
     
@@ -41,39 +40,10 @@ class ShowRemindTableViewController: UITableViewController {
         //按目前逻辑，只要从本地能查到的remind，都能保证最新； 只有在本地去不到然后才需要到LC上查，因此segue那个页面操作，比如动态页，不在这个页面获取数据
         //请看function.swift
         
-        
-       
-        
+ 
 
-        //如果是自己创建或已关注，就不会显示关注按钮
-        let uid = user.valueForKey("uid") as! String
-        let rid = remind.remindId!
-        
-        //自己创建
-        var condition:String
-        //        condition = "createNot = '1'"
-        condition = "uid = '\(uid)' && remindId = '\(rid)' && createNot = '1'"
-        reminds = getOneRemind(condition)
         
         
-        if reminds.count > 0 {
-            print("我创建的")
-            tappedFollow.setTitle("我创建的", forState: .Normal)
-            self.remindRelation = 1
-            tappedFollow.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
-        }
-        
-        condition = "uid = '\(uid)' && remindId = '\(rid)' && createNot = '0'"
-        reminds = getOneRemind(condition)
-        if reminds.count > 0 {
-            print("我关注的")
-            //非用户自己创建的提醒，隐藏编辑按钮
-            self.navigationItem.rightBarButtonItem = nil
-            tappedFollow.setTitle("已关注", forState: .Normal)
-            self.remindRelation = 1
-            tappedFollow.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
-            
-        }
         
         
         // Do any additional setup after loading the view.
