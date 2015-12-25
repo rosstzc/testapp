@@ -81,7 +81,6 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
     
     
     
-    
     //关注按钮
     @IBAction func followBtn(sender: AnyObject) {
         let uid = user.valueForKey("uid") as! String
@@ -204,7 +203,6 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
     }
     
     
-    
     //当不是创建者时，隐藏“修改”那行
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if (self.remindRelation != 2
@@ -215,12 +213,6 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
         }
     }
 
-    
-
-
-   
-
-    
     
     //传递数据
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

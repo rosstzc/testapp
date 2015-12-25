@@ -40,11 +40,18 @@ class ShowRemindTableViewController: UITableViewController {
         //按目前逻辑，只要从本地能查到的remind，都能保证最新； 只有在本地去不到然后才需要到LC上查，因此segue那个页面操作，比如动态页，不在这个页面获取数据
         //请看function.swift
         
- 
+        let rid = remind.remindId! as String
+        //从LC获取图片
+        let query = AVQuery(className: "Remind")
+        query.cachePolicy = AVCachePolicy.CacheElseNetwork
+        query.maxCacheAge = 1
+        let remindLC = query.getObjectWithId(rid)
+        if let imageFile = (remindLC.objectForKey("image") as? AVFile ){
+            let imageData:NSData? = imageFile.getData()
+            image.image = UIImage.init(data:imageData!)
+        }
 
-        
-        
-        
+
         
         // Do any additional setup after loading the view.
         if remind != nil {

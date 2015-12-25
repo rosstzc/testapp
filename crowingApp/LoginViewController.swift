@@ -11,19 +11,18 @@ import CoreData
 
 class LoginViewController: UIViewController {
     var users:[User] = []
-
+    
     
     @IBOutlet weak var txtName: UITextField!
     
     @IBOutlet weak var txtMail: UITextField!
-
+    
     @IBOutlet weak var txtPwd: UITextField!
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    let currentUser = AVUser.currentUser()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view
         
         
@@ -35,10 +34,10 @@ class LoginViewController: UIViewController {
         for i in tempp {
             print("name",i.name ," email",i.email, " pwd", i.password)
             
-        // 上面代码只是用户检查有多少个用户
+            // 上面代码只是用户检查有多少个用户
         }
-
-
+        
+        
         
     }
     
@@ -52,14 +51,8 @@ class LoginViewController: UIViewController {
         user.name = txtName.text!
         user.email = txtMail.text!
         user.password = txtPwd.text!
-        do {
-            //        user.online = false
-            try context.save()
-        } catch _ {
-        }
-        
-        
-        
+
+
         //先到LeanCloud注册
         let userLC = AVUser()
         userLC.email = txtMail.text!
@@ -68,37 +61,41 @@ class LoginViewController: UIViewController {
         userLC.setObject(txtName.text!, forKey: "nickName")
         userLC.signUpInBackgroundWithBlock({(succeeded:Bool, error:NSError?) in
             if (error == nil ) {
-                if self.currentUser != nil {
+                do {
+                    try context.save()
+                } catch _ {
+                }
+                self.setUserDefault()
+                if AVUser.currentUser() != nil {
                     self.performSegueWithIdentifier("segueLogin", sender: self)
                 }
             } else  {
-            print(error)
-            print(error?.code)
+                print(error)
+                print(error?.code)
                 if (error?.code == 125) {
                     //email地址错误
-                    
                 }
                 if (error?.code == 203) {
                     //email已经被占用
                     print("email已被占用")
-                    
                 }
-
-
             }
         })
-        
+    }
+    
+    
+    
+    
+    func setUserDefault() {
         
         // 考虑使用匿名用户，让用户首次登录
-        
-        
-        
-        
         // 把注册信息写到 NSUserDefaults
-            //待完善？ 这里应该有网络部分，并且上面写coredata是没有用户的
+        //待完善？ 这里应该有网络部分，并且上面写coredata是没有用户的
+        let currentUser = AVUser.currentUser()
         let uuid = currentUser.objectId
+        
         let userDict:NSDictionary = ["uid":uuid, "name":txtName.text!, "email":txtMail.text!, "password":txtPwd.text!]
-//        userDict.setValue(uuid, forKey: "uid")
+        //        userDict.setValue(uuid, forKey: "uid")
         
         userDefaults.setObject(uuid, forKey: "uid")
         userDefaults.setObject(txtName.text, forKey: "name")
@@ -119,16 +116,14 @@ class LoginViewController: UIViewController {
         //通过查询刚才是否增加了一个用户
         let request =  NSFetchRequest(entityName: "User")
         var tempp:[User] = []
+        let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         tempp = (try! context.executeFetchRequest(request)) as! [User]
         print("user count：",  tempp.count)
-      
-//        self.performSegueWithIdentifier("segueLogin", sender: self)
-
-        
     }
     
     
-
+    
+    
     @IBAction func btnLogin(sender: AnyObject) {
         let email = txtMail.text
         let passsword = txtPwd.text
@@ -151,7 +146,7 @@ class LoginViewController: UIViewController {
                 userDefaults.setObject(userDict?.valueForKey("password"), forKey: "password")
                 userDefaults.setBool(true, forKey:"logined")
                 userDefaults.synchronize()
-
+                
                 self.performSegueWithIdentifier("segueLogin", sender: self)
             }
             
@@ -164,24 +159,24 @@ class LoginViewController: UIViewController {
         print(user.valueForKey("logined"))
         
         if user.valueForKey("logined") as? Bool == true {
-        
-        print("555")
-
+            
+            print("555")
+            
             
         }
     }
     
-
     
     
-//    //登录成功
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "segueLogin" {
-//            let nextVC = segue.destinationViewController as! RemindListViewController
-//            
-//        }
-//        
-//    }
+    
+    //    //登录成功
+    //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    //        if segue.identifier == "segueLogin" {
+    //            let nextVC = segue.destinationViewController as! RemindListViewController
+    //
+    //        }
+    //
+    //    }
     
     
     //for leanCloud
@@ -194,11 +189,11 @@ class LoginViewController: UIViewController {
         }
     }
     
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
 }

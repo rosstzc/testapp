@@ -20,10 +20,11 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
 
     var messages:[RemindMessage] = []
     var reminds:[Remind]! = []
-    var selectMessage:RemindMessage? = nil
-    var selectMessageRemindId:String? = nil
+    var selectMessage:RemindMessage! = nil
+    var remindId:String! = nil
     let user = NSUserDefaults.standardUserDefaults()
     var uid:String = ""
+    var rid:String = ""
     
     
     override func viewDidLoad() {
@@ -41,13 +42,23 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
 //        AVOSCloud.setApplicationId("3KyUWfvl0GsYhqVdEWHldBsW", clientKey: "aQbFi4NSkbUsaKG0WUqh0tlH")
 //        let object:AVObject = AVObject()
 //        object.setObject("12333", forKey: "name3")
-//        object.save()
-        
-   
-        
+//        object.save()      
     }
 
 
+    
+    override func viewWillAppear(animated: Bool) {
+        //检查是否有信息的通知信息，如果有就刷新
+        updateRemindMessage2(uid)
+        updateFollowRemind(uid) //刷新已关注的提醒信息
+        if !self.isViewLoaded() {
+            return
+        }
+        self.tableView.reloadData()
+    }
+    
+    
+    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("numberOfRow")
@@ -105,31 +116,38 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        print(indexPath)
-        print(indexPath.row)
-        
         selectMessage = messages[indexPath.row]
-        let id = selectMessage!.objectID
-        
-        // 从coredata中找到id的行，然后修改保存
+        let objectId = selectMessage!.objectID
+        print(selectMessage.remindId)
+        print((selectMessage.remindId)! as String)
+        // 从coredata中找到id的行,标记为已读
         let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-        let request =  NSFetchRequest(entityName: "RemindMessage")
-        var temp:[RemindMessage] = []
-        temp = (try! context.executeFetchRequest(request)) as! [RemindMessage]
-        for i in temp {
-            if i.objectID == id {
-                i.state = 1
-                print(i.title)
-            }
-        }
+        let message  = (try!context.existingObjectWithID(objectId)) as! RemindMessage
+        message.state = 1
         do {
             try context.save()
         } catch _ {
         }
         
+        
+        
+//        let request =  NSFetchRequest(entityName: "RemindMessage")
+//        var temp:[RemindMessage] = []
+//        temp = (try! context.executeFetchRequest(request)) as! [RemindMessage]
+//        for i in temp {
+//            if i.objectID == id {
+//                i.state = 1
+//                print(i.title)
+//            }
+//        }
+//        do {
+//            try context.save()
+//        } catch _ {
+//        }
+        
         //就是把对应的remindId传到下一个view
-        self.selectMessageRemindId = selectMessage?.remindId
+        remindId = (selectMessage!.remindId)! as String
+        print(remindId)
 //        self.performSegueWithIdentifier("segueShowRemind", sender: self)
         self.performSegueWithIdentifier("segueShowRemind2", sender: self)
     }
@@ -144,6 +162,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
             
             //删除coredata上的数据
             let id = messages[indexPath.row].remindId! as String
+            print(id)
             deleteRemindMessage("remindId = '\(id)'")
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
             
@@ -154,10 +173,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-    
 
-
-    
     //传递数据
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "segueShowRemind2" {
@@ -165,31 +181,25 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
             let nextVC = segue.destinationViewController as! ShowRemindTableViewController
 
             //根据remindId获取该remind的数据
-            reminds = getRemindData()
+            print(remindId)
+            reminds = getOneRemind("remindId = '\(remindId)'")
             for i in reminds {
-                let remindId = i.remindId
-                let id: String = selectMessageRemindId!
-                if (remindId == id) {
-                    nextVC.remind = i
-                    break
-                }
+                nextVC.remind = i
+                print(i.remindId)
+//                break
             }
-            
         }
         
         if segue.identifier == "RemindListToCreateList" {
-            
             let nextVC = segue.destinationViewController as! RemindListCreateViewController
             nextVC.fromSegue = "RemindListVC"
-        }
-
-        
+        } 
     }
     
     
-    func updateRemindMessage2() {
+    func updateRemindMessage2(uid:String) {
         
-        reminds = getRemindData() //创建+关注的提醒
+        reminds = getRemindData(uid) //创建+关注的提醒
         var lastMessageTime: NSDate = NSDate()
         let now:NSDate = NSDate()
         if reminds.count > 0 {
@@ -271,8 +281,6 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
                 
             }
             
-
-            
             //把提醒时间最近的拿来比较 (大于上次提醒信息的发出时间，而少于当前时间)
             if (time.compare(lastMessageTime) == NSComparisonResult.OrderedDescending) && (now.compare(time) == NSComparisonResult.OrderedDescending)   {
                 
@@ -294,12 +302,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
                     try context.save()
                 } catch _ {
                 }
-                
-                
             }
-
-
-            
         }
     }
     
@@ -324,20 +327,6 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
 
 
     
-    override func viewWillAppear(animated: Bool) {
-        //检查是否有信息的通知信息，如果有就刷新
-        updateRemindMessage2()
-        updateFollowRemind(uid) //刷新已关注的提醒信息
-        if !self.isViewLoaded() {
-            return
-        }
-       self.tableView.reloadData()
-    }
-    
-    
-
-    
-    
     func getRemindMessageData2(condition:NSString) ->[RemindMessage] {
         let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         let filter:NSPredicate = NSPredicate(format: condition as String) //不显示已删除的
@@ -359,7 +348,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         return messages
     }
     
-    func getRemindData() ->[Remind] {
+    func getRemindData(uid:String) ->[Remind] {
         let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
         let request =  NSFetchRequest(entityName: "Remind")
         request.predicate = NSPredicate(format: "uid='\(uid)'")
