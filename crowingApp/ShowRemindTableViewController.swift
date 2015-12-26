@@ -13,7 +13,7 @@ class ShowRemindTableViewController: UITableViewController {
 
     @IBOutlet weak var remindTitle: UILabel!
     @IBOutlet weak var remindContent: UILabel!
-    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var checkContent: UITextField!
     var remind:Remind! = nil
@@ -42,16 +42,9 @@ class ShowRemindTableViewController: UITableViewController {
         
         let rid = remind.remindId! as String
         //从LC获取图片
-        let query = AVQuery(className: "Remind")
-        query.cachePolicy = AVCachePolicy.CacheElseNetwork
-        query.maxCacheAge = 1
-        let remindLC = query.getObjectWithId(rid)
-        if let imageFile = (remindLC.objectForKey("image") as? AVFile ){
-            let imageData:NSData? = imageFile.getData()
-            image.image = UIImage.init(data:imageData!)
-        }
-
-
+        let image = getImageFromLC("Remind", objectId: rid)
+        imageView.image  = image
+        
         
         // Do any additional setup after loading the view.
         if remind != nil {

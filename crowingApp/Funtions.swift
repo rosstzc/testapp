@@ -18,6 +18,93 @@ func temp2() {
 
 
 
+//从userDefault获取remindId
+func getRemindId(user: NSUserDefaults) -> String?{
+    var remindId:String = ""
+    if user.valueForKey("remindId") != nil {
+        remindId = user.valueForKey("remindId") as! String
+        return remindId
+    } else {
+        return nil
+    }
+}
+
+//删除LC上的图片
+func delImageFromLC(className:String, objectId:String) {
+    let query = AVQuery(className: className)
+    let object = query.getObjectWithId(objectId)
+    if let imageFile = object.objectForKey("image") as? AVFile {
+        imageFile.deleteInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
+            if error == nil {
+            
+            } else {
+                print(error)
+            }
+        })
+    }
+}
+
+//从LC获取图片(前台获取)
+func getImageFromLC(className:String, objectId:String) -> UIImage?{
+    //从LC获取图片
+    print(objectId)
+    let query = AVQuery(className: className)
+    query.cachePolicy = AVCachePolicy.CacheElseNetwork
+    query.maxCacheAge = 1 //缓存时间，单位秒
+    let object = query.getObjectWithId(objectId)
+    var imageData:NSData? = nil
+    if let imageFile = object.objectForKey("image") as? AVFile {
+        imageData = imageFile.getData()
+        return UIImage(data: imageData!)!
+    } else {
+        return nil
+    }
+}
+
+
+//从LC获取图片(后台获取)
+func getImageBackgroundFromLC(className:String, objectId:String) -> UIImage?{
+    //从LC获取图片
+    print(objectId)
+    let query = AVQuery(className: className)
+    query.cachePolicy = AVCachePolicy.CacheElseNetwork
+    query.maxCacheAge = 3600 //缓存时间，单位秒
+    let object = query.getObjectWithId(objectId)
+    var image:UIImage? = nil
+    if let imageFile = object.objectForKey("image") as? AVFile {
+        imageFile.getDataInBackgroundWithBlock({(data: NSData?, error: NSError?) in
+            print(error)
+            if error == nil {
+                //let image: UIImage = UIImage(data: data!, scale: UIScreen.mainScreen().scale)!
+                image = UIImage(data: data!)!
+                //            self.showImage(image)
+                //            self.log("成功得到图片: \(image.description)")
+            }
+            },progressBlock:{(percentDone: Int) in
+                //            self.log("加载进度: \(percentDone)%%")
+            print("")
+        })
+        return image
+    } else {
+        
+    }
+    return nil
+}
+
+
+
+
+
+
+//把照片保存到AVFile
+func saveImageToLC(image:UIImage) -> AVFile{
+    let temp = compressImage2(image)
+    let imageFile = AVFile(name: "image.jpg", data: temp)
+    imageFile.save()
+    return imageFile
+}
+
+
 //按目前逻辑，只要从本地能查到的remind，都能保证最新； 只有在本地去不到然后才需要到LC上查，因此segue那个页面操作，比如动态页，不在这个页面获取数据
 func getRemindFromLC(rid:String, uid: String ) -> Remind{
     var remind:Remind! = nil
@@ -266,6 +353,86 @@ func timeStringForMessage(time:NSDate, type:String = "message") ->String{
     }
     return timeStamp
 }
+
+
+
+//图片压缩 ->jpg
+func compressImage(image: UIImage) -> UIImage {
+    var actualHeight : CGFloat = image.size.height
+    var actualWidth : CGFloat = image.size.width
+    let maxHeight : CGFloat = 600.0
+    let maxWidth : CGFloat = 800.0
+    var imgRatio : CGFloat = actualWidth/actualHeight
+    let maxRatio : CGFloat = maxWidth/maxHeight
+    let compressionQuality : CGFloat = 0.5 //50 percent compression
+    
+    if ((actualHeight > maxHeight) || (actualWidth > maxWidth)){
+        if(imgRatio > maxRatio){
+            //adjust height according to maxWidth
+            imgRatio = maxWidth / actualWidth
+            actualHeight = imgRatio * actualHeight
+            actualWidth = maxWidth;
+        }
+        else{
+            actualHeight = maxHeight
+            actualWidth = maxWidth
+        }
+    }
+    
+    let rect = CGRectMake(0.0, 0.0, actualWidth, actualHeight)
+    UIGraphicsBeginImageContext(rect.size)
+    image.drawInRect(rect)
+    let img : UIImage = UIGraphicsGetImageFromCurrentImageContext()
+    let imageData = UIImageJPEGRepresentation(img, compressionQuality)
+    UIGraphicsEndImageContext()
+    
+    return UIImage(data: imageData!)!
+}
+
+
+//图片压缩 -> jpg
+
+func compressImage2(image:UIImage) -> NSData {
+    // Reducing file size to a 10th
+    var actualHeight : CGFloat = image.size.height
+    var actualWidth : CGFloat = image.size.width
+    let maxHeight : CGFloat = 1136.0
+    let maxWidth : CGFloat = 640.0
+    var imgRatio : CGFloat = actualWidth/actualHeight
+    let maxRatio : CGFloat = maxWidth/maxHeight
+    var compressionQuality : CGFloat = 0.5
+    
+    if (actualHeight > maxHeight || actualWidth > maxWidth){
+        if(imgRatio < maxRatio){
+            //adjust width according to maxHeight
+            imgRatio = maxHeight / actualHeight
+            actualWidth = imgRatio * actualWidth
+            actualHeight = maxHeight
+        }
+        else if(imgRatio > maxRatio){
+            //adjust height according to maxWidth
+            imgRatio = maxWidth / actualWidth
+            actualHeight = imgRatio * actualHeight
+            actualWidth = maxWidth
+        }
+        else{
+            actualHeight = maxHeight
+            actualWidth = maxWidth
+            compressionQuality = 1
+        }
+    }
+    
+    let rect = CGRectMake(0.0, 0.0, actualWidth, actualHeight)
+    UIGraphicsBeginImageContext(rect.size)
+    image.drawInRect(rect)
+    let img = UIGraphicsGetImageFromCurrentImageContext()
+    let imageData = UIImageJPEGRepresentation(img, compressionQuality)
+    UIGraphicsEndImageContext()
+    
+    return imageData!
+}
+
+
 
 
 class Functions: UIViewController, UIPickerViewDelegate {

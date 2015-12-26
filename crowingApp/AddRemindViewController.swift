@@ -21,11 +21,11 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
     var remind:Remind! = nil
     var remindId:String = ""
     var messages:[RemindMessage] = []
-
     
     var remindLC = AVObject(className: "Remind")
     
     let user = NSUserDefaults.standardUserDefaults()
+
     let currentUser = AVUser.currentUser()
     
     @IBOutlet weak var pic: UIImageView!
@@ -43,36 +43,17 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        remindId = remind.remindId! as String
-        print(remindId)
+        
+
         // Do any additional setup after loading the view.
         
         //通知初始化设置
 //        setupNotificationSettings()  //不用本地提醒，所以屏蔽它
         
         //获取用户uid
+        
         print("read userDefault",user.valueForKey("name"))
         print("uuid",user.valueForKey("uid"))
-        
-//        //展示刚刚上传的图片，为保证其切换view不丢失，把其放在userDefault
-//        if let uploadImage = user.valueForKey("upLoadImageData") {
-//            pic.image = UIImage.init(data: uploadImage as! NSData)
-//            pic.clipsToBounds = true
-//            pic.layer.cornerRadius = pic.frame.size.width / 2
-//            pic.clipsToBounds = true
-//        }
-    
-        
-        //从LC获取图片
-        let query = AVQuery(className: "Remind")
-        query.cachePolicy = AVCachePolicy.CacheElseNetwork
-        query.maxCacheAge = 3600
-        print(remindId)
-        let remindLC = query.getObjectWithId(remindId)
-        if let imageFile = (remindLC.objectForKey("image") as? AVFile ){
-            let imageData:NSData? = imageFile.getData()
-            pic.image = UIImage.init(data:imageData!)
-        }
         
         
         
@@ -84,6 +65,19 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             user.setObject(remind.remindTimeArray, forKey: "remindTimeArray")
             //标题变为“修改提醒”
             self.title = "修改提醒"
+            user.synchronize()
+        
+            //从LC获取图片
+            remindId = remind.remindId! as String
+            pic.image = getImageFromLC("Remind", objectId: remindId)
+            user.setObject(UIImageJPEGRepresentation(pic.image!, 100), forKey: "remindPic")
+            user.synchronize()
+//            pic.image
+            
+            
+            if pic.image == nil {
+                pic.image = UIImage(named: "camera@1.5x")
+            }
         }
         
         //检查userDefault有没有remind记录，如果有就赋值到这里 （在提交保存时，要清空userDefault的 remind记录）
@@ -101,7 +95,6 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
         }
     
         remindTimeArray = user.arrayForKey("remindTimeArray")! 
-        
     }
     
 
@@ -211,8 +204,8 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
         else {
             print("no camera")
         }
-        
     }
+    
     
     //处理图片，代理逻辑
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
@@ -221,17 +214,9 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
         pic.image = image
         let temp = UIImageJPEGRepresentation(image, 95)
         user.setObject(temp, forKey: "upLoadImageData")
-//        user.setObject(temp, forKey: "upLoadImageDataShow")
 
         user.synchronize()
         picker.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func saveImageToLC(image:UIImage) -> AVFile{
-        let temp = UIImageJPEGRepresentation(image, 95)
-        let imageFile = AVFile(name: "image.jpg", data: temp)
-        imageFile.save()
-        return imageFile
     }
 
 
@@ -287,6 +272,9 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             remindLC.setObject(textViewContent.text!, forKey: "content")
             remindLC.setObject(remindTimeArray, forKey: "remindTimeArray")
 //            remindLC.setObject(NSDate(), forKey: "sentTime")
+            
+            //先把原来图片删除(只有修改流程才又需要删除老的照片)
+            delImageFromLC("Remind", objectId: remindId)
 
         } else { //新创建
             let uid = user.valueForKey("uid") as? String
@@ -309,10 +297,10 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
 //            remindLC.setObject(NSDate(), forKey: "sentTime")
         }
 
-        //保存图片
+        //保存图片到LC的AVFile
         if pic.image != nil {
-            let file:AVFile = saveImageToLC(pic.image!)
-            remindLC.setObject(file, forKey: "image")
+            let fileData = saveImageToLC(pic.image!)
+            remindLC.setObject(fileData, forKey: "image")
         }
         //触发先保存到LC，如果LC成功再保存本地
         remindLC.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
@@ -344,10 +332,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
                             }
                             AVObject.saveAll(result)
                         }
-
-                        
-
-                        
+        
                         
                         //删除LC的RemindTime表中对应该remind的时间
                         let remindTemp = AVObject(withoutDataWithClassName: "Remind", objectId: self.remindId)

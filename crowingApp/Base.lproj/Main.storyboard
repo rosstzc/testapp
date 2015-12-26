@@ -837,7 +837,7 @@
                     <connections>
                         <outlet property="checkBarButtonItem" destination="Yrm-Ao-gwK" id="lii-Ae-dXP"/>
                         <outlet property="checkContent" destination="7VV-GK-itV" id="voE-IF-0Rq"/>
-                        <outlet property="image" destination="Qex-Kd-jts" id="yUG-oc-zQv"/>
+                        <outlet property="imageView" destination="Qex-Kd-jts" id="dwR-cl-VW6"/>
                         <outlet property="remindContent" destination="ffl-Sk-McX" id="FTU-B2-fkF"/>
                         <outlet property="remindTitle" destination="RnK-8p-2C1" id="g3z-Bw-OU8"/>
                     </connections>

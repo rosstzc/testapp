@@ -105,14 +105,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "crowingApp/AddRemindViewController.swift"
-            timestampString = "472751258.00804"
+            filePath = "crowingApp/Funtions.swift"
+            timestampString = "472807693.781119"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "5">
+            startingLineNumber = "363"
+            endingLineNumber = "363"
+            landmarkName = "compressImage(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -122,12 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "crowingApp/AddRemindViewController.swift"
-            timestampString = "472751245.799739"
+            timestampString = "472808695.344035"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
+            landmarkName = "tappedSave(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -137,30 +137,110 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "crowingApp/AddRemindViewController.swift"
-            timestampString = "472751993.388951"
+            filePath = "crowingApp/Funtions.swift"
+            timestampString = "472806922.574899"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "340"
-            endingLineNumber = "340"
-            landmarkName = "tappedSave(_:)"
-            landmarkType = "5">
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "delImageFromLC(_:objectId:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "crowingApp/AddRemindViewController.swift"
-            timestampString = "472752203.285477"
+            filePath = "crowingApp/Funtions.swift"
+            timestampString = "472807164.53671"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "353"
-            endingLineNumber = "353"
-            landmarkName = "tappedSave(_:)"
-            landmarkType = "5">
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "delImageFromLC(_:objectId:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "crowingApp.delImageFromLC (Swift.String, objectId : Swift.String) -&gt; ()"
+                  moduleName = "crowingApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miketam/Documents/apps/crowingApp/crowingApp/Funtions.swift"
+                  timestampString = "472808828.719826"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "1065">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "crowingApp.(delImageFromLC (Swift.String, objectId : Swift.String) -&gt; ()).(closure #1)"
+                  moduleName = "crowingApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miketam/Documents/apps/crowingApp/crowingApp/Funtions.swift"
+                  timestampString = "472808828.720135"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "30">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "crowingApp/Funtions.swift"
+            timestampString = "472807691.698604"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "delImageFromLC(_:objectId:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "crowingApp.delImageFromLC (Swift.String, objectId : Swift.String) -&gt; ()"
+                  moduleName = "crowingApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miketam/Documents/apps/crowingApp/crowingApp/Funtions.swift"
+                  timestampString = "472808828.721667"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "1301">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "crowingApp.(delImageFromLC (Swift.String, objectId : Swift.String) -&gt; ()).(closure #1)"
+                  moduleName = "crowingApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miketam/Documents/apps/crowingApp/crowingApp/Funtions.swift"
+                  timestampString = "472808828.721982"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "242">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
