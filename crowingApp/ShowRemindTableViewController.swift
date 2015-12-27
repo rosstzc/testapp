@@ -31,6 +31,9 @@ class ShowRemindTableViewController: UITableViewController {
         super.viewDidLoad()
         //显示toolbar，用程序增加toolbar
 //        self.navigationController?.setToolbarHidden(false, animated: true)
+        print(remind)
+        
+        print(remind.remindId)
 
         tableView.dataSource = self
         tableView.delegate  = self
@@ -41,11 +44,19 @@ class ShowRemindTableViewController: UITableViewController {
         //请看function.swift
         
         let rid = remind.remindId! as String
+        
         //从LC获取图片
-        let image = getImageFromLC("Remind", objectId: rid)
-        imageView.image  = image
+        if user.valueForKey("imageTemp") != nil {
+            let image = UIImage(data: user.valueForKey("imageTemp") as! NSData)
+            imageView.image  = image
+            user.setObject(nil, forKey: "imageTemp")
+            user.synchronize()
+        } else {
+            let image = getImageFromLC("Remind", objectId: rid)
+            imageView.image  = image
+        }
         
-        
+     
         // Do any additional setup after loading the view.
         if remind != nil {
             remindTitle.text = remind?.title
@@ -70,8 +81,7 @@ class ShowRemindTableViewController: UITableViewController {
     //为修改提醒而设计回退，只有从这个页面过去addRemind才会调用unwind
     @IBAction func close(sugue:UIStoryboardSegue) {
         print("unwind close")
-        
-        //        remind = nil
+
         //        self.view.setNeedsDisplay()
     }
     

@@ -16,6 +16,29 @@ func temp2() {
 }
 
 
+// 删除一个remind
+func deleteOneRemind(uid:String, rid:String) {
+    let condition = "uid = '\(uid)' && remindId = '\(rid)'"
+    deleteRemindMessage(condition)
+    deleteRemind(condition)
+    deleteLCInstallation(rid)
+    deleteRemindLC(rid) //如果只有创建者1人订阅，删除时也删除LC上记录
+}
+
+
+
+
+//如果只有创建者1人订阅，删除时也删除LC上记录
+func deleteRemindLC(rid:String) {
+    let query = AVQuery(className: "FollowAtRemind")
+    query.whereKey("rid", equalTo: rid)
+    if query.countObjects() == 0 {
+        let remind = AVObject(withoutDataWithClassName: "Remind", objectId: rid)
+        remind.deleteInBackground()
+    }
+    
+}
+
 
 
 //从userDefault获取remindId
@@ -30,7 +53,7 @@ func getRemindId(user: NSUserDefaults) -> String?{
 }
 
 //删除LC上的图片
-func delImageFromLC(className:String, objectId:String) {
+func deleteImageFromLC(className:String, objectId:String) {
     let query = AVQuery(className: className)
     let object = query.getObjectWithId(objectId)
     if let imageFile = object.objectForKey("image") as? AVFile {
@@ -215,6 +238,7 @@ func deleteRemind(condition:String) {
     print(condition)
     let request =  NSFetchRequest(entityName: "Remind")
     request.predicate = NSPredicate(format: condition)
+    print(condition)
     var temp:[Remind] = []
     temp = (try! context.executeFetchRequest(request)) as! [Remind]
     if temp.count > 0 {

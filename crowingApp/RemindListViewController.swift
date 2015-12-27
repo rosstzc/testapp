@@ -254,20 +254,22 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
                     default:
                         break
                     }
+                    let timeDate:NSDate
                     if intervalWeekDay > nowWeekDay {
                         //大于当前日
-                        continue
+                        timeDate = now - (intervalWeekDay - nowWeekDay + 7).day
                     } else {
-                        let timeDate:NSDate = now-(nowWeekDay - intervalWeekDay).day
-                        var timeString = stringFromDateWithFormat(timeDate, format: "yyyy-MM-dd")
-                        timeString = timeString + " " + time
-                        tempTimeArray.append(timeString)
+                        timeDate = now - (nowWeekDay - intervalWeekDay).day
                     }
+                    var timeString = stringFromDateWithFormat(timeDate, format: "yyyy-MM-dd")
+                    timeString = timeString + " " + time
+                    tempTimeArray.append(timeString)
                 }
                 
             }
             
             //给临时数组的时间排序，找到时间最大但少于当前时间的那个时间
+            print(i.remindId)
             var time = Functions.dateFromString(tempTimeArray[0])
             for x in tempTimeArray {
                 let tempTime = Functions.dateFromString(x)

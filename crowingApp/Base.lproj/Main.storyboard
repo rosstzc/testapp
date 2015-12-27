@@ -229,12 +229,14 @@
                                     <rect key="frame" x="0.0" y="64" width="600" height="329"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aUn-HW-HGY">
-                                            <rect key="frame" x="112" y="186" width="44" height="37"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aUn-HW-HGY">
+                                            <rect key="frame" x="54" y="182" width="45" height="46"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="44" id="bga-rr-bUS"/>
+                                                <constraint firstAttribute="width" constant="45" id="bga-rr-bUS"/>
                                             </constraints>
-                                            <state key="normal" title="+"/>
+                                            <state key="normal" title="+">
+                                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
                                             <connections>
                                                 <action selector="addPic:" destination="z5f-8i-7qd" eventType="touchUpInside" id="51W-fY-zKb"/>
                                             </connections>
@@ -265,7 +267,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera@1.5x" translatesAutoresizingMaskIntoConstraints="NO" id="Ijx-S4-7Rp">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ijx-S4-7Rp">
                                             <rect key="frame" x="54" y="182" width="45" height="46"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="45" id="4nE-QV-Nsl"/>
@@ -280,14 +282,14 @@
                                         <constraint firstItem="LBg-n0-5Ux" firstAttribute="leading" secondItem="BRE-Em-9v4" secondAttribute="leading" id="IzU-fZ-aEC"/>
                                         <constraint firstItem="LBg-n0-5Ux" firstAttribute="leading" secondItem="coS-Jy-kH1" secondAttribute="leading" constant="20" id="R7y-mW-dG5"/>
                                         <constraint firstItem="Ijx-S4-7Rp" firstAttribute="top" secondItem="LBg-n0-5Ux" secondAttribute="bottom" constant="8" symbolic="YES" id="RH2-Iy-gcP"/>
-                                        <constraint firstItem="aUn-HW-HGY" firstAttribute="leading" secondItem="Ijx-S4-7Rp" secondAttribute="trailing" constant="13" id="TRd-ns-omq"/>
+                                        <constraint firstItem="aUn-HW-HGY" firstAttribute="leading" secondItem="Ijx-S4-7Rp" secondAttribute="trailing" constant="-45" id="TRd-ns-omq"/>
                                         <constraint firstItem="sTu-6D-ODR" firstAttribute="top" secondItem="LBg-n0-5Ux" secondAttribute="bottom" constant="94" id="VU5-AQ-ilb"/>
                                         <constraint firstItem="LBg-n0-5Ux" firstAttribute="trailing" secondItem="BRE-Em-9v4" secondAttribute="trailing" id="VfS-JY-omN"/>
                                         <constraint firstItem="BRE-Em-9v4" firstAttribute="top" secondItem="coS-Jy-kH1" secondAttribute="topMargin" id="mZt-W1-s09"/>
                                         <constraint firstItem="LBg-n0-5Ux" firstAttribute="top" secondItem="coS-Jy-kH1" secondAttribute="top" constant="57" id="o8j-fr-Fwc"/>
                                         <constraint firstItem="LBg-n0-5Ux" firstAttribute="centerX" secondItem="coS-Jy-kH1" secondAttribute="centerX" id="sl6-7p-msU"/>
                                         <constraint firstItem="aUn-HW-HGY" firstAttribute="centerY" secondItem="Ijx-S4-7Rp" secondAttribute="centerY" id="y8z-tZ-zxR"/>
-                                        <constraint firstItem="aUn-HW-HGY" firstAttribute="top" secondItem="LBg-n0-5Ux" secondAttribute="bottom" constant="12" id="zyB-02-OBO"/>
+                                        <constraint firstItem="aUn-HW-HGY" firstAttribute="top" secondItem="LBg-n0-5Ux" secondAttribute="bottom" constant="8" id="zyB-02-OBO"/>
                                     </constraints>
                                 </view>
                                 <prototypes>
@@ -350,7 +352,7 @@
                                 </state>
                                 <connections>
                                     <action selector="tappedCancel:" destination="z5f-8i-7qd" eventType="touchUpInside" id="3zg-TG-SZK"/>
-                                    <segue destination="DjL-dl-w8n" kind="unwind" unwindAction="close:" id="r6i-aH-2bK"/>
+                                    <segue destination="DjL-dl-w8n" kind="unwind" identifier="cancelSegue" unwindAction="close:" id="r6i-aH-2bK"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -366,7 +368,7 @@
                                 </state>
                                 <connections>
                                     <action selector="tappedSave:" destination="z5f-8i-7qd" eventType="touchUpInside" id="Zi6-bq-IbI"/>
-                                    <segue destination="DjL-dl-w8n" kind="unwind" unwindAction="close:" id="EYa-M7-vFW"/>
+                                    <segue destination="DjL-dl-w8n" kind="unwind" identifier="saveSegue" unwindAction="close:" id="EYa-M7-vFW"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -381,7 +383,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5mP-Ay-l1v" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="DjL-dl-w8n" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3164" y="2033"/>
+            <point key="canvasLocation" x="3268" y="2011"/>
         </scene>
         <!--Add Month View Controller-->
         <scene sceneID="lML-xq-LDn">
@@ -720,20 +722,20 @@
                             <rect key="frame" x="0.0" y="64" width="600" height="424"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="张三 创建于 2015-3-3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VmK-dX-t1z">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="张三 创建于 2015-3-3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VmK-dX-t1z">
                                     <rect key="frame" x="32" y="117" width="168" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="先做6分钟拉伸，然后慢跑5分钟，再跑30分钟" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffl-Sk-McX">
-                                    <rect key="frame" x="33" y="156" width="536" height="21"/>
+                                    <rect key="frame" x="33" y="143" width="536" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="144也关注该提醒" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b15-ND-pUf">
-                                    <rect key="frame" x="438" y="184" width="131" height="21"/>
+                                    <rect key="frame" x="438" y="247" width="131" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -763,10 +765,10 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qex-Kd-jts">
-                                    <rect key="frame" x="27" y="203" width="194" height="109"/>
+                                    <rect key="frame" x="32" y="220" width="196" height="48"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="194" id="icf-MK-EQd"/>
-                                        <constraint firstAttribute="height" constant="109" id="xP4-zU-6jx"/>
+                                        <constraint firstAttribute="width" constant="196" id="icf-MK-EQd"/>
+                                        <constraint firstAttribute="height" constant="48" id="xP4-zU-6jx"/>
                                     </constraints>
                                 </imageView>
                             </subviews>
@@ -774,10 +776,10 @@
                             <constraints>
                                 <constraint firstItem="Qex-Kd-jts" firstAttribute="leading" secondItem="VfF-WZ-BMx" secondAttribute="leading" constant="27" id="Bts-bA-b2m"/>
                                 <constraint firstItem="RnK-8p-2C1" firstAttribute="top" secondItem="VfF-WZ-BMx" secondAttribute="top" constant="82" id="Eai-nf-WBC"/>
-                                <constraint firstItem="Qex-Kd-jts" firstAttribute="leading" secondItem="VfF-WZ-BMx" secondAttribute="leading" constant="27" id="PCC-6c-AnR"/>
-                                <constraint firstItem="VmK-dX-t1z" firstAttribute="leading" secondItem="VfF-WZ-BMx" secondAttribute="leading" constant="33" id="PJL-B1-bJ4"/>
+                                <constraint firstItem="Qex-Kd-jts" firstAttribute="leading" secondItem="VfF-WZ-BMx" secondAttribute="leading" constant="32" id="PCC-6c-AnR"/>
+                                <constraint firstItem="VmK-dX-t1z" firstAttribute="leading" secondItem="VfF-WZ-BMx" secondAttribute="leading" constant="32" id="PJL-B1-bJ4"/>
                                 <constraint firstItem="RnK-8p-2C1" firstAttribute="leading" secondItem="VfF-WZ-BMx" secondAttribute="leading" constant="32" id="Re6-dM-16P"/>
-                                <constraint firstItem="b15-ND-pUf" firstAttribute="top" secondItem="ffl-Sk-McX" secondAttribute="bottom" constant="28" id="S6U-T8-F8P"/>
+                                <constraint firstItem="b15-ND-pUf" firstAttribute="top" secondItem="ffl-Sk-McX" secondAttribute="bottom" constant="83" id="S6U-T8-F8P"/>
                                 <constraint firstItem="VmK-dX-t1z" firstAttribute="top" secondItem="RnK-8p-2C1" secondAttribute="bottom" constant="14" id="TVg-Zn-DWq"/>
                                 <constraint firstAttribute="bottom" secondItem="7VV-GK-itV" secondAttribute="bottom" constant="74" id="Vmp-vB-VDH"/>
                                 <constraint firstAttribute="trailing" secondItem="7VV-GK-itV" secondAttribute="trailing" constant="316" id="W6B-n4-cm6"/>
@@ -786,12 +788,12 @@
                                 <constraint firstAttribute="trailing" secondItem="ffl-Sk-McX" secondAttribute="trailing" constant="31" id="ccR-2G-bxK"/>
                                 <constraint firstItem="ffl-Sk-McX" firstAttribute="leading" secondItem="VfF-WZ-BMx" secondAttribute="leading" constant="33" id="dCg-JV-Cbb"/>
                                 <constraint firstAttribute="bottom" secondItem="iPl-Nr-daz" secondAttribute="bottom" constant="29" id="fUA-Dy-aYJ"/>
-                                <constraint firstAttribute="trailing" secondItem="VmK-dX-t1z" secondAttribute="trailing" constant="399" id="gE9-pS-TZy"/>
-                                <constraint firstItem="ffl-Sk-McX" firstAttribute="top" secondItem="VmK-dX-t1z" secondAttribute="bottom" constant="21" id="igN-Vm-2rj"/>
+                                <constraint firstAttribute="trailing" secondItem="VmK-dX-t1z" secondAttribute="trailing" constant="400" id="gE9-pS-TZy"/>
+                                <constraint firstItem="ffl-Sk-McX" firstAttribute="top" secondItem="VmK-dX-t1z" secondAttribute="bottom" constant="8" id="igN-Vm-2rj"/>
                                 <constraint firstItem="7VV-GK-itV" firstAttribute="leading" secondItem="VfF-WZ-BMx" secondAttribute="leading" constant="18" id="jgd-Vq-hS4"/>
                                 <constraint firstItem="Qex-Kd-jts" firstAttribute="width" secondItem="VfF-WZ-BMx" secondAttribute="width" id="q4i-1A-90l"/>
                                 <constraint firstItem="Qex-Kd-jts" firstAttribute="leading" secondItem="ffl-Sk-McX" secondAttribute="leading" id="tvD-2P-uXS"/>
-                                <constraint firstItem="Qex-Kd-jts" firstAttribute="top" secondItem="ffl-Sk-McX" secondAttribute="bottom" constant="26" id="uiC-1p-12d"/>
+                                <constraint firstItem="Qex-Kd-jts" firstAttribute="top" secondItem="ffl-Sk-McX" secondAttribute="bottom" constant="56" id="uiC-1p-12d"/>
                                 <constraint firstItem="iPl-Nr-daz" firstAttribute="leading" secondItem="VfF-WZ-BMx" secondAttribute="leading" constant="18" id="yWT-lh-0DY"/>
                             </constraints>
                             <variation key="default">
@@ -1671,7 +1673,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="camera@1.5x" width="50" height="50"/>
         <image name="fangbingbing" width="320" height="568"/>
         <image name="geisha" width="25" height="25"/>
         <image name="torii" width="25" height="25"/>

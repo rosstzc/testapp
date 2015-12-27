@@ -25,6 +25,7 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
 
+
         
         //如果是自己创建或已关注，就不会显示关注按钮
         let uid = user.valueForKey("uid") as! String
@@ -84,7 +85,7 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
     //关注按钮
     @IBAction func followBtn(sender: AnyObject) {
         let uid = user.valueForKey("uid") as! String
-        let rid = remind.remindId
+        let rid = remind.remindId!
         
         //已关注，去取消关注
         if self.remindRelation == 1 {
@@ -105,7 +106,7 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
                     deleteRemind(condition)
                     
                     //删除LC上的installtion
-                    deleteLCInstallation(rid!)
+                    deleteLCInstallation(rid)
                 }
             })
 
@@ -114,6 +115,7 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
         
         //自己创建，要删除
         if self.remindRelation == 2 {
+            
             //执行删除本地记录，不需要删除LC上的记录（在LC要做个标记）。但记得删除intallation的订阅； （用户下次看到该提醒将当非自己的提醒处理）
             let remindTemp = AVObject(withoutDataWithClassName: "Remind", objectId: rid)
             remindTemp.setObject("1", forKey: "deleteKey")
@@ -121,13 +123,16 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
                 if (error != nil) {
                     print("错误")
                 }else {
+                    deleteOneRemind(uid,rid: rid)
                     
-                    let condition = "uid = '\(uid)' && remindId = '\(rid)'"
-                    deleteRemindMessage(condition)
-                    deleteRemind(condition)
-                    deleteLCInstallation(rid!)
+                    //返回2层页面
+                    print(self.navigationController?.viewControllers.count)
+                    let level:Int = (self.navigationController?.viewControllers.count)!
+                    self.navigationController?.popToViewController((self.navigationController?.viewControllers[level - 3 ])!, animated: true) //
+
                 }
             })
+
         }
         
         //去关注
@@ -166,7 +171,7 @@ class RemindInfoTableViewController: UITableViewController,UIActionSheetDelegate
                     }else {
                         
                         //写入LC的installation表
-                        addLCInstallation(rid!)
+                        addLCInstallation(rid)
                         
                         // 写入本地
                         do {

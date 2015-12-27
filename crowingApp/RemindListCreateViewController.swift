@@ -111,10 +111,7 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
                     if (error != nil) {
                         print("错误")
                     }else {
-                        let condition = "uid = '\(uid)' && remindId = '\(rid)'"
-                        deleteRemind(condition)
-                        deleteLCInstallation(rid!)
-                        deleteRemindMessage(condition)
+                        deleteOneRemind(uid!,rid: rid!)
                     }
                 })
                 self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -132,7 +129,6 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
         let storyboard = UIStoryboard(name: "Main", bundle: nil);
         let vc = storyboard.instantiateViewControllerWithIdentifier("tab") as UIViewController
         self.presentViewController(vc, animated: true, completion: nil)
-        
     }
     
     
