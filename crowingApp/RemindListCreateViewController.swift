@@ -111,7 +111,7 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
                     if (error != nil) {
                         print("错误")
                     }else {
-                        deleteOneRemind(uid!,rid: rid!)
+                        deleteOneRemind(uid!,rid: rid!) 
                     }
                 })
                 self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
