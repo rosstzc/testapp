@@ -11,8 +11,10 @@ import CoreData
 
 class ShowRemindTableViewController: UITableViewController {
 
+
     @IBOutlet weak var remindTitle: UILabel!
-    @IBOutlet weak var remindContent: UILabel!
+    @IBOutlet weak var remindContent: UITextView!
+    
     @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var checkContent: UITextField!
@@ -30,7 +32,7 @@ class ShowRemindTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //显示toolbar，用程序增加toolbar
-//        self.navigationController?.setToolbarHidden(false, animated: true)
+        self.navigationController?.setToolbarHidden(false, animated: true)
         print(remind)
         
         print(remind.remindId)
@@ -39,6 +41,13 @@ class ShowRemindTableViewController: UITableViewController {
         tableView.delegate  = self
         
         self.navigationItem.title = remind.title
+        
+        remindContent.scrollEnabled = false
+
+        
+//        imageView.image = UIImage(named: "fangbingbing")
+        
+        
         
         //按目前逻辑，只要从本地能查到的remind，都能保证最新； 只有在本地去不到然后才需要到LC上查，因此segue那个页面操作，比如动态页，不在这个页面获取数据
         //请看function.swift
@@ -61,6 +70,7 @@ class ShowRemindTableViewController: UITableViewController {
         if remind != nil {
             remindTitle.text = remind?.title
             remindContent.text = remind?.content
+            
         }
         
         //获取所有提醒时间
@@ -96,6 +106,12 @@ class ShowRemindTableViewController: UITableViewController {
             nextVC.remind = self.remind
         }
         
+        if segue.identifier == "segueToCheckIn" {
+            let nextVC = segue.destinationViewController as! CheckInViewController
+            nextVC.remindId = remind.remindId!
+            nextVC.remindTitle = remind.title!
+        }
+        
     }
     
     
@@ -107,6 +123,8 @@ class ShowRemindTableViewController: UITableViewController {
         
         
     }
+    
+
     
 
     

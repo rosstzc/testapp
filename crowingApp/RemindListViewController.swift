@@ -26,6 +26,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     var uid:String = ""
     var rid:String = ""
     
+    let currentUser = AVUser.currentUser()
     
     override func viewDidLoad() {
         

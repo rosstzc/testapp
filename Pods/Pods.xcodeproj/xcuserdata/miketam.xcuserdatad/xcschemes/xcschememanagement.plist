@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SlackTextViewController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SwiftDate.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>4B7A7429CA1C710F7BF93BA10CE0B60C</key>
+		<key>0AFE5C5D048CC1FE8DF789B00F95DE7F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5CFF0E856088A5E4C3258B63F57C590F</key>
+		<key>8295627E384A6D14230236FF2CAB790C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9CF5D5ABC674B247EEC09419E6D84BAE</key>
 		<dict>
 			<key>primary</key>
 			<true/>

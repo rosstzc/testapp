@@ -4,4 +4,5 @@ use_frameworks!
 
 pod 'SwiftDate'
 pod 'AVOSCloud'
+pod 'SlackTextViewController'
 

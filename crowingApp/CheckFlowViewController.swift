@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 
-class CheckViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class CheckFlowViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
         
     @IBOutlet weak var tableView: UITableView!
     

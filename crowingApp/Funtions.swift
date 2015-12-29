@@ -16,6 +16,9 @@ func temp2() {
 }
 
 
+
+
+
 // 删除一个remind
 func deleteOneRemind(uid:String, rid:String) {
     let condition = "uid = '\(uid)' && remindId = '\(rid)'"
@@ -455,6 +458,8 @@ func compressImage2(image:UIImage) -> NSData {
     
     return imageData!
 }
+
+
 
 
 
