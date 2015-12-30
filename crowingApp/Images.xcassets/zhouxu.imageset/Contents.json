@@ -2,13 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "zhouxu.jpg"
+      "filename" : "zhouxu.jpg",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "zhouxu@2x.jpg"
+      "filename" : "zhouxu@2x.jpg",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",

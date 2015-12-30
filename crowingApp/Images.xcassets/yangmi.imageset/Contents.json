@@ -2,13 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "yangmi.jpg"
+      "filename" : "yangmi.jpg",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "yangmi@2x.jpg"
+      "filename" : "yangmi@2x.jpg",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",

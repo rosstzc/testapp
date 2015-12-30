@@ -100,13 +100,10 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             textViewContent.text = placeHolder
             textViewContent.textColor = UIColor.lightGrayColor()
         }
-    
-        remindTimeArray = user.arrayForKey("remindTimeArray")! 
+        remindTimeArray = user.arrayForKey("remindTimeArray")!
     }
     
-
-
-    
+ 
     
     func textViewDidBeginEditing(textView: UITextView) {
         if textViewContent.text == placeHolder {

@@ -16,7 +16,23 @@ func temp2() {
 }
 
 
-
+//同步发布时间线内容
+func sendStatus(type:String, index:String) {
+    let status = AVStatus()
+    //        var data:NSMutableDictionary
+    //        data = [
+    //            "type222" : "checkIn",
+    //            "data" : ["objectId: 333"],
+    //        ]
+    //用户发动态(自定义的分类type和对应id，方便后续获取对应数据)
+    status.data = ["statusType":type, "objectIndex":index]
+    AVStatus.sendStatusToFollowers(status, andCallback: {(succeeded: Bool, error: NSError?) in
+        if (error != nil) {
+            print(error)
+        } else {
+        }
+    })
+}
 
 
 // 删除一个remind

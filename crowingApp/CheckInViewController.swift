@@ -25,13 +25,58 @@ class CheckInViewController: UIViewController,UITextViewDelegate,UIImagePickerCo
     override func viewDidLoad() {
         super.viewDidLoad()
         self.content.delegate = self
-
         content.text = "#\(remindTitle)#打卡"
 
         imageView.image = UIImage(named: "fangbingbing")  //默认icon
-        
-        
     }
+    
+    
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == "segueSave" {
+            //如果未选择时间，或者标题为空，就阻止segue跳转
+            let checkIn = AVObject(className: "CheckIn")
+            let remind = AVObject(withoutDataWithClassName: "Remind", objectId: remindId)
+            let currentUser = AVUser.currentUser()
+            
+
+            checkIn.setObject(content.text, forKey: "content")
+            checkIn.setObject(currentUser, forKey: "uid")
+            checkIn.setObject(remind, forKey: "rid")
+            if imageUpload != nil  {
+                let fileData = saveImageToLC(imageUpload!)
+                checkIn.setObject(fileData, forKey: "image")
+            }
+            
+            if content.text != "" || imageUpload != nil {
+                checkIn.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
+                    if (error != nil) {
+                        print(error)
+                    } else {
+                        remind.incrementKey("checks")
+                        remind.saveInBackground()
+                        //同步时间线
+                        sendStatus("checkIn", index: checkIn.objectId)
+                    }
+                    
+                    
+                })
+            }
+        }
+        
+        
+        if identifier == "segueCancel" {
+            //如果未选择时间，或者标题为空，就阻止segue跳转
+            
+
+                    }
+        return true
+    }
+    
+    
+    
+
+    
     
     
     @IBAction func addPhotoAction(sender: AnyObject) {
@@ -51,7 +96,7 @@ class CheckInViewController: UIViewController,UITextViewDelegate,UIImagePickerCo
         presentViewController(actionSheet, animated: true, completion: nil)
         
     }
-    
+
     
 
     
@@ -86,40 +131,6 @@ class CheckInViewController: UIViewController,UITextViewDelegate,UIImagePickerCo
     }
     
 
-    
-    
-    
-    
-    @IBAction func saveCheckIn(sender: AnyObject) {
-        let checkIn = AVObject(className: "CheckIn")
-        let currentUser = AVUser.currentUser()
-        print(currentUser)
-        checkIn.setObject(content.text, forKey: "content")
-        
-        checkIn.setObject(currentUser, forKey: "uid")
-        print(remindId)
-        let remind = AVObject(withoutDataWithClassName: "Remind", objectId: remindId)
-        checkIn.setObject(remind, forKey: "rid")
-        
-        if imageUpload != nil  {
-            let fileData = saveImageToLC(imageUpload!)
-            checkIn.setObject(fileData, forKey: "image")
-        }
-        if content.text != "" && imageUpload != nil {
-            checkIn.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
-                if (error != nil) {
-                    print(error)
-                } else {
-                }
-            })
-        }
-
-    }
-    
-    
-    
-    @IBAction func cancelCheckIn(sender: AnyObject) {
-    }
     
     
     //处理图片，代理逻辑

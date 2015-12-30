@@ -2,13 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "origami.png"
+      "filename" : "origami.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "origami@2x.png"
+      "filename" : "origami@2x.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",

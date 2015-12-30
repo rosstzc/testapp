@@ -2,13 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "wangfei.jpg"
+      "filename" : "wangfei.jpg",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "wangfei@2x.jpg"
+      "filename" : "wangfei@2x.jpg",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
