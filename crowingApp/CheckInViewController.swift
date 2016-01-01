@@ -48,6 +48,16 @@ class CheckInViewController: UIViewController,UITextViewDelegate,UIImagePickerCo
                 checkIn.setObject(fileData, forKey: "image")
             }
             
+            //前台刷新
+//            if content.text != "" || imageUpload != nil {
+//                checkIn.save()
+//                remind.incrementKey("checks")
+//                remind.save()
+//                //同步时间线
+//                sendStatus("checkIn", cid:"", rid:remind)
+//            }
+      
+            //
             if content.text != "" || imageUpload != nil {
                 checkIn.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
                     if (error != nil) {
@@ -56,7 +66,7 @@ class CheckInViewController: UIViewController,UITextViewDelegate,UIImagePickerCo
                         remind.incrementKey("checks")
                         remind.saveInBackground()
                         //同步时间线
-                        sendStatus("checkIn", index: checkIn.objectId)
+                        sendStatus("checkIn", cid:"", rid:remind)
                     }
                     
                     

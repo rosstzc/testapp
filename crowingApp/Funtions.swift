@@ -15,9 +15,116 @@ func temp2() {
     print("666")
 }
 
+//获取点赞所在行和cell
+func getCellRow(sender:AnyObject, tableView:UITableView) ->[AnyObject] {
+    var row:Int = 0
+    var selectCell:UITableViewCell = UITableViewCell()
+    if let button = sender as? UIButton {
+        if let superview = button.superview {
+            if let cell = superview.superview as? UITableViewCell {
+                row = (tableView.indexPathForCell(cell)?.row)!
+                print(row)
+                selectCell = cell
+            }
+        }
+    }
+    var temp:[AnyObject] = []
+    temp.append(row)
+    temp.append(selectCell)
+    return temp
+}
 
-//同步发布时间线内容
-func sendStatus(type:String, index:String) {
+
+// 展示点赞按钮
+func showLikeButton(checkIn:AnyObject, button:UIButton, indexPath:NSIndexPath, mark:[AnyObject]) -> UIButton{
+    var markForCurrentUserLikeCheck:[AnyObject] = []
+    markForCurrentUserLikeCheck = mark
+    
+    //有人赞过
+    if var likeCount = checkIn.valueForKey("likes") {
+        likeCount = checkIn.valueForKey("likes") as! Int
+        
+        //我赞过的
+        if (markForCurrentUserLikeCheck[indexPath.row]) as! Int == 1 {
+//            print("position:\(markForCurrentUserLikeCheck[indexPath.row])")
+//            print("index: \(indexPath.row)")
+//            print(markForCurrentUserLikeCheck[indexPath.row])
+            button.setTitle("已赞 \(likeCount)", forState: UIControlState.Normal)
+            button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        //我未赞过
+        } else {
+            button.setTitle("赞 \(likeCount)", forState: UIControlState.Normal)
+            if likeCount as! NSObject == 0 {
+                button.setTitle("赞 ", forState: UIControlState.Normal)
+            }
+            button.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
+        }
+        //从来没有被赞
+    } else {
+        button.setTitle("赞 ", forState: UIControlState.Normal)
+        button.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
+    }
+
+    
+    return button
+}
+
+
+
+
+//点赞按钮（事件触发）
+func changeLikeButton(checkIn:AnyObject, currentUser:AnyObject, button:UIButton) -> UIButton {
+    //        let checkIn = self.checkIns[row]
+    let likeButton = button
+    let query = AVQuery(className: "Like")
+    query.whereKey("uid", equalTo: currentUser)
+    query.whereKey("cid", equalTo: checkIn)
+    let result = query.findObjects()
+    print(checkIn.valueForKey("likes"))
+    var likeCount:Int = 0
+    if checkIn.valueForKey("likes") != nil {
+        likeCount = checkIn.valueForKey("likes") as! Int
+    }
+    
+    //检查是否已点赞
+    if result.count >= 1 {
+        likeCount = likeCount - 1
+        likeButton.setTitle("赞 \(likeCount)", forState: UIControlState.Normal)
+        likeButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
+        
+        let oid = result[0].valueForKey("objectId") as! String
+        let likeTemp = AVObject(withoutDataWithClassName: "Like", objectId: oid)
+        likeTemp.deleteInBackground()
+        checkIn.incrementKey("likes", byAmount: -1)
+        checkIn.saveInBackground()
+    } else {
+        //刷新为“已赞”
+        likeCount = likeCount + 1
+        likeButton.setTitle("已赞 \(likeCount)", forState: UIControlState.Normal)
+        likeButton.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        
+        let like = AVObject(className: "Like")
+        like.setObject(checkIn, forKey: "cid")
+        like.setObject(currentUser, forKey: "uid")
+        like.setObject("likeCheckIn", forKey: "type")
+        like.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
+            if error == nil {
+                checkIn.incrementKey("likes")  //刷新累计值
+                checkIn.save()
+            }else {
+                
+            }
+        })
+    }
+    return likeButton
+}
+
+
+
+
+
+//同步发布时间线内容 (type： checkIn、shareRemind、createRemind、shareCheckIn)
+func sendStatus(type:String, cid:AnyObject, rid:AnyObject) {
     let status = AVStatus()
     //        var data:NSMutableDictionary
     //        data = [
@@ -25,7 +132,11 @@ func sendStatus(type:String, index:String) {
     //            "data" : ["objectId: 333"],
     //        ]
     //用户发动态(自定义的分类type和对应id，方便后续获取对应数据)
-    status.data = ["statusType":type, "objectIndex":index]
+    if cid.isEqual("")  {
+        status.data = ["statusType":type, "rid":rid]
+    } else {
+        status.data = ["statusType":type, "cid":cid, "rid":rid]
+    }
     AVStatus.sendStatusToFollowers(status, andCallback: {(succeeded: Bool, error: NSError?) in
         if (error != nil) {
             print(error)

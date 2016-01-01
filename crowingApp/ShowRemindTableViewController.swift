@@ -17,6 +17,7 @@ class ShowRemindTableViewController: UITableViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var checkContent: UITextField!
     
+    
     var remind:Remind! = nil
     var reminds:[Remind] = []
     let user = NSUserDefaults.standardUserDefaults()
@@ -25,8 +26,10 @@ class ShowRemindTableViewController: UITableViewController {
     var checkIns:[AnyObject] = []
     var checkInCount:Int = 0
     var rid:String = ""
+    var remindLC:AnyObject? = nil
 
     var remindTimeArray:NSArray = []
+    var markForCurrentUserLikeCheck:[AnyObject] = []
     
     @IBOutlet weak var checkBarButtonItem: UIBarButtonItem!
     
@@ -84,10 +87,54 @@ class ShowRemindTableViewController: UITableViewController {
         let query = AVQuery(className: "CheckIn")
         query.whereKey("rid", equalTo: remindLC)
         query.includeKey("uid")
+        query.includeKey("image")
+        query.orderByDescending("createdAt")
         query.limit = 100
         let result = query.findObjects()
-        self.checkInCount = result!.count
+        self.checkInCount = result.count
         self.checkIns = result!
+
+//        query.findObjectsInBackgroundWithBlock({(objects:[AnyObject]? , error:NSError?)  in
+//            if (error != nil) {
+//                print("错误")
+//            } else {
+//                self.checkInCount = objects!.count
+//                self.checkIns = objects!
+//                print(objects?.count)
+//            }
+//        })
+        
+        // 找到这个remind下我喜欢过的checkin (like记录)
+        let query2 = AVQuery(className: "Like")
+        query2.whereKey("uid", equalTo: self.currentUser)
+        query2.whereKey("cid", matchesQuery: query)
+        let likes = query2.findObjects()  //增加一个查询多1s
+        
+        //给已喜欢的做标记, 1表已喜欢
+        var x = 0
+        markForCurrentUserLikeCheck = []
+        for i in checkIns {
+            
+            print(i.valueForKey("createdAt"))
+            markForCurrentUserLikeCheck.append(0)
+            print(markForCurrentUserLikeCheck   )
+            markForCurrentUserLikeCheck[x] = 0
+            for j in likes {
+                print(j.valueForKey("cid")!.objectId)
+                if (i.objectId as String) == (j.valueForKey("cid")!.objectId) {
+                    print("1")
+                    markForCurrentUserLikeCheck[x] = 1
+                }
+            }
+            x = x + 1
+        }
+
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        print("view refresh")
+        self.viewDidLoad() //先更新数据
+        self.tableView.reloadData() //然后更新table
 
     }
     
@@ -128,21 +175,35 @@ class ShowRemindTableViewController: UITableViewController {
         
     }
     
-    
-    override func viewWillAppear(animated: Bool) {
-        
-        print("view refresh")
-        self.tableView.reloadData()
-        self.viewDidLoad()
 
+    
+
+    //点赞：点击cell上的button
+    @IBAction func likeCheckIn(sender: AnyObject) {
+        //获取表格的行数
+        var cellRow = getCellRow(sender,tableView: tableView)
+        let row = cellRow[0] as! Int
+        let selectCell = cellRow[1] as! UITableViewCell
+        let likeButton = selectCell.viewWithTag(15) as! UIButton
+        //点赞逻辑和UI刷新
+        changeLikeButton(self.checkIns[row], currentUser: currentUser, button: likeButton)
+        
+        //更新那个标记自己赞过/未赞的数组
+        if markForCurrentUserLikeCheck[row] as! Int == 0 {
+            markForCurrentUserLikeCheck[row] = 1
+        }else {
+            markForCurrentUserLikeCheck[row] = 0
+        }
         
     }
     
 
     
-
+    @IBAction func commentCheckIn(sender: AnyObject) {
+    }
     
-
+    
+    
     
     //输入键盘屏蔽
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -157,27 +218,38 @@ class ShowRemindTableViewController: UITableViewController {
     
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         return self.checkInCount
     }
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "checkInCell")
-        let checkIn = self.checkIns[indexPath.row]
-        let content = checkIn.valueForKey("content") as! String
-        let image = checkIn.valueForKey("image")
-        let user = checkIn.valueForKey("uid")
-        print (user?.valueForKey("username"))
-//        let time = checkIn.valueForKey("createAt") as! NSDate
+        let cell = tableView.dequeueReusableCellWithIdentifier("checkInCell")!
+        let checkIn = checkIns[indexPath.row]
         
+        let avatar = cell.viewWithTag(10) as! UIImageView
+        let username = cell.viewWithTag(11) as! UILabel
+        let time = cell.viewWithTag(12) as! UILabel
+        let image = cell.viewWithTag(13) as! UIImageView
+        
+        let content = cell.viewWithTag(18) as! UILabel
+
+        var likeButton  = cell.viewWithTag(15) as! UIButton
+        let comment = cell.viewWithTag(16) as! UIButton
+        let report = cell.viewWithTag(17) as! UIButton
 
         
-        cell.textLabel?.text = content
-        return cell
+//        avatar.image = UIImage(named: <#T##String#>)
+        username.text = checkIn.valueForKey("uid")!.valueForKey("username") as? String
+        time.text = timeStringForMessage(checkIn.valueForKey("createdAt") as! NSDate)
+//        image.image = 
+        content.text = checkIn.valueForKey("content") as? String
+        
+        likeButton = showLikeButton(checkIn, button: likeButton, indexPath: indexPath, mark: markForCurrentUserLikeCheck)
+
+     return cell
     }
     
 
-    
+
 
 }
