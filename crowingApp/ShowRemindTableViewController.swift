@@ -113,14 +113,13 @@ class ShowRemindTableViewController: UITableViewController {
         //给已喜欢的做标记, 1表已喜欢
         var x = 0
         markForCurrentUserLikeCheck = []
+        
         for i in checkIns {
-            
             print(i.valueForKey("createdAt"))
             markForCurrentUserLikeCheck.append(0)
             print(markForCurrentUserLikeCheck   )
             markForCurrentUserLikeCheck[x] = 0
             for j in likes {
-                print(j.valueForKey("cid")!.objectId)
                 if (i.objectId as String) == (j.valueForKey("cid")!.objectId) {
                     print("1")
                     markForCurrentUserLikeCheck[x] = 1
@@ -128,7 +127,7 @@ class ShowRemindTableViewController: UITableViewController {
             }
             x = x + 1
         }
-
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -226,16 +225,16 @@ class ShowRemindTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("checkInCell")!
         let checkIn = checkIns[indexPath.row]
         
-        let avatar = cell.viewWithTag(10) as! UIImageView
+//        let avatar = cell.viewWithTag(10) as! UIImageView
         let username = cell.viewWithTag(11) as! UILabel
         let time = cell.viewWithTag(12) as! UILabel
-        let image = cell.viewWithTag(13) as! UIImageView
+//        let image = cell.viewWithTag(13) as! UIImageView
         
         let content = cell.viewWithTag(18) as! UILabel
 
         var likeButton  = cell.viewWithTag(15) as! UIButton
-        let comment = cell.viewWithTag(16) as! UIButton
-        let report = cell.viewWithTag(17) as! UIButton
+//        let comment = cell.viewWithTag(16) as! UIButton
+//        let report = cell.viewWithTag(17) as! UIButton
 
         
 //        avatar.image = UIImage(named: <#T##String#>)

@@ -39,11 +39,7 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         print("home page")
         uid = user.valueForKey("uid") as! String
 
-        // 测试一下 leanCloud
-//        AVOSCloud.setApplicationId("3KyUWfvl0GsYhqVdEWHldBsW", clientKey: "aQbFi4NSkbUsaKG0WUqh0tlH")
-//        let object:AVObject = AVObject()
-//        object.setObject("12333", forKey: "name3")
-//        object.save()      
+
     }
 
 
@@ -55,11 +51,11 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         if !self.isViewLoaded() {
             return
         }
+        
         self.tableView.reloadData()
     }
     
-    
-    
+
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("numberOfRow")

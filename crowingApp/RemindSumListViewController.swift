@@ -25,8 +25,7 @@ class RemindSumListViewController: UIViewController, UITableViewDataSource, UITa
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         reminds = getDataFromCoreData()
-        
-        
+
         //提醒时间倒序
         let sortedResults = reminds.sort({
             $0.updateTime!.compare($1.updateTime!) == NSComparisonResult.OrderedDescending

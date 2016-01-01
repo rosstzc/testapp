@@ -46,9 +46,9 @@ func showLikeButton(checkIn:AnyObject, button:UIButton, indexPath:NSIndexPath, m
         
         //我赞过的
         if (markForCurrentUserLikeCheck[indexPath.row]) as! Int == 1 {
-//            print("position:\(markForCurrentUserLikeCheck[indexPath.row])")
-//            print("index: \(indexPath.row)")
-//            print(markForCurrentUserLikeCheck[indexPath.row])
+            print("position:\(markForCurrentUserLikeCheck[indexPath.row])")
+            print("index: \(indexPath.row)")
+            print(markForCurrentUserLikeCheck[indexPath.row])
             button.setTitle("已赞 \(likeCount)", forState: UIControlState.Normal)
             button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
         //我未赞过

@@ -53,8 +53,9 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        reminds = getDataFromCoreData()
-        
+        let uid:String = user.valueForKey("uid") as! String
+        let condition = "uid = '\(uid)' && createNot = '1'"
+        reminds = getOneRemind(condition)
         
         //提醒时间倒序
         let sortedResults = reminds.sort({
@@ -151,18 +152,17 @@ class RemindListCreateViewController: UIViewController, UITableViewDelegate, UIT
         tableView.reloadData()
     }
     
-    func getDataFromCoreData() -> [Remind] {
-        
-        let uid:String = user.valueForKey("uid") as! String
-
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-        let request =  NSFetchRequest(entityName: "Remind")
-        let filter:NSPredicate = NSPredicate(format: "uid= %@ && createNot = '1'", uid) // 显示自己创建的
-        request.predicate = filter
-        self.reminds = (try! context.executeFetchRequest(request)) as! [Remind]
-        return self.reminds
-    }
     
+//    func getDataFromCoreData() -> [Remind] {
+//        let uid:String = user.valueForKey("uid") as! String
+//        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+//        let request =  NSFetchRequest(entityName: "Remind")
+//        let filter:NSPredicate = NSPredicate(format: "uid= %@ && createNot = '1'", uid) // 显示自己创建的
+//        request.predicate = filter
+//        self.reminds = (try! context.executeFetchRequest(request)) as! [Remind]
+//        return self.reminds
+//    }
+//    
     
     
 }
