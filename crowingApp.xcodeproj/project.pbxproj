@@ -26,6 +26,7 @@
 		150397AA1C297F03008C4DA9 /* Remind+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150397A61C297F03008C4DA9 /* Remind+CoreDataProperties.swift */; };
 		150397AB1C297F03008C4DA9 /* Remind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150397A71C297F03008C4DA9 /* Remind.swift */; };
 		150508861C3690CB0078E200 /* CheckFlowTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150508851C3690CB0078E200 /* CheckFlowTableViewController.swift */; };
+		151D0FA01C37671C0086A9D5 /* CommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151D0F9F1C37671C0086A9D5 /* CommentTableViewController.swift */; };
 		153D00791BDDB7AB00F77A62 /* Funtions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153D00781BDDB7AB00F77A62 /* Funtions.swift */; };
 		153D007D1BDE589700F77A62 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153D007C1BDE589600F77A62 /* SettingTableViewController.swift */; };
 		1547E99A1C320E96000FD82E /* CheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1547E9991C320E96000FD82E /* CheckInViewController.swift */; };
@@ -81,6 +82,7 @@
 		150397A61C297F03008C4DA9 /* Remind+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Remind+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		150397A71C297F03008C4DA9 /* Remind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Remind.swift; sourceTree = "<group>"; };
 		150508851C3690CB0078E200 /* CheckFlowTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckFlowTableViewController.swift; sourceTree = "<group>"; };
+		151D0F9F1C37671C0086A9D5 /* CommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTableViewController.swift; sourceTree = "<group>"; };
 		153D00781BDDB7AB00F77A62 /* Funtions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Funtions.swift; sourceTree = "<group>"; };
 		153D007C1BDE589600F77A62 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		1547E9991C320E96000FD82E /* CheckInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInViewController.swift; sourceTree = "<group>"; };
@@ -165,9 +167,9 @@
 				15EAB6421BD91F79009F56AC /* AddOneDayRemindTimeViewController.swift */,
 				15F698331BF16E3F00B8CF1F /* AddWeekRemindViewController.swift */,
 				15F698351BF16E9800B8CF1F /* AddMonthViewController.swift */,
-				002D47601B91403600A43D5D /* ShowRemindViewController.swift */,
 				1500C5DB1C179FE7002A9AFE /* ShowRemindTableViewController.swift */,
 				1547E9991C320E96000FD82E /* CheckInViewController.swift */,
+				151D0F9F1C37671C0086A9D5 /* CommentTableViewController.swift */,
 				15FB89721C1C69CA00566BA9 /* RemindInfoTableViewController.swift */,
 				15FB89701C1C67AC00566BA9 /* RemindTimeTableViewController.swift */,
 				004F4BC31B909442007DABE7 /* RemindListViewController.swift */,
@@ -184,6 +186,7 @@
 				153D007C1BDE589600F77A62 /* SettingTableViewController.swift */,
 				001A365D1BB21F2900D94F34 /* LoginViewController.swift */,
 				153D00781BDDB7AB00F77A62 /* Funtions.swift */,
+				002D47601B91403600A43D5D /* ShowRemindViewController.swift */,
 				15F44BFA1BF6DE76002AE993 /* View1.xib */,
 			);
 			path = crowingApp;
@@ -396,6 +399,7 @@
 				55C62A2F1BCB2A1B002C6BE8 /* FollowAtRemind.swift in Sources */,
 				15F2D5D51BE98DA90028D55B /* AddIntervalViewController.swift in Sources */,
 				15FB89731C1C69CA00566BA9 /* RemindInfoTableViewController.swift in Sources */,
+				151D0FA01C37671C0086A9D5 /* CommentTableViewController.swift in Sources */,
 				150397AA1C297F03008C4DA9 /* Remind+CoreDataProperties.swift in Sources */,
 				150397A91C297F03008C4DA9 /* RemindMessage.swift in Sources */,
 				00EB3AF71B93DEFE008B061A /* RemindListFollowViewController.swift in Sources */,

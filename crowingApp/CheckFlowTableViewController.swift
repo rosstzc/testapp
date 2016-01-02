@@ -22,15 +22,38 @@ class CheckFlowTableViewController: UITableViewController {
     var checkIns:[AnyObject] = []
     var checkInCount:Int = 0
     var markForCurrentUserLikeCheck:[AnyObject] = []
-
+    var uid:String = ""
+    var selectCheckIn:AVObject = AVObject()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
 
+        //默认取相关的checkIns
+        getRelatedCheckIns()
         
-        let uid:String = user.valueForKey("uid") as! String
+
+    }
+    
+    
+    
+    //最新的checkIn
+    func getLatestCheckIns(){
+        let queryCheckIn = AVQuery(className: "CheckIn")
+        queryCheckIn.orderByDescending("createdAt")
+        queryCheckIn.includeKey("uid")
+        queryCheckIn.includeKey("image")
+        queryCheckIn.limit = 100
+        self.checkIns = queryCheckIn.findObjects()
+        self.checkInCount = checkIns.count
+        markForCurrentUserLikeCheck = getMarkForCurrentUserLikeCheck(queryCheckIn, checkIns: checkIns, user: currentUser)
         
+    }
+    
+    //与我相关remind的checkIn
+    func getRelatedCheckIns() {
         //从本地获得相关的提醒id
+        let uid:String = user.valueForKey("uid") as! String
         let condition = "uid = '\(uid)'"
         reminds = getOneRemind(condition)
         var ridArray:[String] = []
@@ -38,12 +61,12 @@ class CheckFlowTableViewController: UITableViewController {
             let rid = i.valueForKey("remindId") as! String
             ridArray.append(rid)
         }
-            //到LC查询相关的提醒对象
+        //到LC查询相关的提醒对象
         let queryRemind = AVQuery(className: "Remind")
         queryRemind.whereKey("objectId", containedIn: ridArray)
-//        let temp = queryRemind.findObjects()
+        //        let temp = queryRemind.findObjects()
         
-           //从LC获取与我相关提醒的checkIn
+        //从LC获取与我相关提醒的checkIn
         let queryCheckIn = AVQuery(className: "CheckIn")
         queryCheckIn.whereKey("rid", matchesQuery: queryRemind)
         queryCheckIn.orderByDescending("createdAt")
@@ -54,50 +77,61 @@ class CheckFlowTableViewController: UITableViewController {
         self.checkInCount = checkIns.count
         
         
-        // 找到这个remind下我喜欢过的checkin (like记录)
-        let query2 = AVQuery(className: "Like")
-        query2.whereKey("uid", equalTo: self.currentUser)
-        query2.whereKey("cid", matchesQuery: queryCheckIn)
-        let likes = query2.findObjects()  //增加一个查询多1s
-        
-        
-        //标记我喜欢过的 （重用于单个提醒页）
-        var x = 0
-        markForCurrentUserLikeCheck = []
-        for i in checkIns {
-            print(i.valueForKey("createdAt"))
-            markForCurrentUserLikeCheck.append(0)
-            print(markForCurrentUserLikeCheck   )
-            markForCurrentUserLikeCheck[x] = 0
-            for j in likes {
-                if (i.objectId as String) == (j.valueForKey("cid")!.objectId) {
-                    print("1")
-                    markForCurrentUserLikeCheck[x] = 1
-                }
-            }
-            x = x + 1
-        }
-
-        
-        
-        //从LC获取最新的checkIn（另一个segment)
-        
-        
-        
+        markForCurrentUserLikeCheck = getMarkForCurrentUserLikeCheck(queryCheckIn, checkIns: checkIns, user: currentUser)
     }
 
+    
+    //点赞：点击cell上的button
+    @IBAction func likeCheckIn(sender: AnyObject) {
+        //获取表格的行数
+        var cellRow = getCellRow(sender,tableView: tableView)
+        let row = cellRow[0] as! Int
+        let selectCell = cellRow[1] as! UITableViewCell
+        let likeButton = selectCell.viewWithTag(15) as! UIButton
+        //点赞逻辑和UI刷新
+        changeLikeButton(self.checkIns[row], currentUser: currentUser, button: likeButton)
+        
+        //更新那个标记自己赞过/未赞的数组
+        if markForCurrentUserLikeCheck[row] as! Int == 0 {
+            markForCurrentUserLikeCheck[row] = 1
+        }else {
+            markForCurrentUserLikeCheck[row] = 0
+        }
+        
+    }
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         if !self.isViewLoaded() {
             return
         }
-        tableView.reloadData()
+//        tableView.reloadData()
     }
     
     
     
     
     @IBAction func changeSegment(sender: AnyObject) {
+
+        if flowSegment.selectedSegmentIndex == 0 {
+            getRelatedCheckIns()
+            tableView.reloadData()
+        }
+        if flowSegment.selectedSegmentIndex == 1 {
+            getLatestCheckIns()
+            tableView.reloadData()
+        }
+    }
+    
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "segueToComment" {
+            let nextVC = segue.destinationViewController as! CommentTableViewController
+            var cellRow = getCellRow(sender!, tableView: self.tableView)
+            let row = cellRow[0] as! Int
+            nextVC.checkIn = self.checkIns[row] as! AVObject
+        }
     }
     
     

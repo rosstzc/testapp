@@ -104,29 +104,7 @@ class ShowRemindTableViewController: UITableViewController {
 //            }
 //        })
         
-        // 找到这个remind下我喜欢过的checkin (like记录)
-        let query2 = AVQuery(className: "Like")
-        query2.whereKey("uid", equalTo: self.currentUser)
-        query2.whereKey("cid", matchesQuery: query)
-        let likes = query2.findObjects()  //增加一个查询多1s
-        
-        //给已喜欢的做标记, 1表已喜欢
-        var x = 0
-        markForCurrentUserLikeCheck = []
-        
-        for i in checkIns {
-            print(i.valueForKey("createdAt"))
-            markForCurrentUserLikeCheck.append(0)
-            print(markForCurrentUserLikeCheck   )
-            markForCurrentUserLikeCheck[x] = 0
-            for j in likes {
-                if (i.objectId as String) == (j.valueForKey("cid")!.objectId) {
-                    print("1")
-                    markForCurrentUserLikeCheck[x] = 1
-                }
-            }
-            x = x + 1
-        }
+        markForCurrentUserLikeCheck = getMarkForCurrentUserLikeCheck(query, checkIns: checkIns, user: currentUser)
         
     }
     

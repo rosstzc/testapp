@@ -15,6 +15,38 @@ func temp2() {
     print("666")
 }
 
+
+// 获得我喜欢过的checkIn的like标记 （行位置）
+func getMarkForCurrentUserLikeCheck(queryCheckIn:AVQuery, checkIns:[AnyObject], user:AnyObject) ->[AnyObject]{
+    // 找到我喜欢过的checkin (like记录)
+    let query2 = AVQuery(className: "Like")
+    query2.whereKey("uid", equalTo: user)
+    query2.whereKey("cid", matchesQuery: queryCheckIn)
+    let likes = query2.findObjects()  //增加一个查询多1s
+    
+    
+    //标记我喜欢过的 （重用于单个提醒页）
+    var x = 0
+    var markForCurrentUserLikeCheck:[AnyObject] = []
+    for i in checkIns {
+        print(i.valueForKey("createdAt"))
+        markForCurrentUserLikeCheck.append(0)
+        print(markForCurrentUserLikeCheck   )
+        markForCurrentUserLikeCheck[x] = 0
+        for j in likes {
+            if (i.objectId as String) == (j.valueForKey("cid")!.objectId) {
+                print("1")
+                markForCurrentUserLikeCheck[x] = 1
+            }
+        }
+        x = x + 1
+    }
+    return markForCurrentUserLikeCheck
+}
+
+
+
+
 //获取点赞所在行和cell
 func getCellRow(sender:AnyObject, tableView:UITableView) ->[AnyObject] {
     var row:Int = 0
