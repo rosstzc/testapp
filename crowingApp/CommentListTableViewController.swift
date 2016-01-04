@@ -32,7 +32,7 @@ class CommentListTableViewController: UITableViewController {
             query.whereKey("uid", notEqualTo: currentUser)
             query.whereKey("type", containedIn: typeArray)
             query.includeKey("uid")
-            query.includeKey("cid")
+            query.includeKey("cid") 
             query.orderByDescending("createdAt")
             query.limit = 100
             self.comments = query.findObjects()
