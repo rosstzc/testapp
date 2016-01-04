@@ -81,6 +81,20 @@ class CheckFlowTableViewController: UITableViewController {
     }
 
     
+    // 我发的checkIn
+    func getMyCheckIn() {
+        let queryCheckIn = AVQuery(className: "CheckIn")
+        queryCheckIn.whereKey("uid", equalTo: currentUser)
+        queryCheckIn.orderByDescending("createdAt")
+        queryCheckIn.includeKey("uid")
+        queryCheckIn.includeKey("image")
+        queryCheckIn.limit = 100
+        self.checkIns = queryCheckIn.findObjects()
+        self.checkInCount = checkIns.count
+    }
+    
+    
+    
     //点赞：点击cell上的button
     @IBAction func likeCheckIn(sender: AnyObject) {
         //获取表格的行数

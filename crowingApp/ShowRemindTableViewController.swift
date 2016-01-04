@@ -149,6 +149,13 @@ class ShowRemindTableViewController: UITableViewController {
             nextVC.remindId = remind.remindId!
             nextVC.remindTitle = remind.title!
         }
+        if segue.identifier == "segueToComment" {
+            let nextVC = segue.destinationViewController as! CommentTableViewController
+            var cellRow = getCellRow(sender!, tableView: self.tableView)
+            let row = cellRow[0] as! Int
+            nextVC.checkIn = self.checkIns[row] as! AVObject
+        }
+
         
     }
     

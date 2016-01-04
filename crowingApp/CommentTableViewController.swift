@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CommentTableViewController: UITableViewController {
+class CommentTableViewController: UITableViewController,UITextViewDelegate, UINavigationControllerDelegate {
 
     
     var user = NSUserDefaults.standardUserDefaults()
@@ -18,6 +18,9 @@ class CommentTableViewController: UITableViewController {
     var comments:[AnyObject] = []
     var comment:AVObject = AVObject()
     var commentCount = 0
+    var rUid:AVObject? = AVObject()
+    
+    var selectCommentFromCommentList:AVObject = AVObject()   //来自于评论我的或未读的list
     
     
     @IBOutlet weak var commentContent: UITextField! //这里日后用textView
@@ -36,6 +39,7 @@ class CommentTableViewController: UITableViewController {
         self.comments = query.findObjects()
         commentCount = comments.count
         commentContent.placeholder = "评论"
+        self.rUid = self.currentUser
     }
 
     
@@ -43,10 +47,9 @@ class CommentTableViewController: UITableViewController {
         let content = commentContent.text
         comment = AVObject(className: "Comment")
         comment.setObject(content, forKey: "content")
-        comment.setObject(currentUser, forKey: "uid")
-        comment.setObject(currentUser, forKey: "rUid")
-
         comment.setObject(checkIn, forKey: "cid")
+        comment.setObject(currentUser, forKey: "uid")
+        comment.setObject(self.rUid, forKey: "rUid") //但uid等于rUid表示评论checkin，不同时表示评论某人的评论
         comment.save()
         
         commentContent.text = ""
@@ -55,18 +58,36 @@ class CommentTableViewController: UITableViewController {
 
         //按道理这里应该异步插入一行数据
         
+        
+        
+        //未完，从评论/未读列表的segue过来，要定位到具体行位置
+        
     }
     
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         comment = self.comments[indexPath.row] as! AVObject
-        let userName = comment.valueForKey("uid")?.valueForKey("username") as! String
-        commentContent.placeholder = "回复\(userName):"
+        self.rUid = comment.valueForKey("uid") as? AVObject
+        
+        //如果当前用户与rUid是相同，那么显示删除
+        if  self.rUid == currentUser {
+            //显示删除actionsheet
+        }else {
+            let userName = comment.valueForKey("uid")?.valueForKey("username") as! String
+            commentContent.placeholder = "回复\(userName):"
+            self.rUid = (comment.valueForKey("uid") as! AVObject)
+        }
     }
     
+    //滚动时，让键盘隐藏
+    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        commentContent.resignFirstResponder()
+    }
     
-    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        commentContent.resignFirstResponder()
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -99,7 +120,11 @@ class CommentTableViewController: UITableViewController {
         username.text = comment.valueForKey("uid")!.valueForKey("username") as? String
         time.text = timeStringForMessage(comment.valueForKey("createdAt") as! NSDate)
         content.text = comment.valueForKey("content") as? String
-        
+        //当评论别人评论时
+        if ((comment.valueForKey("uid")?.isEqual(comment.valueForKey("sUid"))) != nil)  {
+            let usernameR = comment.valueForKey("sUid")?.valueForKey("username") as! String
+            content.text = "回复\(usernameR): "
+        }
         
         return cell
     }
