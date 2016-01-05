@@ -32,6 +32,10 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         
         super.viewDidLoad()
         
+        if currentUser == nil  {
+            print("未登录")
+            return 
+        }
  
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self

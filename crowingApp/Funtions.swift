@@ -18,10 +18,12 @@ func temp2() {
 
 // 获得我喜欢过的checkIn的like标记 （行位置）
 func getMarkForCurrentUserLikeCheck(queryCheckIn:AVQuery, checkIns:[AnyObject], user:AnyObject) ->[AnyObject]{
+    print("34")
     // 找到我喜欢过的checkin (like记录)
-    let query2 = AVQuery(className: "Like")
+    let query2 = AVQuery(className: "Comment")
     query2.whereKey("uid", equalTo: user)
     query2.whereKey("cid", matchesQuery: queryCheckIn)
+    query2.whereKey("type", equalTo: "likeCheckIn")
     let likes = query2.findObjects()  //增加一个查询多1s
     
     
@@ -105,14 +107,16 @@ func showLikeButton(checkIn:AnyObject, button:UIButton, indexPath:NSIndexPath, m
 
 
 //点赞按钮（事件触发）
-func changeLikeButton(checkIn:AnyObject, currentUser:AnyObject, button:UIButton) -> UIButton {
+func changeLikeButton(checkIn:AVObject, currentUser:AnyObject, button:UIButton) -> UIButton {
     //        let checkIn = self.checkIns[row]
     let likeButton = button
-    let query = AVQuery(className: "Like")
+    let rUid = checkIn.valueForKey("uid") as! AVObject
+    let query = AVQuery(className: "Comment")
     query.whereKey("uid", equalTo: currentUser)
+    query.whereKey("rUid", equalTo: rUid)
     query.whereKey("cid", equalTo: checkIn)
+    query.whereKey("type", equalTo: "likeCheckIn")
     let result = query.findObjects()
-    print(checkIn.valueForKey("likes"))
     var likeCount:Int = 0
     if checkIn.valueForKey("likes") != nil {
         likeCount = checkIn.valueForKey("likes") as! Int
@@ -125,7 +129,7 @@ func changeLikeButton(checkIn:AnyObject, currentUser:AnyObject, button:UIButton)
         likeButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         
         let oid = result[0].valueForKey("objectId") as! String
-        let likeTemp = AVObject(withoutDataWithClassName: "Like", objectId: oid)
+        let likeTemp = AVObject(withoutDataWithClassName: "Comment", objectId: oid)
         likeTemp.deleteInBackground()
         checkIn.incrementKey("likes", byAmount: -1)
         checkIn.saveInBackground()
@@ -135,11 +139,13 @@ func changeLikeButton(checkIn:AnyObject, currentUser:AnyObject, button:UIButton)
         likeButton.setTitle("已赞 \(likeCount)", forState: UIControlState.Normal)
         likeButton.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
         
-        let like = AVObject(className: "Like")
-        like.setObject(checkIn, forKey: "cid")
-        like.setObject(currentUser, forKey: "uid")
-        like.setObject("likeCheckIn", forKey: "type")
-        like.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
+        let likeCheckIn = AVObject(className: "Comment")
+        likeCheckIn.setObject(checkIn, forKey: "cid")
+        likeCheckIn.setObject(currentUser, forKey: "uid")
+        likeCheckIn.setObject(rUid, forKey: "rUid")
+        likeCheckIn.setObject("likeCheckIn", forKey: "type")
+        likeCheckIn.setObject("赞", forKey: "content")
+        likeCheckIn.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
             if error == nil {
                 checkIn.incrementKey("likes")  //刷新累计值
                 checkIn.save()
@@ -360,7 +366,7 @@ func updateFollowRemind(uid: String) {
                     print(error)
                 }
                 // 把处理了的项目的标记设置为false
-                i.setObject("changeKey", forKey: false)
+                i.setObject(false, forKey: "changeKey")
             }
         }
         AVObject.saveAllInBackground(result)  //批量保存LC

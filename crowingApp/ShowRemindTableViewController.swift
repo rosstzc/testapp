@@ -170,7 +170,7 @@ class ShowRemindTableViewController: UITableViewController {
         let selectCell = cellRow[1] as! UITableViewCell
         let likeButton = selectCell.viewWithTag(15) as! UIButton
         //点赞逻辑和UI刷新
-        changeLikeButton(self.checkIns[row], currentUser: currentUser, button: likeButton)
+        changeLikeButton(self.checkIns[row] as! AVObject, currentUser: currentUser, button: likeButton)
         
         //更新那个标记自己赞过/未赞的数组
         if markForCurrentUserLikeCheck[row] as! Int == 0 {
@@ -231,6 +231,7 @@ class ShowRemindTableViewController: UITableViewController {
         likeButton = showLikeButton(checkIn, button: likeButton, indexPath: indexPath, mark: markForCurrentUserLikeCheck)
 
      return cell
+        
     }
     
 

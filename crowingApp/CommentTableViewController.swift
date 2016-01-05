@@ -21,8 +21,6 @@ class CommentTableViewController: UITableViewController,UITextViewDelegate, UINa
     var rUid:AVObject? = AVObject()
     
     var selectCommentFromCommentList:AVObject = AVObject()   //来自于评论我的或未读的list
-    
-    
     @IBOutlet weak var commentContent: UITextField! //这里日后用textView
     
 
@@ -30,8 +28,10 @@ class CommentTableViewController: UITableViewController,UITextViewDelegate, UINa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //查询所有评论（包括“赞”）
         let query = AVQuery(className: "Comment")
         query.whereKey("cid", equalTo: checkIn)
+        print(checkIn.objectId)
         query.orderByDescending("createdAt")
         query.includeKey("uid")
         query.includeKey("rUid")
@@ -43,13 +43,15 @@ class CommentTableViewController: UITableViewController,UITextViewDelegate, UINa
     }
 
     
+    
     @IBAction func sendComment(sender: AnyObject) {
         let content = commentContent.text
         comment = AVObject(className: "Comment")
         comment.setObject(content, forKey: "content")
         comment.setObject(checkIn, forKey: "cid")
         comment.setObject(currentUser, forKey: "uid")
-        comment.setObject(self.rUid, forKey: "rUid") //但uid等于rUid表示评论checkin，不同时表示评论某人的评论
+        comment.setObject("comment", forKey: "type")
+        comment.setObject(self.rUid, forKey: "rUid") //当uid等于rUid表示评论checkin，不同时表示评论某人的评论
         comment.save()
         
         commentContent.text = ""
@@ -119,13 +121,19 @@ class CommentTableViewController: UITableViewController,UITextViewDelegate, UINa
         //        avatar.image = UIImage(named: <#T##String#>)
         username.text = comment.valueForKey("uid")!.valueForKey("username") as? String
         time.text = timeStringForMessage(comment.valueForKey("createdAt") as! NSDate)
-        content.text = comment.valueForKey("content") as? String
-        //当评论别人评论时
-        if ((comment.valueForKey("uid")?.isEqual(comment.valueForKey("sUid"))) != nil)  {
-            let usernameR = comment.valueForKey("sUid")?.valueForKey("username") as! String
-            content.text = "回复\(usernameR): "
-        }
+        content.text = (comment.valueForKey("content") as! String)
         
+        //当评论别人评论时,评论内容如下( 如果评论人与被评论人是相同，逻辑认为是评论checkIn，因为操作上不允许评论自己的评论)
+        let uidString = comment.valueForKey("uid")?.valueForKey("objectId") as! String
+        let rUidString = comment.valueForKey("rUid")?.valueForKey("objectId") as! String
+        print(uidString)
+
+        if (uidString != rUidString)  {
+            print(uidString)
+            let usernameR = comment.valueForKey("rUid")!.valueForKey("username") as! String
+            content.text = "回复\(usernameR): \(content.text!)"
+        }
+
         return cell
     }
 

@@ -1,4 +1,4 @@
-//
+ //
 //  CheckFlowTableViewController.swift
 //  crowingApp
 //
@@ -16,7 +16,6 @@ class CheckFlowTableViewController: UITableViewController {
     @IBOutlet weak var highView: UIView!
     
     let user = NSUserDefaults.standardUserDefaults()
-    let currentUser = AVUser.currentUser()
 
     var reminds:[Remind] = []
     var checkIns:[AnyObject] = []
@@ -31,14 +30,17 @@ class CheckFlowTableViewController: UITableViewController {
 
         //默认取相关的checkIns
         getRelatedCheckIns()
-        
 
     }
     
     
+    //查询未读信息
+    sdf
     
     //最新的checkIn
     func getLatestCheckIns(){
+        let currentUser = AVUser.currentUser()
+
         let queryCheckIn = AVQuery(className: "CheckIn")
         queryCheckIn.orderByDescending("createdAt")
         queryCheckIn.includeKey("uid")
@@ -52,6 +54,8 @@ class CheckFlowTableViewController: UITableViewController {
     
     //与我相关remind的checkIn
     func getRelatedCheckIns() {
+        let currentUser = AVUser.currentUser()
+
         //从本地获得相关的提醒id
         let uid:String = user.valueForKey("uid") as! String
         let condition = "uid = '\(uid)'"
@@ -77,12 +81,47 @@ class CheckFlowTableViewController: UITableViewController {
         self.checkInCount = checkIns.count
         
         
+        //----下为调试
+//        // 找到我喜欢过的checkin (like记录)
+//        let query2 = AVQuery(className: "Comment")
+//        print(currentUser.objectId)
+//        
+//        
+//        query2.whereKey("uid", equalTo: currentUser)
+//        query2.whereKey("cid", matchesQuery: queryCheckIn)
+//        query2.whereKey("type", equalTo: "likeCheckIn")
+//        let likes = query2.findObjects()  //增加一个查询多1s
+//        
+//        
+//        //标记我喜欢过的 （重用于单个提醒页）
+//        var x = 0
+//        var markForCurrentUserLikeCheck:[AnyObject] = []
+//        for i in checkIns {
+//            print(i.valueForKey("createdAt"))
+//            markForCurrentUserLikeCheck.append(0)
+//            print(markForCurrentUserLikeCheck   )
+//            markForCurrentUserLikeCheck[x] = 0
+//            for j in likes {
+//                if (i.objectId as String) == (j.valueForKey("cid")!.objectId) {
+//                    print("1")
+//                    markForCurrentUserLikeCheck[x] = 1
+//                }
+//            }
+//            x = x + 1
+//        }
+
+        
+        
+        
+        
         markForCurrentUserLikeCheck = getMarkForCurrentUserLikeCheck(queryCheckIn, checkIns: checkIns, user: currentUser)
     }
 
     
     // 我发的checkIn
     func getMyCheckIn() {
+        let currentUser = AVUser.currentUser()
+
         let queryCheckIn = AVQuery(className: "CheckIn")
         queryCheckIn.whereKey("uid", equalTo: currentUser)
         queryCheckIn.orderByDescending("createdAt")
@@ -97,13 +136,15 @@ class CheckFlowTableViewController: UITableViewController {
     
     //点赞：点击cell上的button
     @IBAction func likeCheckIn(sender: AnyObject) {
+        let currentUser = AVUser.currentUser()
+
         //获取表格的行数
         var cellRow = getCellRow(sender,tableView: tableView)
         let row = cellRow[0] as! Int
         let selectCell = cellRow[1] as! UITableViewCell
         let likeButton = selectCell.viewWithTag(15) as! UIButton
         //点赞逻辑和UI刷新
-        changeLikeButton(self.checkIns[row], currentUser: currentUser, button: likeButton)
+        changeLikeButton(self.checkIns[row] as! AVObject, currentUser: currentUser, button: likeButton)
         
         //更新那个标记自己赞过/未赞的数组
         if markForCurrentUserLikeCheck[row] as! Int == 0 {
@@ -146,6 +187,18 @@ class CheckFlowTableViewController: UITableViewController {
             let row = cellRow[0] as! Int
             nextVC.checkIn = self.checkIns[row] as! AVObject
         }
+        
+        if segue.identifier == "segueToCommentUnread" {
+            let nextVC = segue.destinationViewController as! CommentListTableViewController
+            nextVC.segue = "segueToCommentUnread"
+            
+        }
+        if segue.identifier == "segueToCommentList" {
+            let nextVC = segue.destinationViewController as! CommentListTableViewController
+            nextVC.segue = "segueToCommentList"
+        }
+        
+        
     }
     
     

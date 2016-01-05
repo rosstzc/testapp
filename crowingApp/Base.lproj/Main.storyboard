@@ -23,7 +23,7 @@
                                     <rect key="frame" x="31" y="32" width="82" height="30"/>
                                     <state key="normal" title="你有1个信息"/>
                                     <connections>
-                                        <segue destination="aFy-JE-cwK" kind="show" identifier="toCommentUnread" id="d3N-Nr-5Mc"/>
+                                        <segue destination="aFy-JE-cwK" kind="show" identifier="segueToCommentUnread" id="d3N-Nr-5Mc"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TtC-xd-e2D">
@@ -144,7 +144,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="131" id="wDs-0h-Jem" customClass="commentListCell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="commentListCell" rowHeight="131" id="wDs-0h-Jem" customClass="commentListCell">
                                 <rect key="frame" x="0.0" y="92" width="600" height="131"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wDs-0h-Jem" id="mdr-Y8-lt5">
@@ -155,7 +155,7 @@
                                             <rect key="frame" x="16" y="8" width="64" height="56"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="11" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="张三" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="piI-jf-RjY">
-                                            <rect key="frame" x="96" y="8" width="34" height="21"/>
+                                            <rect key="frame" x="96" y="8" width="184" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -168,7 +168,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="15" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="日期" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vO0-LT-3Wa">
-                                            <rect key="frame" x="96" y="99" width="34" height="21"/>
+                                            <rect key="frame" x="96" y="99" width="135" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -198,9 +198,6 @@
                                         <constraint firstItem="lQf-Zd-LR3" firstAttribute="top" secondItem="mdr-Y8-lt5" secondAttribute="topMargin" constant="17" id="vLZ-Nu-dDH"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="Qoy-dw-6mX" kind="show" identifier="segueToComment" id="D6p-1P-G1t"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -208,10 +205,13 @@
                             <outlet property="delegate" destination="aFy-JE-cwK" id="4o0-33-gKl"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="Qoy-dw-6mX" kind="show" identifier="segueToComment" id="54c-cF-4Cy"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rqh-3j-8kO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2362" y="103"/>
+            <point key="canvasLocation" x="2342" y="63"/>
         </scene>
         <!--Comment Table View Controller-->
         <scene sceneID="KSA-KW-1l8">
@@ -252,19 +252,19 @@
                                             <rect key="frame" x="21" y="8" width="30" height="27"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="13" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWs-aD-VhU">
-                                            <rect key="frame" x="61" y="40" width="59" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="12" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="er3-JN-Lzk">
-                                            <rect key="frame" x="151" y="8" width="112" height="21"/>
+                                            <rect key="frame" x="61" y="40" width="387" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="11" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="张三" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IRS-Wu-7Rj">
-                                            <rect key="frame" x="67" y="11" width="34" height="21"/>
+                                            <rect key="frame" x="67" y="11" width="115" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="12" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="er3-JN-Lzk">
+                                            <rect key="frame" x="217" y="8" width="112" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1060,7 +1060,7 @@
                     </items>
                 </toolbar>
             </objects>
-            <point key="canvasLocation" x="3248" y="713"/>
+            <point key="canvasLocation" x="3250" y="621"/>
         </scene>
         <!--RemindInfoTableVC-->
         <scene sceneID="7kZ-Gg-nTo">
@@ -1304,7 +1304,6 @@
                                 </state>
                                 <connections>
                                     <action selector="btnReg:" destination="ucs-K3-hHX" eventType="touchUpInside" id="vTx-Is-lWM"/>
-                                    <segue destination="89c-f0-d76" kind="show" identifier="segueRegisterInfo" id="Pju-Bw-ljY"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whL-L2-hti">
@@ -1788,7 +1787,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dbu-SS-ORY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3046" y="1657"/>
+            <point key="canvasLocation" x="2400" y="1573"/>
         </scene>
         <!--发现-->
         <scene sceneID="amr-3v-2zO">
@@ -2207,11 +2206,10 @@
         <image name="twitter" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gHU-z5-QwF"/>
-        <segue reference="Pju-Bw-ljY"/>
         <segue reference="yOs-s2-7NB"/>
-        <segue reference="dEO-wS-V56"/>
+        <segue reference="54c-cF-4Cy"/>
         <segue reference="b8P-s5-IoN"/>
+        <segue reference="gHU-z5-QwF"/>
         <segue reference="0py-gb-cbc"/>
     </inferredMetricsTieBreakers>
 </document>

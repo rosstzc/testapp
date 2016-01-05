@@ -19,6 +19,7 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var txtPwd: UITextField!
     let userDefaults = NSUserDefaults.standardUserDefaults()
+    var currentUser:AVUser = AVUser()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,12 +148,27 @@ class LoginViewController: UIViewController {
                 userDefaults.setBool(true, forKey:"logined")
                 userDefaults.synchronize()
                 
+                //在LC登录
+                AVUser.logInWithUsernameInBackground(email, password: passsword, block: {(user: AVUser?, error: NSError?) in
+                    if error != nil {
+                        print(error)
+                    } else {
+                        print("登录成功")
+                        self.currentUser = AVUser.currentUser()
+                    }
+                })
+                
+                
                 self.performSegueWithIdentifier("segueLogin", sender: self)
             }
             
         }
         
     }
+    
+
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         let user = NSUserDefaults.standardUserDefaults()

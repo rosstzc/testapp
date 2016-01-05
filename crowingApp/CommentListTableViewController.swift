@@ -89,14 +89,18 @@ class CommentListTableViewController: UITableViewController {
         let selectComment = comments[indexPath.row]
         checkIn = selectComment.valueForKey("cid") as! AVObject
         
-        //清理未读标记
+        //标记为已读
         let query = AVQuery(className: "Comment")
         query.whereKey("rUid", equalTo: currentUser)
+//        query.whereKey("uid", notEqualTo: currentUser)
         query.whereKey("cid", equalTo: checkIn)
         query.whereKey("type", containedIn: typeArray)
         let result = query.findObjects()
-        
-        
+        for i in result {
+            i.setObject(true, forKey: "readed")
+        }
+        AVObject.saveAll(result)
+   
         self.performSegueWithIdentifier("segueToComment", sender: self)
     }
     
@@ -128,7 +132,7 @@ class CommentListTableViewController: UITableViewController {
 
 
         username.text = comment.valueForKey("uid")!.valueForKey("username") as? String
-        content.text = comment.valueForKey("content") as? String // 赞是没有内容的
+        content.text = comment.valueForKey("content") as? String 
 //        checkInImage.image =
         checkInTitle.text = comment.valueForKey("cid")!.valueForKey("title") as? String
         time.text = timeStringForMessage(comment.valueForKey("createdAt") as! NSDate)

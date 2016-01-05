@@ -44,6 +44,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+//        print(currentUser.objectId)
 
         // Do any additional setup after loading the view.
         

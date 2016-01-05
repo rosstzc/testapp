@@ -112,7 +112,7 @@ class ModUserInfoTableViewController: UITableViewController, UIPickerViewDataSou
         }
         
         if birthText.text != "" {
-            let date = dateFromString(birthText.text!)
+            let date = dateFromStringWithFormat(birthText.text!, format: "yyyy-MM-dd")
             birthPicker.setDate(date, animated: true)
         }
         
@@ -121,7 +121,7 @@ class ModUserInfoTableViewController: UITableViewController, UIPickerViewDataSou
     
     
     func changeText() {
-        birthText.text = stringFromDate(birthPicker.date)
+        birthText.text = stringFromDateWithFormat(birthPicker.date, format: "yyyy-MM-dd")
         
     }
     
