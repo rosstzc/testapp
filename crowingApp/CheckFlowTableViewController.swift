@@ -14,6 +14,7 @@ class CheckFlowTableViewController: UITableViewController {
     @IBOutlet weak var flowSegment: UISegmentedControl!
     
     @IBOutlet weak var highView: UIView!
+    @IBOutlet weak var unreadBtn: UIButton!
     
     let user = NSUserDefaults.standardUserDefaults()
 
@@ -23,6 +24,8 @@ class CheckFlowTableViewController: UITableViewController {
     var markForCurrentUserLikeCheck:[AnyObject] = []
     var uid:String = ""
     var selectCheckIn:AVObject = AVObject()
+    let typeArray = ["likeCheckIn","comment"]  //查询评论和check的赞
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,12 +33,26 @@ class CheckFlowTableViewController: UITableViewController {
 
         //默认取相关的checkIns
         getRelatedCheckIns()
-
+        
+        let unreadCount = getUnreadComment()
+        unreadBtn.setTitle("你有\(String(unreadCount))个未读信息", forState: .Normal)
     }
     
     
     //查询未读信息
-    sdf
+    func getUnreadComment() -> Int {
+        let currentUser = AVUser.currentUser()
+
+        let query = AVQuery(className: "Comment")
+        query.whereKey("rUid", equalTo: currentUser)
+        query.whereKey("uid", notEqualTo: currentUser)
+        query.whereKey("type", containedIn: typeArray)
+        query.whereKey("readed", notEqualTo:true)
+        let count = query.countObjects()
+        return count
+    }
+    
+    
     
     //最新的checkIn
     func getLatestCheckIns(){

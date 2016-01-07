@@ -1,4 +1,3 @@
-//
 //  ViewController.swift
 //  crowingApp
 //
@@ -26,15 +25,16 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
     var uid:String = ""
     var rid:String = ""
     
-    let currentUser = AVUser.currentUser()
+    var currentUser = AVUser.currentUser()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
+        //在登录页，登录数据是后台获取，但上面定义是先后台执行，所以会没有数据
         if currentUser == nil  {
             print("未登录")
-            return 
+            currentUser = AVUser.currentUser()
         }
  
         // Do any additional setup after loading the view, typically from a nib.

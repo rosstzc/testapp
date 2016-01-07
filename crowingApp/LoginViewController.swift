@@ -84,7 +84,7 @@ class LoginViewController: UIViewController {
         })
     }
     
-    
+//    需要保证LC登录成功才写userDefault，才能跳转，否则如果currentUser不能用，就产品都用不了
     
     
     func setUserDefault() {
@@ -125,48 +125,128 @@ class LoginViewController: UIViewController {
     
     
     
+    
     @IBAction func btnLogin(sender: AnyObject) {
         let email = txtMail.text
         let passsword = txtPwd.text
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-        let filter:NSPredicate = NSPredicate(format: " email = %@ && password = %@", email!, passsword!)
-        let request =  NSFetchRequest(entityName: "User")
-        request.predicate = filter
-        var temp:[User] = []
-        temp = (try! context.executeFetchRequest(request)) as! [User]
-        if temp.count > 0 {
-            print("yes")
-            for i in temp {
-                print("name",i.name ," email",i.email, " pwd", i.password)
-                
-                let userDict = userDefaults.valueForKey("\(txtMail.text!)")
-                
-                userDefaults.setObject(userDict?.valueForKey("uid"), forKey: "uid")
-                userDefaults.setObject(userDict?.valueForKey("name"), forKey: "name")
-                userDefaults.setObject(userDict?.valueForKey("email"), forKey: "email")
-                userDefaults.setObject(userDict?.valueForKey("password"), forKey: "password")
-                userDefaults.setBool(true, forKey:"logined")
-                userDefaults.synchronize()
-                
-                //在LC登录
-                AVUser.logInWithUsernameInBackground(email, password: passsword, block: {(user: AVUser?, error: NSError?) in
-                    if error != nil {
-                        print(error)
-                    } else {
-                        print("登录成功")
-                        self.currentUser = AVUser.currentUser()
-                    }
-                })
-                
-                
-                self.performSegueWithIdentifier("segueLogin", sender: self)
-            }
-            
-        }
+        
+        
+        //在LC登录
+        AVUser.logInWithUsernameInBackground(email, password: passsword, block: {(user: AVUser?, error: NSError?) in
+            if error != nil {
+                print(error)
+            } else {
+                print("登录成功")
+                if AVUser.currentUser() != nil {
+                    let currentUser = AVUser.currentUser()
+                    let uuid = currentUser.objectId
+                    self.userDefaults.setObject(uuid, forKey: "uid")
+                    self.userDefaults.setBool(true, forKey:"logined")
+                    self.userDefaults.synchronize()
+                    self.dataSynchronize(currentUser) //同步数据
+                    
+                    self.performSegueWithIdentifier("segueLogin", sender: self)
+                }                    }
+        })
+        
+        
+
+        
+//        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+//        let filter:NSPredicate = NSPredicate(format: " email = %@ && password = %@", email!, passsword!)
+//        let request =  NSFetchRequest(entityName: "User")
+//        request.predicate = filter
+//        var temp:[User] = []
+//        temp = (try! context.executeFetchRequest(request)) as! [User]
+//        if temp.count > 0 {
+//            print("yes")
+//            for i in temp {
+//                print("name",i.name ," email",i.email, " pwd", i.password)
+//                
+//                let userDict = userDefaults.valueForKey("\(txtMail.text!)")
+//                
+//                userDefaults.setObject(userDict?.valueForKey("uid"), forKey: "uid")
+//                userDefaults.setObject(userDict?.valueForKey("name"), forKey: "name")
+//                userDefaults.setObject(userDict?.valueForKey("email"), forKey: "email")
+//                userDefaults.setObject(userDict?.valueForKey("password"), forKey: "password")
+//                userDefaults.setBool(true, forKey:"logined")
+//                userDefaults.synchronize()
+//                
+//                //在LC登录
+//                AVUser.logInWithUsernameInBackground(email, password: passsword, block: {(user: AVUser?, error: NSError?) in
+//                    if error != nil {
+//                        print(error)
+//                    } else {
+//                        print("登录成功")
+//                        if AVUser.currentUser() != nil {
+//                            self.performSegueWithIdentifier("segueLogin", sender: self)
+//                        }                    }
+//                })
+//                
+////                self.performSegueWithIdentifier("segueLogin", sender: self)
+//            }
+//            
+//        }
         
     }
     
 
+    //在登录时做数据校验，保证网络上创建/关注的提醒数量与本地保存一致
+    
+    func dataSynchronize(currentUser:AVUser){
+        let uid = currentUser.objectId
+        let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+        let remind = NSEntityDescription.insertNewObjectForEntityForName("Remind",inManagedObjectContext: context) as! Remind
+        
+        //删除当前用户本地remind表的所有数据
+        let condition = "uid = '\(uid)'"
+        deleteRemind(condition)
+        
+        //自己创建的提醒
+        var query = AVQuery(className: "Remind")
+        query.whereKey("uid", equalTo: currentUser)
+        var result = query.findObjects()
+        for i in result {
+            remind.title = i.valueForKey("title") as? String
+            remind.content = i.valueForKey("title") as? String
+            remind.remindTimeArray = i.valueForKey("remindTimeArray") as! NSArray
+            remind.updateTime = i.valueForKey("updateTime") as? NSDate
+            remind.createNot = "1"
+            remind.uid = uid
+            remind.sentTime = i.valueForKey("sentTime") as? NSDate
+            remind.createAt = i.valueForKey("title") as? NSDate
+            remind.remindId = i.objectId
+        }
+        do {
+            try context.save()
+        } catch{
+            print(error)
+        }
+        
+        
+        //关注的提醒
+        query = AVQuery(className: "FollowAtRemind")
+        query.whereKey("uid", equalTo: currentUser)
+        result = query.findObjects(
+        for i in result {
+            remind.title = i.valueForKey("title") as? String
+            remind.content = i.valueForKey("title") as? String
+            remind.remindTimeArray = i.valueForKey("remindTimeArray") as! NSArray
+            remind.updateTime = i.valueForKey("updateTime") as? NSDate
+            remind.createNot = "0" //就这里与上不同，其他相同
+            remind.uid = uid
+            remind.sentTime = i.valueForKey("sentTime") as? NSDate
+            remind.createAt = i.valueForKey("title") as? NSDate
+            remind.remindId = i.valueForKey("rid")?.objectId
+        }
+        do {
+            try context.save()
+        } catch{
+            print(error)
+        }
+
+        
+    }
     
     
     

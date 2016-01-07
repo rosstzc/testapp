@@ -24,10 +24,12 @@ class ModUserInfoTableViewController: UITableViewController, UIPickerViewDataSou
     @IBOutlet  var weightPicker:UIPickerView! = UIPickerView()
     @IBOutlet  var birthPicker:UIDatePicker! = UIDatePicker()
     
+//    var height:String = ""
+//    let weight:String = ""
+//    
     
     
-    
-    var user = NSUserDefaults.standardUserDefaults()
+//    var user = NSUserDefaults.standardUserDefaults()
     
     var genderSelection = ["男", "女", "不限"]
     var heightSelection = ["100"]
@@ -56,10 +58,11 @@ class ModUserInfoTableViewController: UITableViewController, UIPickerViewDataSou
         
         self.birthText.inputView = self.birthPicker
         
+
+        //同步
+        let user = AVUser.currentUser()
         
-        
-        
-        name.text = user.valueForKey("name") as? String
+        name.text = user.valueForKey("username") as? String
         //        var row = user.valueForKey("gender") as? NSInteger
         
         
@@ -70,7 +73,9 @@ class ModUserInfoTableViewController: UITableViewController, UIPickerViewDataSou
             heightSelection.append(String(i))
         }
         let height = user.valueForKey("height") as? String
-        heightText.text = (height)! + "cm"
+        if height != nil {
+            heightText.text = (height)! + "cm"
+        }
         
         //体重
         i = 20
@@ -78,14 +83,19 @@ class ModUserInfoTableViewController: UITableViewController, UIPickerViewDataSou
             i = i + 1
             weightSelection.append(String(i))
         }
+        
         let weight = user.valueForKey("weight") as? String
-        weightText.text = (weight)! + "kg"
+        if weight != nil {
+           weightText.text = (weight)! + "kg"
+
+        }
         
         genderText.text = user.valueForKey("gender") as? String
         
-        if (user.valueForKey("avatar") != nil) {
-            avatar.image = UIImage(data: user.valueForKey("avatar") as! NSData, scale: 1.0)
-        }
+        //头像
+        let imageFile = user.objectForKey("image") as? AVFile
+        let imageData = imageFile!.getData()
+        avatar.image = UIImage(data: imageData!)!
         
         
         //生日
@@ -98,11 +108,11 @@ class ModUserInfoTableViewController: UITableViewController, UIPickerViewDataSou
         
         // 初始化picker，让默认值与userDefault一致
         var row:Int
-        if height != "" {
+        if height != nil {
             row = heightSelection.indexOf(height!)!
             heightPicker.selectRow(row, inComponent: 0, animated: true)
         }
-        if weight != "" {
+        if weight != nil {
             row = weightSelection.indexOf(weight!)!
             weightPicker.selectRow(row, inComponent: 0, animated: true)
         }
@@ -293,7 +303,7 @@ class ModUserInfoTableViewController: UITableViewController, UIPickerViewDataSou
     //    }
     
     @IBAction func save(sender: AnyObject) {
-        
+        let user = AVUser.currentUser()
         user.setObject(name.text, forKey: "name")
         user.setObject(genderText.text, forKey:"gender")
         
@@ -311,17 +321,53 @@ class ModUserInfoTableViewController: UITableViewController, UIPickerViewDataSou
         if (avatar.image != nil) {
             //            let temp = UIImagePNGRepresentation(avatar.image!) //
             let temp = UIImageJPEGRepresentation(avatar.image!, 95)
-            print("save image")
-            user.setObject(temp, forKey: "avatar")
+            
+            if let imageFile = AVUser.currentUser().objectForKey("image") as? AVFile {
+                imageFile.deleteInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
+                    if error == nil {
+                        print("yes")
+                    } else {
+                        print(error)
+                    }
+                })
+            }
+            print(AVUser.currentUser().objectForKey("image"))
+            let fileData = saveImageToLC(self.avatar.image!) //上面已经保存到本地，下面是在保存到服务器
+            user.setObject(fileData, forKey: "image")
+            user.saveInBackground()
+            
+            user.valueForKey("")
+//            
+            //删除LC上老照片
+//            if var imageFile = AVUser.currentUser().objectForKey("image") {
+//                imageFile = imageFile as! AVFile
+//                imageFile.deleteInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
+//                    if error == nil {
+//                        print("yes")
+//                        let fileData = saveImageToLC(self.avatar.image!) //上面已经保存到本地，下面是在保存到服务器
+//                        user.setObject(fileData, forKey: "image")
+//                        user.save()
+//                    } else {
+//                        print(error)
+//                    }
+//                })
+//            } else {
+//                let fileData = saveImageToLC(self.avatar.image!) //上面已经保存到本地，下面是在保存到服务器
+//                user.setObject(fileData, forKey: "image")
+//                user.save()
+//            }
             
         }
         
         
-        //        user.setObject(introduction.text, forKey: "introduction")
-        user.synchronize()
+//        user.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
+//            if (error != nil) {
+//                print(error)
+//            } else {
+//            }
+//        })
         
-        //        print(user.valueForKey("avatar") as! UIImage)
-        //        self.performSegueWithIdentifier("testt", sender: self)
+
         self.dismissViewControllerAnimated(true, completion: nil)
         
         

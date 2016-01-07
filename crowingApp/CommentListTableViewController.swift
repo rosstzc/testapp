@@ -92,7 +92,7 @@ class CommentListTableViewController: UITableViewController {
         //标记为已读
         let query = AVQuery(className: "Comment")
         query.whereKey("rUid", equalTo: currentUser)
-//        query.whereKey("uid", notEqualTo: currentUser)
+        query.whereKey("uid", notEqualTo: currentUser)
         query.whereKey("cid", equalTo: checkIn)
         query.whereKey("type", containedIn: typeArray)
         let result = query.findObjects()

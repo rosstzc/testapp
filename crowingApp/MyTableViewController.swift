@@ -10,9 +10,24 @@ import UIKit
 
 class MyTableViewController: UITableViewController {
 
+    @IBOutlet weak var avatar: UIImageView!
+    
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var gender: UILabel!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let currentUser = AVUser.currentUser()
+
+        //头像
+        let imageFile = currentUser.objectForKey("image") as? AVFile
+        let imageData = imageFile!.getData()
+        avatar.image = UIImage(data: imageData!)!
         
+        name.text = currentUser.valueForKey("username") as? String
+        gender.text = currentUser.valueForKey("gender") as? String
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -37,6 +52,10 @@ class MyTableViewController: UITableViewController {
         }
 
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.viewDidLoad()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
