@@ -196,7 +196,8 @@ class LoginViewController: UIViewController {
     func dataSynchronize(currentUser:AVUser){
         let uid = currentUser.objectId
         let  context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
-        let remind = NSEntityDescription.insertNewObjectForEntityForName("Remind",inManagedObjectContext: context) as! Remind
+
+
         
         //删除当前用户本地remind表的所有数据
         let condition = "uid = '\(uid)'"
@@ -206,44 +207,61 @@ class LoginViewController: UIViewController {
         var query = AVQuery(className: "Remind")
         query.whereKey("uid", equalTo: currentUser)
         var result = query.findObjects()
+        
         for i in result {
+        let remind = NSEntityDescription.insertNewObjectForEntityForName("Remind",inManagedObjectContext: context) as! Remind
             remind.title = i.valueForKey("title") as? String
-            remind.content = i.valueForKey("title") as? String
+            remind.content = i.valueForKey("content") as? String
             remind.remindTimeArray = i.valueForKey("remindTimeArray") as! NSArray
-            remind.updateTime = i.valueForKey("updateTime") as? NSDate
-            remind.createNot = "1"
+            remind.updateTime = i.valueForKey("updatedAt") as? NSDate
             remind.uid = uid
-            remind.sentTime = i.valueForKey("sentTime") as? NSDate
-            remind.createAt = i.valueForKey("title") as? NSDate
+            remind.sentTime = i.valueForKey("createdAt") as? NSDate
+            remind.createAt = i.valueForKey("createdAt") as? NSDate
+            
             remind.remindId = i.objectId
+            remind.createNot = "1"
+            do {
+                try context.save()
+            } catch{
+                print(error)
+            }
+
+
         }
-        do {
-            try context.save()
-        } catch{
-            print(error)
+        
+        //for test
+        let reminds = getOneRemind("uid='\(uid)'")
+        for i in reminds {
+            print(reminds.count)
+            print(i.remindId)
+            
         }
         
         
         //关注的提醒
         query = AVQuery(className: "FollowAtRemind")
         query.whereKey("uid", equalTo: currentUser)
-        result = query.findObjects(
+        result = query.findObjects()
         for i in result {
+        let remind = NSEntityDescription.insertNewObjectForEntityForName("Remind",inManagedObjectContext: context) as! Remind
             remind.title = i.valueForKey("title") as? String
-            remind.content = i.valueForKey("title") as? String
+            remind.content = i.valueForKey("content") as? String
             remind.remindTimeArray = i.valueForKey("remindTimeArray") as! NSArray
-            remind.updateTime = i.valueForKey("updateTime") as? NSDate
-            remind.createNot = "0" //就这里与上不同，其他相同
+            remind.updateTime = i.valueForKey("updatedAt") as? NSDate
             remind.uid = uid
-            remind.sentTime = i.valueForKey("sentTime") as? NSDate
-            remind.createAt = i.valueForKey("title") as? NSDate
+            remind.sentTime = i.valueForKey("createdAt") as? NSDate
+            remind.createAt = i.valueForKey("createdAt") as? NSDate
+            
+            remind.createNot = "0" //这两行与上不同
             remind.remindId = i.valueForKey("rid")?.objectId
+            
+            do {
+                try context.save()
+            } catch{
+                print(error)
+            }
         }
-        do {
-            try context.save()
-        } catch{
-            print(error)
-        }
+
 
         
     }

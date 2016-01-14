@@ -54,6 +54,11 @@ class CommentTableViewController: UITableViewController,UITextViewDelegate, UINa
         comment.setObject(self.rUid, forKey: "rUid") //当uid等于rUid表示评论checkin，不同时表示评论某人的评论
         comment.save()
         
+        //增加checkIn表中comment的累计数
+        checkIn.incrementKey("commentCount")
+        checkIn.save()
+        
+        
         commentContent.text = ""
         self.viewDidLoad()
         self.tableView.reloadData()
@@ -62,7 +67,7 @@ class CommentTableViewController: UITableViewController,UITextViewDelegate, UINa
         
         
         
-        //未完，从评论/未读列表的segue过来，要定位到具体行位置
+        //未完，从评论/未读列表的segue过来，要定位到具体行位置 （下面实现）
         
     }
     

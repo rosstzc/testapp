@@ -16,6 +16,16 @@ func temp2() {
 }
 
 
+//使用RGB的16进制颜色
+func UIColorFromRGB(rgbValue: UInt) -> UIColor {
+    return UIColor(
+        red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+        green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+        blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+        alpha: CGFloat(1.0)
+    )
+}
+
 // 获得我喜欢过的checkIn的like标记 （行位置）
 func getMarkForCurrentUserLikeCheck(queryCheckIn:AVQuery, checkIns:[AnyObject], user:AnyObject) ->[AnyObject]{
     print("34")
@@ -31,13 +41,13 @@ func getMarkForCurrentUserLikeCheck(queryCheckIn:AVQuery, checkIns:[AnyObject], 
     var x = 0
     var markForCurrentUserLikeCheck:[AnyObject] = []
     for i in checkIns {
-        print(i.valueForKey("createdAt"))
+//        print(i.valueForKey("createdAt"))
         markForCurrentUserLikeCheck.append(0)
-        print(markForCurrentUserLikeCheck   )
+//        print(markForCurrentUserLikeCheck   )
         markForCurrentUserLikeCheck[x] = 0
         for j in likes {
             if (i.objectId as String) == (j.valueForKey("cid")!.objectId) {
-                print("1")
+//                print("1")
                 markForCurrentUserLikeCheck[x] = 1
             }
         }

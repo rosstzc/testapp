@@ -44,6 +44,8 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         uid = user.valueForKey("uid") as! String
 
 
+        
+        
     }
 
 
@@ -181,6 +183,12 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
 //            let nextVC = segue.destinationViewController as! ShowRemindViewController
             let nextVC = segue.destinationViewController as! ShowRemindTableViewController
 
+            //test
+//            reminds = getOneRemind("uid='\(uid)'")
+//            for i in reminds {
+//                print(i.remindId)
+//            }
+            
             //根据remindId获取该remind的数据
             print(remindId)
             reminds = getOneRemind("remindId = '\(remindId)'")
@@ -209,6 +217,9 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
                 $0.sentTime!.compare($1.sentTime!) == NSComparisonResult.OrderedDescending
             })
             reminds = sortedResults
+            print(reminds[0])
+            print(reminds[0].title)
+            print(reminds[0].sentTime)
             lastMessageTime =  reminds[0].sentTime!
         }
         

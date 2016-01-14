@@ -36,6 +36,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("ee", user.arrayForKey("remindTimeArray"))
         }
         
+        // 修改所有导航的颜色
+//        UINavigationBar.appearance().barTintColor = UIColorFromRGB(0x067AB5)//导航条
+        UINavigationBar.appearance().barTintColor = UIColor.blackColor()    //导航条
+        
+        UINavigationBar.appearance()
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor() //导航条上的buton和标题的字体颜色
+        
+
+//        UIStatusBarStyle = UIStatusBarStyleL
+        UINavigationBar.appearance().barStyle = .Black //状态条
+//        UINavigationBar.appearance().barStyle = UIBarStyle.BlackOpaque
+        
         
         //判断是否已经登录，如果有就跳转
         if user.valueForKey("logined") as? Bool == true {
@@ -61,6 +73,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
     }
+    
+    
     
     
     //注册了远程推送后，记录用户的设备token

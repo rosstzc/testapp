@@ -5,4 +5,4 @@ use_frameworks!
 pod 'SwiftDate'
 pod 'AVOSCloud'
 pod 'SlackTextViewController'
-
+pod 'AlamofireImage', '~> 2.0'

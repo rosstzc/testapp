@@ -27,7 +27,7 @@ class CheckInViewController: UIViewController,UITextViewDelegate,UIImagePickerCo
         self.content.delegate = self
         content.text = "#\(remindTitle)#打卡"
 
-        imageView.image = UIImage(named: "fangbingbing")  //默认icon
+//        imageView.image = UIImage(named: "fangbingbing")  //默认icon
     }
     
     
@@ -59,18 +59,26 @@ class CheckInViewController: UIViewController,UITextViewDelegate,UIImagePickerCo
       
             //
             if content.text != "" || imageUpload != nil {
-                checkIn.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
-                    if (error != nil) {
-                        print(error)
-                    } else {
-                        remind.incrementKey("checks")
-                        remind.saveInBackground()
-                        //同步时间线
-                        sendStatus("checkIn", cid:"", rid:remind)
-                    }
-                    
-                    
-                })
+                //前台保存
+                checkIn.save()
+                remind.incrementKey("checks")
+                remind.save()
+                //同步时间线
+                sendStatus("checkIn", cid:"", rid:remind)
+                
+                //后台保存
+//                checkIn.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError?) in
+//                    if (error != nil) {
+//                        print(error)
+//                    } else {
+//                        remind.incrementKey("checks")
+//                        remind.saveInBackground()
+//                        //同步时间线
+//                        sendStatus("checkIn", cid:"", rid:remind)
+//                    }
+//                    
+//                    
+//                })
             }
         }
         

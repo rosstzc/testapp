@@ -105,7 +105,7 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
     }
     
  
-    
+    //实习placeholder效果
     func textViewDidBeginEditing(textView: UITextView) {
         if textViewContent.text == placeHolder {
             textViewContent.text = ""
@@ -314,6 +314,9 @@ class AddRemindViewController: UIViewController,UITextFieldDelegate,UITextViewDe
             remind = NSEntityDescription.insertNewObjectForEntityForName("Remind",inManagedObjectContext: context) as! Remind
             remind.title = textTitle.text!
             remind.content = textViewContent.text!
+            if textViewContent.text! == placeHolder {
+                remind.content = ""
+            }
             remind.remindTimeArray = remindTimeArray
             remind.updateTime = NSDate()
             remind.createNot = "1"

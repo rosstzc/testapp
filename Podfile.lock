@@ -1,14 +1,20 @@
 PODS:
+  - Alamofire (3.1.4)
+  - AlamofireImage (2.2.0):
+    - Alamofire (~> 3.1)
   - AVOSCloud (3.1.6.8)
   - SlackTextViewController (1.8)
   - SwiftDate (1.2)
 
 DEPENDENCIES:
+  - AlamofireImage (~> 2.0)
   - AVOSCloud
   - SlackTextViewController
   - SwiftDate
 
 SPEC CHECKSUMS:
+  Alamofire: fbc829692f351fa1d8a31dd75fd7f7f56fea31fb
+  AlamofireImage: bedb8a4bdfb98eda81ba12952fba6e9e90420922
   AVOSCloud: 4b06ec4444ca0ee0543e6cf729b11e5f3f956977
   SlackTextViewController: 0300adee2931fdbe72488990336f0937dbed048e
   SwiftDate: 49ebd4efb5f82336cfc2b1d8a6622f47d4b17370
