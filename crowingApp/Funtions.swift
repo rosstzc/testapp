@@ -89,6 +89,7 @@ func showLikeButton(checkIn:AnyObject, button:UIButton, indexPath:NSIndexPath, m
         likeCount = checkIn.valueForKey("likes") as! Int
         
         //我赞过的
+
         if (markForCurrentUserLikeCheck[indexPath.row]) as! Int == 1 {
             print("position:\(markForCurrentUserLikeCheck[indexPath.row])")
             print("index: \(indexPath.row)")

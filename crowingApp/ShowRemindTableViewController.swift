@@ -125,37 +125,23 @@ class ShowRemindTableViewController: UITableViewController {
         query.includeKey("image")
         query.orderByDescending("createdAt")
         query.limit = 100
-//        let result = query.findObjects()
-//        self.checkInCount = result.count
-//        self.checkIns = result!
+        //主线程获取
+        let result = query.findObjects()
+        self.checkInCount = result.count
+        self.checkIns = result!
 
-        query.findObjectsInBackgroundWithBlock({(objects:[AnyObject]? , error:NSError?)  in
-            if (error != nil) {
-                print("错误")
-            } else {
-                self.checkInCount = objects!.count
-                self.checkIns = objects!
-                print(objects?.count)
-                
-                //把图片写入alamofire的cache
-//                let imageCache = AutoPurgingImageCache()
-//                for i in self.checkIns {
-//                   let  urlString = i.valueForKey("image")?.valueForKey("url") as! String
-//                    
-//                    let URLRequest = NSURLRequest(URL: NSURL(string: urlString)!)
-//                    let avatarImage = UIImage(named: "avatar")!.af_imageRoundedIntoCircle()
-//                    // Add
-//                    imageCache.addImage(
-//                        avatarImage,
-//                        forRequest: URLRequest,
-//                        withAdditionalIdentifier: "circle")
-//                }
-                
-
-                
-            }
-        })
+        //后台获取
+//        query.findObjectsInBackgroundWithBlock({(objects:[AnyObject]? , error:NSError?)  in
+//            if (error != nil) {
+//                print("错误")
+//            } else {
+//                self.checkInCount = objects!.count
+//                self.checkIns = objects!
+//                print(objects?.count)
+//            }
+//        })
         
+        //由于这个函数要用到checkIns的值，如果上面后后台获取，就会导致这里没值
         markForCurrentUserLikeCheck = getMarkForCurrentUserLikeCheck(query, checkIns: checkIns, user: currentUser)
         
     }
@@ -284,6 +270,12 @@ class ShowRemindTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 //        let cell = tableView.dequeueReusableCellWithIdentifier("checkInCell")!
         let cell = tableView.dequeueReusableCellWithIdentifier("checkInCell", forIndexPath: indexPath)
+        
+//        let updateCell = tableView.cellForRowAtIndexPath(indexPath)
+//        if ((updateCell) != nil) {
+//            cell = updateCell!
+//        }
+        
         let checkIn = checkIns[indexPath.row]
         
         let avatarView = cell.viewWithTag(10) as! UIImageView
@@ -305,7 +297,13 @@ class ShowRemindTableViewController: UITableViewController {
         time.text = timeStringForMessage(checkIn.valueForKey("createdAt") as! NSDate)
         content.text = checkIn.valueForKey("content") as? String
 //        content.sizeToFit()
-        likeButton = showLikeButton(checkIn, button: likeButton, indexPath: indexPath, mark: markForCurrentUserLikeCheck)
+        
+        print("start")
+        print(self.markForCurrentUserLikeCheck)
+        print(indexPath.row)
+//        print(markForCurrentUserLikeCheck[indexPath.row])
+        likeButton = showLikeButton(checkIn, button: likeButton, indexPath: indexPath, mark: self.markForCurrentUserLikeCheck)
+       
         if let commentCount = checkIn.valueForKey("commentCount") {
             comment.setTitle("评论 \(commentCount as! Int)", forState: .Normal)
 
@@ -332,7 +330,9 @@ class ShowRemindTableViewController: UITableViewController {
 //            print(checkIn.valueForKey("image")?.valueForKey("url") as! String)
             urlString = checkIn.valueForKey("image")?.valueForKey("url") as! String
             let url = NSURL(string: urlString)
-            imageView.af_setImageWithURL(url!)
+            
+            let placeholderImage = UIImage(named: "twitter")
+            imageView.af_setImageWithURL(url!, placeholderImage: placeholderImage)
             
             //处理图片加载错乱问题
             let updateCell = tableView.cellForRowAtIndexPath(indexPath)
@@ -387,7 +387,7 @@ class ShowRemindTableViewController: UITableViewController {
 //        
         }
         else {
-            print("no")
+            print("no photo in checkIn")
 //            imageView.frame.size.height = 200
 //                imageView.frame = CGRectMake(imageView.frame.origin.x, imageView.frame.origin.y
 //                ,imageView.frame.size.width

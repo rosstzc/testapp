@@ -152,7 +152,8 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
         remindId = (selectMessage!.remindId)! as String
         print(remindId)
 //        self.performSegueWithIdentifier("segueShowRemind", sender: self)
-        self.performSegueWithIdentifier("segueShowRemind2", sender: self)
+//        self.performSegueWithIdentifier("segueShowRemind2", sender: self)
+               self.performSegueWithIdentifier("segueTest", sender: self)
     }
     
 
@@ -179,6 +180,26 @@ class RemindListViewController: UIViewController, UITableViewDelegate, UITableVi
 
     //传递数据
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "segueTest" {
+            //            let nextVC = segue.destinationViewController as! ShowRemindViewController
+            let nextVC = segue.destinationViewController as! TestTableViewController    
+            
+            //test
+            //            reminds = getOneRemind("uid='\(uid)'")
+            //            for i in reminds {
+            //                print(i.remindId)
+            //            }
+            
+            //根据remindId获取该remind的数据
+            print(remindId)
+            reminds = getOneRemind("remindId = '\(remindId)'")
+            for i in reminds {
+                nextVC.remind = i
+                print(i.remindId)
+                //                break
+            }
+        }
         if segue.identifier == "segueShowRemind2" {
 //            let nextVC = segue.destinationViewController as! ShowRemindViewController
             let nextVC = segue.destinationViewController as! ShowRemindTableViewController

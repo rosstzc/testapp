@@ -32,6 +32,9 @@
 		153D007D1BDE589700F77A62 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153D007C1BDE589600F77A62 /* SettingTableViewController.swift */; };
 		1547E99A1C320E96000FD82E /* CheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1547E9991C320E96000FD82E /* CheckInViewController.swift */; };
 		157FEDE81BE11B4100348E61 /* MyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157FEDE71BE11B4100348E61 /* MyTableViewController.swift */; };
+		15A6A3C41C49E2F50058CA6A /* CheckInTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A6A3C31C49E2F50058CA6A /* CheckInTableViewCell.xib */; };
+		15A6A3C61C49E43C0058CA6A /* CheckInTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6A3C51C49E43C0058CA6A /* CheckInTableViewCell.swift */; };
+		15A6A3C81C49EEA50058CA6A /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6A3C71C49EEA50058CA6A /* TestTableViewController.swift */; };
 		15EAB6431BD91F79009F56AC /* AddOneDayRemindTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAB6421BD91F79009F56AC /* AddOneDayRemindTimeViewController.swift */; };
 		15F2D5D51BE98DA90028D55B /* AddIntervalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F2D5D41BE98DA90028D55B /* AddIntervalViewController.swift */; };
 		15F44BFB1BF6DE76002AE993 /* View1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15F44BFA1BF6DE76002AE993 /* View1.xib */; };
@@ -90,6 +93,9 @@
 		153D007C1BDE589600F77A62 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		1547E9991C320E96000FD82E /* CheckInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInViewController.swift; sourceTree = "<group>"; };
 		157FEDE71BE11B4100348E61 /* MyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewController.swift; sourceTree = "<group>"; };
+		15A6A3C31C49E2F50058CA6A /* CheckInTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CheckInTableViewCell.xib; path = ../CheckInTableViewCell.xib; sourceTree = "<group>"; };
+		15A6A3C51C49E43C0058CA6A /* CheckInTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckInTableViewCell.swift; path = ../CheckInTableViewCell.swift; sourceTree = "<group>"; };
+		15A6A3C71C49EEA50058CA6A /* TestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
 		15DF8B651C43DEE00012CAA4 /* Haneke.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Haneke.framework; path = "Pods/../build/Debug-iphoneos/Haneke.framework"; sourceTree = "<group>"; };
 		15EAB6421BD91F79009F56AC /* AddOneDayRemindTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOneDayRemindTimeViewController.swift; sourceTree = "<group>"; };
 		15F2D5D41BE98DA90028D55B /* AddIntervalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddIntervalViewController.swift; sourceTree = "<group>"; };
@@ -182,6 +188,9 @@
 				150508851C3690CB0078E200 /* CheckFlowTableViewController.swift */,
 				55D86AB51BC4CB3E0059ECA7 /* RemindSumListViewController.swift */,
 				004F4BC51B909442007DABE7 /* Main.storyboard */,
+				15A6A3C71C49EEA50058CA6A /* TestTableViewController.swift */,
+				15A6A3C51C49E43C0058CA6A /* CheckInTableViewCell.swift */,
+				15A6A3C31C49E2F50058CA6A /* CheckInTableViewCell.xib */,
 				004F4BC81B909442007DABE7 /* Images.xcassets */,
 				004F4BCA1B909442007DABE7 /* LaunchScreen.xib */,
 				004F4BC01B909442007DABE7 /* crowingApp.xcdatamodeld */,
@@ -330,6 +339,7 @@
 				15F44BFB1BF6DE76002AE993 /* View1.xib in Resources */,
 				004F4BC71B909442007DABE7 /* Main.storyboard in Resources */,
 				004F4BCC1B909442007DABE7 /* LaunchScreen.xib in Resources */,
+				15A6A3C41C49E2F50058CA6A /* CheckInTableViewCell.xib in Resources */,
 				004F4BE41B90A556007DABE7 /* 0.jpeg in Resources */,
 				004F4BC91B909442007DABE7 /* Images.xcassets in Resources */,
 			);
@@ -420,6 +430,7 @@
 				151102C51C380AE900330748 /* CommentListTableViewController.swift in Sources */,
 				150397AB1C297F03008C4DA9 /* Remind.swift in Sources */,
 				15FB89711C1C67AC00566BA9 /* RemindTimeTableViewController.swift in Sources */,
+				15A6A3C81C49EEA50058CA6A /* TestTableViewController.swift in Sources */,
 				15FB008A1C3964CA0074B08F /* ModUserInfoTableViewController.swift in Sources */,
 				002D475D1B91326700A43D5D /* AddRemindViewController.swift in Sources */,
 				15F698341BF16E3F00B8CF1F /* AddWeekRemindViewController.swift in Sources */,
@@ -431,6 +442,7 @@
 				001A365E1BB21F2900D94F34 /* LoginViewController.swift in Sources */,
 				004F4BC21B909442007DABE7 /* crowingApp.xcdatamodeld in Sources */,
 				55C62A361BCB2A1B002C6BE8 /* CheckAtFollowing+CoreDataProperties.swift in Sources */,
+				15A6A3C61C49E43C0058CA6A /* CheckInTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
